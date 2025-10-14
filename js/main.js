@@ -84,7 +84,7 @@ function getControllers() {
 function renderDynamicSections(data) {
     renderList(data.news, '[data-news-list]', createNewsCard);
     renderList(data.projects, '[data-projects-grid]', createProjectCard);
-    renderList(data.team, '[data-team-grid]', createTeamCard);
+    // Team is now statically rendered in HTML
     renderList(data.testimonials, '[data-testimonials-grid]', createTestimonialCard);
     renderList(data.publications, '[data-publications-list]', createPublicationItem);
 }
@@ -161,12 +161,26 @@ function createProjectCard(item) {
 
 function createTeamCard(member) {
     const article = document.createElement('article');
-    article.className = 'card-surface reveal team-card';
-    article.innerHTML = `
-        <h3 class="team-name">${member.name}</h3>
-        <div class="team-role">${member.role}</div>
-        <p class="team-bio">${member.bio}</p>
-    `;
+    const roleClass = member.role.toLowerCase().replace(/\s+/g, '-');
+    
+    // Set class based on role
+    article.className = `team-card ${roleClass}-card`;
+    
+    // Add hero image
+    const imageHtml = member.image ? 
+        `<img src="${member.image}" alt="${member.name}" class="team-image" loading="lazy">` : 
+        `<div class="team-avatar-placeholder">${member.name.split(' ').map(n => n[0]).join('')}</div>`;
+    
+    // Add contact links
+    const contactLinks = [];
+    if (member.email) contactLinks.push(`<a href="mailto:${member.email}" class="team-link email" aria-label="Email ${member.name}">✉️</a>`);
+    if (member.website) contactLinks.push(`<a href="${member.website}" class="team-link website" target="_blank" rel="noopener" aria-label="${member.name}'s website">🌐</a>`);
+    if (member.linkedin) contactLinks.push(`<a href="${member.linkedin}" class="team-link linkedin" target="_blank" rel="noopener" aria-label="${member.name}'s LinkedIn">💼</a>`);
+    
+    const linksHtml = contactLinks.length > 0 ? `<div class="team-links">${contactLinks.join('')}</div>` : '';
+    
+    article.innerHTML = imageHtml + linksHtml;
+    
     return article;
 }
 
@@ -255,6 +269,7 @@ function setupSmoothScrolling() {
                     behavior: 'smooth'
                 });
                 
+                // Update active nav link
                 // Update active nav link
                 navLinks.forEach(navLink => navLink.classList.remove('active'));
                 link.classList.add('active');

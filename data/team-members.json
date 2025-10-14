@@ -1,56 +1,46 @@
 [
     {
         "name": "Dr. Ahsan Islam",
-        "role": "Principal Investigator & Lab Director",
-        "bio": "Expert in metabolic engineering and synthetic biology with extensive research experience at MIT, University of Toronto, and Imperial College London. Specializes in constraint-based metabolic modeling, genome-scale analysis, and microbial production of platform chemicals. Has 15+ years of research experience in chemical engineering and applied chemistry with focus on sustainable biomanufacturing.",
-        "image": "assets/images/team/ahsan-islam.jpg",
+        "role": "Principal Investigator",
+        "title": "Senior Lecturer in Biochemical Engineering",
+        "bio": "Expert in metabolic engineering and synthetic biology with extensive research experience at MIT, University of Toronto, and Imperial College London. Specializes in constraint-based metabolic modeling, genome-scale analysis, and microbial production of platform chemicals. Has 15+ years of research experience and 30+ publications in high-impact journals.",
+        "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuC7159i3aSURNClEcDvSrrPOqfhw_iqKRyZ-nQMbhAJpWPXhCaYEGPJTXKJwFshiEhSz3e6qXn1-k26yjNxGyqezPNWUJMmcDzDkEmGzoz_bGAdbRO7US_6EoGgIenwxs99eEzr3ZKWyOdZ3pjOLF7yMm_9HBJOuQrTl35FeQ7fnQDTzAbVRVOqNe9QF8PMGXFnAsD78XP0VhAklZjZsBFMeXOPryzf5YKQfn-qUAC7Ri1b8sgoumc4oHbOUkyr3-EUTrpgreYtIBQ",
         "email": "a.islam@lboro.ac.uk",
         "website": "https://www.lboro.ac.uk/departments/chemical/staff/ahsan-islam",
-        "linkedin": "https://linkedin.com/in/ahsan-islam"
-    },
-    {
-        "name": "Dr. Elena Martinez",
-        "role": "Senior Research Scientist",
-        "bio": "Expert in interpretable machine learning for genomics and systems biology. Previously at Stanford BioAI Center with 15+ years of experience in computational biology and AI research.",
-        "image": "assets/images/team/elena-martinez.jpg",
-        "email": "elena.martinez@bioai.lab",
-        "website": "https://elenamartinez.bioai.lab",
-        "linkedin": "https://linkedin.com/in/elenamartinez"
-    },
-    {
-        "name": "Dr. Sarah Chen",
-        "role": "Machine Learning Engineer",
-        "bio": "Develops novel deep learning architectures for biological sequence analysis. Expert in transformers and attention mechanisms for genomics.",
-        "image": "assets/images/team/sarah-chen.jpg",
-        "email": "sarah.chen@bioai.lab",
-        "website": "https://sarahchen.bioai.lab",
-        "linkedin": "https://linkedin.com/in/sarahchen"
-    },
-    {
-        "name": "Dr. James Williams",
-        "role": "Computational Biologist",
-        "bio": "Leads metabolic network modeling and pathway optimization research. Background in synthetic biology and metabolic engineering.",
-        "image": "assets/images/team/james-williams.jpg",
-        "email": "james.williams@bioai.lab",
-        "website": "https://jameswilliams.bioai.lab",
-        "linkedin": "https://linkedin.com/in/jameswilliams"
-    },
-    {
-        "name": "Dr. Maria Rodriguez",
-        "role": "Postdoctoral Researcher",
-        "bio": "Working on multi-omics integration and single-cell analysis using advanced machine learning techniques.",
-        "image": "assets/images/team/maria-rodriguez.jpg",
-        "email": "maria.rodriguez@bioai.lab",
-        "website": "https://mariarodriguez.bioai.lab",
-        "linkedin": "https://linkedin.com/in/mariarodriguez"
+        "linkedin": "https://linkedin.com/in/ahsan-islam",
+        "qualifications": [
+            "Ph.D., Chemical Engineering and Applied Chemistry, University of Toronto, 2014",
+            "M. Sc., Chemical Engineering, Imperial College London, 2005",
+            "B. Sc. Eng., Chemical Engineering, BUET, 2003"
+        ],
+        "achievements": [
+            "30+ peer-reviewed publications",
+            "Nature Metabolism lead author, 2019", 
+            "Multiple prestigious research fellowships",
+            "UKRI Scholarship for PhD studies"
+        ]
     },
     {
         "name": "Tamoghna Das",
-        "role": "PhD Student",
-        "bio": "Developing a digital twin of bioprocesses to optimize media and feeding strategies for industrial cell culture processes. Focus on high-throughput screening and multivariate data analysis to create predictive computational models that can revolutionize bioprocess design. Previously completed MSc in Biochemical Engineering at UCL and MSc in Data Science at University of East Anglia.",
-        "image": "assets/images/team/tamoghna-das.jpg",
+        "role": "PhD Researcher",
+        "title": "UKRI Scholarship Student",
+        "bio": "Developing a digital twin of bioprocesses to optimize media and feeding strategies for industrial cell culture processes. Focus on high-throughput screening and multivariate data analysis to create predictive computational models. Previously completed MSc in Biochemical Engineering at UCL and Data Science at University of East Anglia.",
+        "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBzpllll19Q5vg3yGDpbV1vsIgU5IqfKkh5VoxfcVLOfQhUkSa5xWdS8aOwbVKS4LrsEWq55itlTFaSFHLedHTE0koPUEcMC4bK5ekD-p28tcxEoR-W56uilBG5sHJjwMYLy0NoFprcS60f_AeHbIxQa8vYFxFEo6uxcwvNDs0tX3o060ikjJ1HWv04-Uu9AIrSQYGr8TTztvvbqfQyx50dXJD4BedSk2OYQujBkWp7MtOGo9flGX1ePfo9sg-5QyMaiWlfgjdpk6o",
         "email": "t.das@lboro.ac.uk",
         "website": "https://www.lboro.ac.uk/departments/chemical/staff/tamoghna-das",
-        "linkedin": "https://linkedin.com/in/tamoghna-das"
+        "linkedin": "https://linkedin.com/in/tamoghna-das",
+        "qualifications": [
+            "Ph.D., Biochemical Engineering, Loughborough University (Current)",
+            "M.Sc., Biochemical Engineering, University College London (Merit)",
+            "M.Sc., Data Science, University of East Anglia (Merit)",
+            "B.Tech., Biotechnology, Vellore Institute of Technology"
+        ],
+        "researchFocus": [
+            "Digital twin development",
+            "High-throughput screening",
+            "Multivariate data analysis",
+            "Media and feeding strategy optimization",
+            "Industrial bioprocess modeling"
+        ]
     }
 ]
