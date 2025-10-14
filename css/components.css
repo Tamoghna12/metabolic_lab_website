@@ -87,6 +87,15 @@
     transform: scaleX(1);
 }
 
+.nav-link.active {
+    color: var(--color-primary);
+}
+
+.nav-link.active::after {
+    transform: scaleX(1);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+}
+
 .nav-actions {
     display: flex;
     align-items: center;
@@ -95,7 +104,7 @@
 
 .hero {
     position: relative;
-    padding: 6rem 0 4rem;
+    padding: 3rem 0 2rem;
     overflow: hidden;
 }
 
@@ -109,7 +118,7 @@
 
 .hero-grid {
     display: grid;
-    gap: 3rem;
+    gap: 2rem;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     align-items: stretch;
 }
@@ -117,7 +126,7 @@
 .hero-intro {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.2rem;
 }
 
 .hero-title {
@@ -146,7 +155,7 @@
 .hero-metric {
     background: var(--surface-muted);
     border-radius: var(--radius-xl);
-    padding: 1.4rem 1.6rem;
+    padding: 1rem 1.2rem;
     border: 1px solid rgba(31, 95, 74, 0.14);
 }
 
@@ -385,7 +394,7 @@
 .contact-form-container {
     background: var(--color-surface);
     border-radius: var(--radius-lg);
-    padding: 2rem;
+    padding: 1.5rem;
     box-shadow: var(--shadow-md);
     border: 1px solid var(--color-border);
 }
@@ -504,7 +513,7 @@
 .grant-form {
     background: var(--color-surface);
     border-radius: var(--radius-lg);
-    padding: 2rem;
+    padding: 1.5rem;
     box-shadow: var(--shadow-md);
     border: 1px solid var(--color-border);
 }

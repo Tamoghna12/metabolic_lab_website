@@ -34,6 +34,7 @@ body {
     color: var(--color-ink);
     background: var(--page-gradient);
     -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
 }
 
 body::before {
@@ -103,9 +104,20 @@ img {
     padding: 0 1.5rem;
 }
 
+/* Custom padding utilities */
+.py-12 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.py-16 {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
 .section-header {
     max-width: 720px;
-    margin: 0 auto 3rem;
+    margin: 0 auto 2rem;
     text-align: center;
 }
 

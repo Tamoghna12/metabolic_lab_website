@@ -226,4 +226,58 @@ window.showProjectDetails = function(projectTitle) {
     document.body.appendChild(modal);
 };
 
-window.addEventListener('DOMContentLoaded', bootstrap);
+// Smooth scroll for navigation links
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize the app
+    bootstrap();
+    
+    // Set up smooth scrolling for navigation links
+    setupSmoothScrolling();
+});
+
+function setupSmoothScrolling() {
+    const navLinks = document.querySelectorAll('a[href^="#"]:not([href="#"])');
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const targetId = link.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                e.preventDefault();
+                
+                const headerOffset = 80; // Account for fixed header
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+                
+                // Update active nav link
+                navLinks.forEach(navLink => navLink.classList.remove('active'));
+                link.classList.add('active');
+            }
+        });
+    });
+    
+    // Update active nav link on scroll
+    window.addEventListener('scroll', () => {
+        let current = '';
+        const sections = document.querySelectorAll('section[id]');
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            const sectionHeight = section.clientHeight;
+            
+            if (window.pageYOffset >= sectionTop && window.pageYOffset < sectionTop + sectionHeight) {
+                current = section.getAttribute('id');
+            }
+        });
+        
+        navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href').slice(1) === current);
+        });
+    });
+}
