@@ -1,0 +1,75 @@
+<section id="publications" class="publications-section">
+    <div class="section-container">
+        <div class="section-header">
+            <h2 class="section-title">Publications</h2>
+            <p class="section-subtitle">Our latest research contributions to the scientific community</p>
+        </div>
+        
+        <div class="filter-controls">
+            <div class="year-filter">
+                <label for="pub-year">Filter by year:</label>
+                <select id="pub-year" class="year-select">
+                    <option value="all">All Years</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                    <option value="2020">2020</option>
+                </select>
+            </div>
+            <div class="filter-stats">
+                <span class="count-display">Showing <span id="pub-count">30</span> publications</span>
+            </div>
+        </div>
+        
+        <div class="publications-list" data-publications-list>
+            <div class="publication-item">
+                <div class="publication-content">
+                    <h4 class="publication-title">
+                        <a href="#" target="_blank" rel="noopener">Genome-scale metabolic model reveals novel pathways for enhanced biofuel production</a>
+                    </h4>
+                    <div class="publication-authors">Ahsan Islam, J. Smith, K. Johnson, et al.</div>
+                    <div class="publication-meta">
+                        <span class="publication-venue">Nature Metabolism</span>
+                        <span class="publication-year">2024</span>
+                    </div>
+                    <div class="publication-abstract">
+                        Constraint-based modeling reveals previously undocumented metabolic bottlenecks in yeast biofuel production pathways, enabling strain optimization strategies.
+                    </div>
+                </div>
+                <div class="publication-links">
+                    <a href="#" class="pub-link" target="_blank" rel="noopener" title="View on publisher site">📄</a>
+                    <a href="#" class="pub-link" target="_blank" rel="noopener" title="View PDF">📥</a>
+                    <a href="#" class="pub-link" target="_blank" rel="noopener" title="Cite this work">📋</a>
+                </div>
+            </div>
+            
+            <div class="publication-item">
+                <div class="publication-content">
+                    <h4 class="publication-title">
+                        <a href="#" target="_blank" rel="noopener">Digital twin development for industrial bioprocess optimization using machine learning</a>
+                    </h4>
+                    <div class="publication-authors">Tamoghna Das, Ahsan Islam, M. Lee, et al.</div>
+                    <div class="publication-meta">
+                        <span class="publication-venue">Biotechnology Advances</span>
+                        <span class="publication-year">2024</span>
+                    </div>
+                    <div class="publication-abstract">
+                        Novel approach to creating predictive digital twins for bioprocess optimization using multivariate analysis and deep learning models.
+                    </div>
+                </div>
+                <div class="publication-links">
+                    <a href="#" class="pub-link" target="_blank" rel="noopener" title="View on publisher site">📄</a>
+                    <a href="#" class="pub-link" target="_blank" rel="noopener" title="View PDF">📥</a>
+                    <a href="#" class="pub-link" target="_blank" rel="noopener" title="Cite this work">📋</a>
+                </div>
+            </div>
+            
+            <!-- Additional publications will be dynamically loaded -->
+        </div>
+        
+        <div class="load-more">
+            <button class="load-more-button" onclick="loadMorePublications()">Load More Publications</button>
+        </div>
+    </div>
+</section>

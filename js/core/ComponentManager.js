@@ -6,15 +6,12 @@ export class ComponentManager {
         this.componentOrder = [
             'header',
             'hero', 
-            'overview',
-            'research',
-            'news',
-            'projects',
-            'publications',
-            'team',
-            'testimonials',
-            'grant-generator',
-            'contact',
+            'research-card',
+            'team-card',
+            'publications-with-filter',
+            'partners',
+            'grant-generator-ai',
+            'contact-form',
             'footer'
         ];
         this.loadedComponents = new Map();

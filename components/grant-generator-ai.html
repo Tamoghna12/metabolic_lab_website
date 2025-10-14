@@ -1,0 +1,108 @@
+<section id="grant-generator" class="grant-generator-section">
+    <div class="section-container">
+        <div class="section-header">
+            <h2 class="section-title">AI Grant Proposal Generator</h2>
+            <p class="section-subtitle">Create compelling grant proposals using artificial intelligence</p>
+        </div>
+        
+        <div class="grant-generator-content">
+            <div class="grant-form-panel">
+                <h3>Generate Your Grant Proposal</h3>
+                <p>Answer a few questions about your research focus and let our AI help craft a compelling grant proposal.</p>
+                
+                <form id="grant-form" class="grant-form">
+                    <div class="form-section">
+                        <label for="research-area" class="form-label">Research Focus Area</label>
+                        <select id="research-area" class="form-select" required>
+                            <option value="">Select your primary research area</option>
+                            <option value="ai-ml">Artificial Intelligence & Machine Learning</option>
+                            <option value="metabolic">Metabolic Engineering</option>
+                            <option value="synthetic-bio">Synthetic Biology</option>
+                            <option value="bioinformatics">Bioinformatics</option>
+                            <option value="bioprocess">Bioprocess Engineering</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-section">
+                        <label for="project-description" class="form-label">Project Description</label>
+                        <textarea id="project-description" class="form-textarea" rows="4" 
+                            placeholder="Describe your research project in a few sentences..." required></textarea>
+                        <div class="char-count"><span id="char-count">0</span>/500</div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <label for="funding-agency" class="form-label">Target Funding Agency</label>
+                        <select id="funding-agency" class="form-select">
+                            <option value="">Select funding agency</option>
+                            <option value="nsf">National Science Foundation (NSF)</option>
+                            <option value="nih">National Institutes of Health (NIH)</option>
+                            <option value="ukri">UK Research and Innovation (UKRI)</option>
+                            <option value="eu">European Commission</option>
+                            <option value="industry">Industry Sponsor</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-section">
+                        <label for="grant-type" class="form-label">Grant Type</label>
+                        <select id="grant-type" class="form-select">
+                            <option value="">Select grant type</option>
+                            <option value="seed">Seed Grant</option>
+                            <option value="career">Career Development</option>
+                            <option value="collaborative">Collaborative Research</option>
+                            <option value="equipment">Equipment Funding</option>
+                            <option value="travel">Travel & Conference</option>
+                            <option value="graduate">Graduate Fellowship</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="generate-button">
+                            <span class="button-text">Generate Proposal</span>
+                            <span class="button-loading" style="display: none;">Generating...</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="grant-output-panel" id="grant-output" style="display: none;">
+                <div class="output-header">
+                    <h3>Your AI-Generated Proposal</h3>
+                    <div class="output-actions">
+                        <button class="copy-button" onclick="copyProposal()">📋 Copy</button>
+                        <button class="download-button" onclick="downloadProposal()">📥 Download</button>
+                        <button class="edit-button" onclick="editProposal()">✏️ Edit</button>
+                    </div>
+                </div>
+                <div class="output-content" id="proposal-content">
+                    <!-- Generated proposal will appear here -->
+                </div>
+            </div>
+            
+            <div class="ai-features">
+                <div class="feature-point">
+                    <div class="feature-icon">🧠</div>
+                    <div class="feature-text">
+                        <h4>AI-Powered Analysis</h4>
+                        <p>Advanced language models analyze your research and generate compelling narratives</p>
+                    </div>
+                </div>
+                <div class="feature-point">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-text">
+                        <h4>Agency-Specific Tailoring</h4>
+                        <p>Proposals customized to match funding agency priorities and evaluation criteria</p>
+                    </div>
+                </div>
+                <div class="feature-point">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-text">
+                        <h4>Instant Generation</h4>
+                        <p>Get professional-quality proposals in seconds, not days or weeks</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
