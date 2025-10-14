@@ -1108,3 +1108,288 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// Prompt insertion function
+window.insertPrompt = function(promptText) {
+    const projectDescription = document.getElementById('project-description');
+    if (projectDescription) {
+        const currentValue = projectDescription.value;
+        const newValue = currentValue ? 
+            currentValue + '\n\n' + promptText : 
+            promptText;
+        
+        projectDescription.value = newValue;
+        
+        // Update character count
+        const charCount = document.getElementById('char-count');
+        if (charCount) {
+            charCount.textContent = newValue.length;
+            
+            // Update color based on count
+            if (newValue.length > 900) {
+                charCount.style.color = 'var(--color-error, #dc2626)';
+            } else if (newValue.length > 800) {
+                charCount.style.color = 'var(--color-warning, #f59e0b)';
+            } else {
+                charCount.style.color = 'var(--color-text-secondary)';
+            }
+        }
+        
+        // Focus the textarea
+        projectDescription.focus();
+        
+        // Set cursor to end of inserted text
+        projectDescription.setSelectionRange(newValue.length, newValue.length);
+        
+        // Show notification
+        showNotification('Prompt inserted! Customize the brackets to fit your research.');
+        
+        // Scroll to form
+        projectDescription.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+};
+
+// Agency template functions
+window.showAgencyTemplate = function() {
+    const agencySelect = document.getElementById('funding-agency');
+    const templateDiv = document.getElementById('agency-template');
+    const contentDiv = document.getElementById('template-content');
+    
+    if (!agencySelect.value) {
+        hideAgencyTemplate();
+        return;
+    }
+    
+    const templates = {
+        'nsf': {
+            title: 'NSF Grant Writing Guidance',
+            items: [
+                {
+                    title: 'Broader Impacts Requirement',
+                    content: 'NSF requires a separate Broader Impacts section. Address: (1) teaching/training, (2) broadening participation, (3) infrastructure enhancement, (4) public understanding, and (5) societal benefits.',
+                    action: 'Insert NSF Broader Impacts template'
+                },
+                {
+                    title: 'Intellectual Merit Criteria',
+                    content: 'Focus on advancing knowledge and understanding within your field. Emphasize novelty, methodological rigor, and potential to transform the field.',
+                    action: 'Insert Intellectual Merit template'
+                },
+                {
+                    title: 'Review Criteria',
+                    content: 'Two criteria: Intellectual Merit (potential to advance knowledge) and Broader Impacts (societal benefits). Both are weighted equally.',
+                    action: 'Insert review criteria reminder'
+                }
+            ]
+        },
+        'nih': {
+            title: 'NIH Grant Writing Guidance',
+            items: [
+                {
+                    title: 'Specific Aims (Page 1)',
+                    content: 'Clearly state your hypothesis, specific aims (2-3), and long-term objectives. Include significance, innovation, and approach summaries.',
+                    action: 'Insert NIH Specific Aims template'
+                },
+                {
+                    title: 'Significance Section',
+                    content: 'Explain why your research matters. Discuss the problem, knowledge gaps, and how your work will advance the field.',
+                    action: 'Insert Significance template'
+                },
+                {
+                    title: 'Innovation Section',
+                    content: 'Highlight novel concepts, approaches, methodologies, or interventions that challenge existing paradigms.',
+                    action: 'Insert Innovation template'
+                }
+            ]
+        },
+        'ukri': {
+            title: 'UKRI Grant Writing Guidance',
+            items: [
+                {
+                    title: 'Impact Pathways',
+                    content: 'UKRI emphasizes academic, economic, societal, cultural, and policy impacts. Include clear pathways to impact and beneficiaries.',
+                    action: 'Insert UKRI Impact statement'
+                },
+                {
+                    title: 'Equality and Diversity',
+                    content: 'Address equality, diversity, and inclusion in research design, team composition, and broader impacts.',
+                    action: 'Insert EDI considerations'
+                },
+                {
+                    title: 'National Importance',
+                    content: 'Demonstrate alignment with UK national priorities, strategic themes, and industrial strategies.',
+                    action: 'Insert national importance section'
+                }
+            ]
+        },
+        'eu': {
+            title: 'Horizon Europe Guidance',
+            items: [
+                {
+                    title: 'Excellence Criteria',
+                    content: 'Emphasize ground-breaking objectives, novel methodology, and interdisciplinary approach. Include state-of-the-art review.',
+                    action: 'Insert Excellence criteria'
+                },
+                {
+                    title: 'Impact and Ambition',
+                    content: 'Focus on climate neutrality, digital transformation, economic competitiveness, and European strategic autonomy.',
+                    action: 'Insert Impact and ambition'
+                },
+                {
+                    title: 'Quality and Efficiency',
+                    content: 'Demonstrate effective work plan, appropriate resources, and strong consortium management.',
+                    action: 'Insert Quality criteria'
+                }
+            ]
+        },
+        'dod': {
+            title: 'DoD Grant Writing Guidance',
+            items: [
+                {
+                    title: 'Military Relevance',
+                    content: 'Clearly connect research to defense priorities, warfighter needs, or national security challenges.',
+                    action: 'Insert DoD relevance statement'
+                },
+                {
+                    title: 'Technical Merit',
+                    content: 'Emphasize technical approach, risk assessment, and transition pathways to operational use.',
+                    action: 'Insert technical approach'
+                },
+                {
+                    title: 'Transition Plan',
+                    content: 'Include clear pathways from research to deployment, with industry partners and timelines.',
+                    action: 'Insert transition plan'
+                }
+            ]
+        },
+        'doe': {
+            title: 'DOE Grant Writing Guidance',
+            items: [
+                {
+                    title: 'Energy Relevance',
+                    content: 'Connect to DOE missions: energy security, scientific discovery, environmental stewardship, and nuclear security.',
+                    action: 'Insert energy mission alignment'
+                },
+                {
+                    title: 'Scientific Impact',
+                    content: 'Focus on transformative science with clear pathways to discovery and innovation.',
+                    action: 'Insert scientific impact'
+                },
+                {
+                    title: 'Facilities and Resources',
+                    content: 'Leverage DOE national laboratories, user facilities, and computational resources.',
+                    action: 'Insert facilities utilization'
+                }
+            ]
+        },
+        'industry': {
+            title: 'Industry Sponsor Guidance',
+            items: [
+                {
+                    title: 'Business Case',
+                    content: 'Emphasize ROI, market opportunity, competitive advantage, and commercialization timeline.',
+                    action: 'Insert business case framework'
+                },
+                {
+                    title: 'IP and Confidentiality',
+                    content: 'Address intellectual property rights, confidentiality terms, and commercial exploitation plans.',
+                    action: 'Insert IP considerations'
+                },
+                {
+                    title: 'Milestones and Deliverables',
+                    content: 'Include clear, measurable milestones tied to business objectives and market entry.',
+                    action: 'Insert milestone structure'
+                }
+            ]
+        },
+        'foundation': {
+            title: 'Foundation Grant Guidance',
+            items: [
+                {
+                    title: 'Mission Alignment',
+                    content: 'Clearly align research with foundation mission, values, and strategic priorities.',
+                    action: 'Insert mission alignment'
+                },
+                {
+                    title: 'Social Impact',
+                    content: 'Emphasize societal benefit, community engagement, and long-term positive change.',
+                    action: 'Insert social impact framework'
+                },
+                {
+                    title: 'Scalability',
+                    content: 'Demonstrate potential for broader impact, replication, and sustainable outcomes.',
+                    action: 'Insert scalability plan'
+                }
+            ]
+        }
+    };
+    
+    const template = templates[agencySelect.value];
+    if (template && contentDiv) {
+        let htmlContent = '<div class="template-intro"><p>' + template.title + '</p></div>';
+        
+        template.items.forEach((item, index) => {
+            htmlContent += `
+                <div class="template-item">
+                    <strong>${item.title}</strong>
+                    <p>${item.content}</p>
+                    <button class="template-action" onclick="insertTemplatePrompt('${agencySelect.value}', ${index})">
+                        ${item.action}
+                    </button>
+                </div>
+            `;
+        });
+        
+        contentDiv.innerHTML = htmlContent;
+        templateDiv.classList.remove('hidden');
+    }
+};
+
+window.hideAgencyTemplate = function() {
+    const templateDiv = document.getElementById('agency-template');
+    if (templateDiv) {
+        templateDiv.classList.add('hidden');
+    }
+};
+
+window.insertTemplatePrompt = function(agency, itemIndex) {
+    const agencyTemplates = {
+        'nsf': [
+            'Broader Impacts: This project will (1) advance education through training graduate students in cutting-edge [research area] techniques, (2) broaden participation by engaging underrepresented groups in [specific activities], (3) enhance infrastructure through development of [tools/databases], (4) improve public understanding via [outreach activities], and (5) create societal benefits through [applications to society].',
+            'Intellectual Merit: This research will advance knowledge in [field] by developing novel [approach] that addresses fundamental challenges in [specific problem]. Our innovative methodology combines [technique A] with [technique B] to achieve breakthroughs in [outcome]. The work is grounded in [theoretical framework] and will generate transformative insights with broad applicability across [related fields].',
+            'This proposal will be evaluated using NSF\'s dual criteria: Intellectual Merit (potential to advance knowledge) and Broader Impacts (societal benefits). Both criteria receive equal weight in the review process. Our project excels in both dimensions through innovative research design and comprehensive impact plan.'
+        ],
+        'nih': [
+            'Specific Aims: (1) Aim 1: Develop [innovative approach] to address [critical knowledge gap] in [disease/condition]; (2) Aim 2: Validate [approach] through [rigorous methodology] to establish [specific outcomes]; (3) Aim 3: Translate findings into [clinical/preclinical application] with potential for [therapeutic/diagnostic impact]. Long-term goal: Improve [health outcome] for [patient population].',
+            'Significance: [Disease/condition] affects [X] million people annually and contributes to [public health burden]. Current treatments are limited by [specific limitations]. Our research addresses critical gaps in understanding [mechanism/process], with potential to transform [field] and improve [patient outcomes]. The proposed work builds on our preliminary data showing [key preliminary findings].',
+            'Innovation: This project is innovative in three key ways: (1) Novel application of [cutting-edge technique] to [research question]; (2) Development of [new methodology/model] that overcomes current limitations; (3) Interdisciplinary approach combining [field A] with [field B] to achieve unprecedented insights into [research area]. These innovations challenge existing paradigms and open new avenues for [therapeutic development].'
+        ]
+        // Add more templates for other agencies as needed
+    };
+    
+    const prompts = agencyTemplates[agency] || [];
+    const prompt = prompts[itemIndex] || '';
+    
+    if (prompt) {
+        window.insertPrompt(prompt);
+    }
+};
+
+// Fix for A.choices error - ensure proper data handling
+function handleAPIResponse(response) {
+    if (!response || typeof response !== 'object') {
+        throw new Error('Invalid API response format');
+    }
+    
+    // Handle different response formats
+    if (response.choices && Array.isArray(response.choices) && response.choices.length > 0) {
+        return response.choices[0].message?.content || response.choices[0].text || '';
+    } else if (response.content) {
+        return response.content;
+    } else if (response.text) {
+        return response.text;
+    } else if (response.data && Array.isArray(response.data) && response.data.length > 0) {
+        return response.data[0].content || response.data[0].text || '';
+    } else {
+        throw new Error('Unable to extract content from API response');
+    }
+}
