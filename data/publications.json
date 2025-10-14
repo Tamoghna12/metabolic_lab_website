@@ -1,16 +1,50 @@
 [
     {
-        "title": "Interpretable Transformers for Regulatory Genomics",
-        "authors": "A. Rivera, L. Zhang, M. Cole",
-        "venue": "Nature Biotechnology",
-        "year": 2024,
-        "link": "#"
+        "title": "Prospecting Biochemical Pathways to Implement Microbe-Based Production of the New-to-Nature Platform Chemical Levulinic Acid",
+        "authors": "Vila-Santa, A, Islam, MA, Ferreira, FC, Prather, KLJ, Mira, NP",
+        "venue": "ACS Synthetic Biology",
+        "year": 2021,
+        "abstract": "Exploring biochemical pathways for sustainable production of levulinic acid using microbial systems, with applications in green chemistry and renewable resources.",
+        "doi": "10.1021/acssynbio.0c00518"
     },
     {
-        "title": "Multimodal Bio-Foundation Models for Phenotype Prediction",
-        "authors": "S. Gupta, J. Alvarez",
-        "venue": "Cell Systems",
-        "year": 2023,
-        "link": "#"
+        "title": "Genetic and metabolic engineering challenges of C1-gas fermenting acetogenic chassis organisms",
+        "authors": "Bourgade, B, Minton, NP, Islam, MA",
+        "venue": "FEMS Microbiology Reviews",
+        "year": 2021,
+        "abstract": "Comprehensive review of the challenges and opportunities in engineering acetogenic bacteria for gas fermentation and sustainable chemical production.",
+        "doi": "10.1093/femsre/fuab008"
+    },
+    {
+        "title": "Synergistic substrate cofeeding stimulates reductive metabolism",
+        "authors": "Park, JO, Liu, N, Holinski, KM, Emerson, DF, Qiao, K, Woolston, BM, Xu, J, Lazar, Z, Islam, MA, Vidoudez, C, Girguis, PR, Stephanopoulos, G",
+        "venue": "Nature Metabolism",
+        "year": 2019,
+        "abstract": "Demonstrating how combined substrate feeding strategies can enhance microbial metabolic efficiency and production yields in engineered systems.",
+        "doi": "10.1038/s42255-019-0077-0"
+    },
+    {
+        "title": "Synthetic biology strategies for improving microbial synthesis of 'green' biopolymers",
+        "authors": "Anderson, LA, Islam, MA, Prather, KLJ",
+        "venue": "Journal of Biological Chemistry",
+        "year": 2018,
+        "abstract": "Review of promising synthetic biology approaches for sustainable production of environmentally friendly biodegradable polymers.",
+        "doi": "10.1074/jbc.tm117.000368"
+    },
+    {
+        "title": "Exploring biochemical pathways for mono-ethylene glycol (MEG) synthesis from synthesis gas",
+        "authors": "Islam, MA, Hadadi, N, Ataman, M, Hatzimanikatis, V, Stephanopoulos, G",
+        "venue": "Metabolic Engineering",
+        "year": 2017,
+        "abstract": "Systematic analysis of metabolic pathways and engineering strategies for microbial production of mono-ethylene glycol, an important industrial chemical.",
+        "doi": "10.1016/j.ymben.2017.04.005"
+    },
+    {
+        "title": "New insights into Dehalococcoides mccartyi metabolism from a reconstructed metabolic network-based systems-level analysis of D. mccartyi transcriptomes",
+        "authors": "Islam, MA, Waller, AS, Hug, LA, Provart, NJ, Edwards, EA, Mahadevan, R",
+        "venue": "PLoS ONE",
+        "year": 2014,
+        "abstract": "Systems-level analysis providing new insights into the metabolic capabilities and regulatory mechanisms of Dehalococcoides mccartyi for bioremediation applications.",
+        "doi": "10.1371/journal.pone.0094808"
     }
 ]

@@ -1,21 +1,21 @@
 [
     {
+        "name": "Dr. Ahsan Islam",
+        "role": "Principal Investigator & Lab Director",
+        "bio": "Expert in metabolic engineering and synthetic biology with extensive research experience at MIT, University of Toronto, and Imperial College London. Specializes in constraint-based metabolic modeling, genome-scale analysis, and microbial production of platform chemicals. Has 15+ years of research experience in chemical engineering and applied chemistry with focus on sustainable biomanufacturing.",
+        "image": "assets/images/team/ahsan-islam.jpg",
+        "email": "a.islam@lboro.ac.uk",
+        "website": "https://www.lboro.ac.uk/departments/chemical/staff/ahsan-islam",
+        "linkedin": "https://linkedin.com/in/ahsan-islam"
+    },
+    {
         "name": "Dr. Elena Martinez",
-        "role": "Lab Director & Principal Investigator",
+        "role": "Senior Research Scientist",
         "bio": "Expert in interpretable machine learning for genomics and systems biology. Previously at Stanford BioAI Center with 15+ years of experience in computational biology and AI research.",
         "image": "assets/images/team/elena-martinez.jpg",
         "email": "elena.martinez@bioai.lab",
         "website": "https://elenamartinez.bioai.lab",
         "linkedin": "https://linkedin.com/in/elenamartinez"
-    },
-    {
-        "name": "Dr. Noah Patel",
-        "role": "Senior Research Scientist",
-        "bio": "Specializes in generative protein design and model interpretability. Pioneer in AI-driven enzyme engineering with numerous high-impact publications.",
-        "image": "assets/images/team/noah-patel.jpg",
-        "email": "noah.patel@bioai.lab",
-        "website": "https://noahpatel.bioai.lab",
-        "linkedin": "https://linkedin.com/in/noahpatel"
     },
     {
         "name": "Dr. Sarah Chen",
@@ -45,12 +45,12 @@
         "linkedin": "https://linkedin.com/in/mariarodriguez"
     },
     {
-        "name": "Alex Thompson",
+        "name": "Tamoghna Das",
         "role": "PhD Student",
-        "bio": "Investigating AI-guided protein engineering for industrial biocatalysts. Focus on reinforcement learning applications.",
-        "image": "assets/images/team/alex-thompson.jpg",
-        "email": "alex.thompson@bioai.lab",
-        "website": "https://alexthompson.bioai.lab",
-        "linkedin": "https://linkedin.com/in/alexthompson"
+        "bio": "Developing a digital twin of bioprocesses to optimize media and feeding strategies for industrial cell culture processes. Focus on high-throughput screening and multivariate data analysis to create predictive computational models that can revolutionize bioprocess design. Previously completed MSc in Biochemical Engineering at UCL and MSc in Data Science at University of East Anglia.",
+        "image": "assets/images/team/tamoghna-das.jpg",
+        "email": "t.das@lboro.ac.uk",
+        "website": "https://www.lboro.ac.uk/departments/chemical/staff/tamoghna-das",
+        "linkedin": "https://linkedin.com/in/tamoghna-das"
     }
 ]

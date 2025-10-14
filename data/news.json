@@ -1,14 +1,27 @@
 [
     {
-        "title": "BioAI Lab Awarded NSF Grant",
-        "summary": "Funding will support new research into AI-driven biomarker discovery.",
-        "date": "2024-02-10",
-        "image": "assets/images/news/nsf-grant.jpg"
+        "title": "Dr. Ahsan Islam Promoted to Senior Lecturer",
+        "summary": "Recognition of significant contributions to biochemical engineering research and education at Loughborough University.",
+        "date": "2022-01-15",
+        "image": "assets/images/news/promotion.jpg"
     },
     {
-        "title": "New Publication in Cell Systems",
-        "summary": "Our team introduces a multimodal foundation model for clinical phenotyping.",
-        "date": "2023-11-05",
-        "image": "assets/images/news/cell-systems.jpg"
+        "title": "Major Publication in Nature Metabolism",
+        "summary": "Demonstrates synergistic substrate cofeeding strategies that enhance microbial metabolism efficiency in engineered systems.",
+        "authors": "Park, JO, Islam, MA, et al.",
+        "date": "2019-06-25",
+        "image": "assets/images/news/nature-metabolism.jpg"
+    },
+    {
+        "title": "New PhD Student Joins the Lab",
+        "summary": "Tamoghna Das joins the BioAI Lab to work on digital twin development for bioprocess optimization.",
+        "date": "2024-09-01",
+        "image": "assets/images/news/phd-recruit.jpg"
+    },
+    {
+        "title": "ACS Synthetic Biology Paper Published",
+        "summary": "Research on microbial production of levulinic acid published in ACS Synthetic Biology, highlighting sustainable chemical production.",
+        "date": "2021-04-20",
+        "image": "assets/images/news/acs-synbio.jpg"
     }
 ]

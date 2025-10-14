@@ -1,12 +1,17 @@
 [
     {
-        "quote": "The BioAI Lab consistently pushes the boundaries of AI for healthcare.",
-        "name": "Prof. Maya Chen",
-        "affiliation": "MIT CSAIL"
+        "quote": "Dr. Islam's research on metabolic systems analysis has been instrumental in advancing our understanding of microbial metabolism and its applications in sustainable biotechnology.",
+        "name": "Prof. Gregory Stephanopoulos",
+        "affiliation": "Massachusetts Institute of Technology"
     },
     {
-        "quote": "Their collaborative approach has accelerated our drug discovery programs.",
-        "name": "Dr. Ethan Ross",
-        "affiliation": "PharmaX"
+        "quote": "The work on Dehalococcoides systems analysis represents a significant contribution to environmental bioremediation and has implications for contaminated site cleanup.",
+        "name": "Prof. Elizabeth Edwards",
+        "affiliation": "University of Toronto"
+    },
+    {
+        "quote": "The digital twin approach being developed in the lab has the potential to revolutionize how we design and optimize industrial bioprocesses, making them more efficient and cost-effective.",
+        "name": "Prof. Kristala Jones Prather",
+        "affiliation": "Massachusetts Institute of Technology"
     }
 ]

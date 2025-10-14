@@ -1,14 +1,32 @@
 [
     {
-        "title": "Atlas",
-        "summary": "A multimodal atlas for mapping gene regulation across tissues.",
+        "title": "Digital Twin for Bioprocess Optimization",
+        "summary": "Developing a detailed predictive computational model of cell culture and fermentation processes to optimize media and feeding strategies, with focus on high-throughput screening and multivariate data analysis.",
         "status": "Active",
-        "image": "assets/images/projects/atlas.jpg"
+        "image": "assets/images/projects/digital-twin.jpg"
     },
     {
-        "title": "HelixGAN",
-        "summary": "Generative adversarial model for de novo protein design.",
-        "status": "In Collaboration",
-        "image": "assets/images/projects/helixgan.jpg"
+        "title": "C1-Gas Fermentation Engineering",
+        "summary": "Engineering acetogenic and other C1-gas fermenting organisms for efficient conversion of synthesis gas (CO, CO₂, H₂) into valuable chemicals and sustainable biofuels.",
+        "status": "Active",
+        "image": "assets/images/projects/gas-fermentation.jpg"
+    },
+    {
+        "title": "Dehalococcoides Systems Analysis",
+        "summary": "Genome-scale constraint-based metabolic modeling and transcriptome analysis to enhance bioremediation capabilities of chlorinated compound degradation.",
+        "status": "Completed",
+        "image": "assets/images/projects/dehalococcoides.jpg"
+    },
+    {
+        "title": "MEG Production from Synthesis Gas",
+        "summary": "Systems-level analysis of metabolic pathways and engineering strategies for microbial production of mono-ethylene glycol, an important platform chemical.",
+        "status": "Published",
+        "image": "assets/images/projects/meg-production.jpg"
+    },
+    {
+        "title": "Sustainable Biopolymer Production",
+        "summary": "Synthetic biology approaches for developing environmentally friendly biodegradable polymers using engineered microbial systems.",
+        "status": "Review",
+        "image": "assets/images/projects/biopolymers.jpg"
     }
 ]
