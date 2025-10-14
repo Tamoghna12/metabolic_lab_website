@@ -1,0 +1,37 @@
+<section id="grant-generator" class="py-24">
+    <div class="max-container">
+        <div class="section-header reveal">
+            <span class="section-eyebrow">Interactive</span>
+            <h2 class="font-display section-title">Prototype your next BioAI grant narrative</h2>
+            <p class="section-subtitle">
+                Outline impact-driven proposals in seconds. Combine your focus area with the outcomes you plan to
+                deliver and receive a polished summary to refine with your team.
+            </p>
+        </div>
+        <div class="grant-generator reveal">
+            <form class="form-grid" data-grant-form>
+                <div class="form-field">
+                    <label for="grant-focus">What is your research focus?</label>
+                    <input id="grant-focus" name="focus" type="text" placeholder="e.g. AI-accelerated enzyme discovery" required />
+                </div>
+                <div class="form-field">
+                    <label for="grant-impact">What change will it create?</label>
+                    <input id="grant-impact" name="impact" type="text" placeholder="e.g. net-zero biomanufacturing" required />
+                </div>
+                <div class="form-field">
+                    <label for="grant-context">Key collaborators or assets</label>
+                    <textarea
+                        id="grant-context"
+                        name="context"
+                        placeholder="e.g. partnering with GreenTech Bio to scale metabolic models to pilot reactors"
+                    ></textarea>
+                </div>
+                <button class="pill-button" type="submit">Generate narrative</button>
+            </form>
+            <div class="grant-output" data-grant-output hidden>
+                <h3 class="font-display">Suggested positioning</h3>
+                <p data-grant-text></p>
+            </div>
+        </div>
+    </div>
+</section>

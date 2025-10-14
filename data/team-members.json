@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Dr. Elena Martinez",
+        "role": "Director",
+        "bio": "Leads research on interpretable machine learning for genomics.",
+        "image": "assets/images/team/elena-martinez.jpg"
+    },
+    {
+        "name": "Dr. Noah Patel",
+        "role": "Senior Scientist",
+        "bio": "Focuses on generative protein design and model interpretability.",
+        "image": "assets/images/team/noah-patel.jpg"
+    }
+]
