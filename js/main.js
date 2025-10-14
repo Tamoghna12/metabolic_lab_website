@@ -211,16 +211,14 @@ function hydrateFooter() {
     }
 }
 
-// Global utility function for project details
+// Enhanced utility functions for interactive components
 window.showProjectDetails = function(projectTitle) {
-    // Find project data
     const projectData = window.__BIOAI_DATA__?.projects?.find(p => p.title === projectTitle);
     if (!projectData) {
         console.warn('Project not found:', projectTitle);
         return;
     }
 
-    // Create and show modal
     const modal = document.createElement('div');
     modal.className = 'project-modal';
     modal.innerHTML = `
@@ -239,6 +237,234 @@ window.showProjectDetails = function(projectTitle) {
     
     document.body.appendChild(modal);
 };
+
+// Grant Generator functionality
+window.copyProposal = function() {
+    const content = document.getElementById('proposal-content');
+    if (content) {
+        navigator.clipboard.writeText(content.innerText).then(() => {
+            alert('Proposal copied to clipboard!');
+        });
+    }
+};
+
+window.downloadProposal = function() {
+    const content = document.getElementById('proposal-content');
+    if (content) {
+        const blob = new Blob([content.innerText], { type: 'text/plain' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'grant-proposal.txt';
+        a.click();
+        window.URL.revokeObjectURL(url);
+    }
+};
+
+window.editProposal = function() {
+    const content = document.getElementById('proposal-content');
+    if (content) {
+        content.contentEditable = true;
+        content.focus();
+    }
+};
+
+// Publications functionality
+window.loadMorePublications = function() {
+    // Implementation for loading more publications
+    console.log('Loading more publications...');
+};
+
+// Form validation and submission
+document.addEventListener('DOMContentLoaded', function() {
+    // Character counter for forms
+    const messageTextarea = document.getElementById('message');
+    const messageCount = document.getElementById('message-count');
+    const projectDescTextarea = document.getElementById('project-description');
+    const charCount = document.getElementById('char-count');
+    
+    if (messageTextarea && messageCount) {
+        messageTextarea.addEventListener('input', function() {
+            const count = this.value.length;
+            messageCount.textContent = count;
+            if (count > 1000) {
+                messageCount.style.color = '#dc3545';
+            } else {
+                messageCount.style.color = '';
+            }
+        });
+    }
+    
+    if (projectDescTextarea && charCount) {
+        projectDescTextarea.addEventListener('input', function() {
+            const count = this.value.length;
+            charCount.textContent = count;
+            if (count > 500) {
+                charCount.style.color = '#dc3545';
+            } else {
+                charCount.style.color = '';
+            }
+        });
+    }
+    
+    // Contact form submission
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Clear previous errors
+            document.querySelectorAll('.form-error').forEach(error => error.textContent = '');
+            
+            // Simple validation
+            let isValid = true;
+            const name = document.getElementById('name');
+            const email = document.getElementById('email');
+            const subject = document.getElementById('subject');
+            const message = document.getElementById('message');
+            
+            if (name && !name.value.trim()) {
+                name.nextElementSibling.textContent = 'Name is required';
+                isValid = false;
+            }
+            
+            if (email && !email.value.trim()) {
+                email.nextElementSibling.textContent = 'Email is required';
+                isValid = false;
+            } else if (email && !isValidEmail(email.value)) {
+                email.nextElementSibling.textContent = 'Please enter a valid email';
+                isValid = false;
+            }
+            
+            if (subject && !subject.value) {
+                subject.nextElementSibling.textContent = 'Please select a subject';
+                isValid = false;
+            }
+            
+            if (message && !message.value.trim()) {
+                message.nextElementSibling.textContent = 'Message is required';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // Show success message
+                const formMessage = document.getElementById('form-message');
+                if (formMessage) {
+                    formMessage.textContent = 'Thank you for your message! We\'ll get back to you soon.';
+                    formMessage.className = 'form-message success';
+                    formMessage.style.display = 'block';
+                }
+                contactForm.reset();
+            }
+        });
+    }
+    
+    // Grant form submission
+    const grantForm = document.getElementById('grant-form');
+    if (grantForm) {
+        grantForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            const button = this.querySelector('.generate-button');
+            const buttonText = button.querySelector('.button-text');
+            const buttonLoading = button.querySelector('.button-loading');
+            
+            buttonText.style.display = 'none';
+            buttonLoading.style.display = 'inline';
+            
+            // Simulate AI generation
+            setTimeout(() => {
+                const outputPanel = document.getElementById('grant-output');
+                const proposalContent = document.getElementById('proposal-content');
+                
+                if (outputPanel && proposalContent) {
+                    // Generate sample proposal
+                    const proposal = generateSampleProposal();
+                    proposalContent.innerHTML = `<div class="proposal-text">${proposal}</div>`;
+                    outputPanel.style.display = 'block';
+                    
+                    // Scroll to output
+                    outputPanel.scrollIntoView({ behavior: 'smooth' });
+                }
+                
+                // Reset button state
+                buttonText.style.display = 'inline';
+                buttonLoading.style.display = 'none';
+            }, 2000);
+        });
+    }
+    
+    // Year filter for publications
+    const yearSelect = document.getElementById('pub-year');
+    if (yearSelect) {
+        yearSelect.addEventListener('change', function() {
+            const year = this.value;
+            filterPublications(year);
+        });
+    }
+});
+
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+function generateSampleProposal() {
+    return `# Research Grant Proposal
+
+## Executive Summary
+This proposal outlines a comprehensive research program focused on advancing the integration of artificial intelligence with biological systems to address critical challenges in biotechnology and medicine.
+
+## Research Objectives
+1. Develop novel machine learning algorithms for biological data analysis
+2. Create predictive models for metabolic pathway optimization
+3. Establish computational frameworks for drug discovery
+
+## Methodology
+Our approach combines deep learning, constraint-based modeling, and experimental validation to achieve breakthrough results in biological engineering.
+
+## Expected Outcomes
+- Publication of 5-7 high-impact papers annually
+- Development of novel computational tools for the research community
+- Training of next-generation scientists in bioinformatics
+
+## Timeline
+Phase 1 (Year 1): Algorithm development and validation
+Phase 2 (Year 2): Application to specific biological problems
+Phase 3 (Year 3): Optimization and dissemination
+
+## Budget
+$500,000 annually for personnel, computational resources, and experimental validation.
+
+This project has the potential to transform how we approach biological research and deliver significant benefits to society.`;
+}
+
+function filterPublications(year) {
+    const publications = document.querySelectorAll('.publication-item');
+    let count = 0;
+    
+    publications.forEach(pub => {
+        if (year === 'all') {
+            pub.style.display = 'flex';
+            count++;
+        } else {
+            const pubYear = pub.querySelector('.publication-year');
+            if (pubYear && pubYear.textContent.includes(year)) {
+                pub.style.display = 'flex';
+                count++;
+            } else {
+                pub.style.display = 'none';
+            }
+        }
+    });
+    
+    // Update count
+    const countDisplay = document.getElementById('pub-count');
+    if (countDisplay) {
+        countDisplay.textContent = count;
+    }
+}
 
 // Smooth scroll for navigation links
 document.addEventListener('DOMContentLoaded', () => {

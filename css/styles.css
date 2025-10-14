@@ -74,6 +74,35 @@ body {
     line-height: 1.6;
 }
 
+/* Fix for page background */
+#app {
+    background: var(--color-background);
+    min-height: 100vh;
+}
+
+/* Ensure all sections have proper backgrounds */
+section {
+    position: relative;
+}
+
+/* Fix hero section background */
+.hero {
+    background: var(--color-surface);
+}
+
+/* Fix section spacing */
+section {
+    padding: var(--section-gap) 0;
+}
+
+/* Fix container margins */
+.max-container,
+.section-container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+}
+
 .page-shell {
     position: relative;
     min-height: 100vh;
