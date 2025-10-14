@@ -2,15 +2,153 @@
     <div class="section-container">
         <div class="section-header">
             <h2 class="section-title">AI Grant Proposal Generator</h2>
-            <p class="section-subtitle">Create compelling grant proposals using artificial intelligence</p>
+            <p class="section-subtitle">Create compelling grant proposals using advanced AI models from leading research organizations</p>
+        </div>
+        
+        <div class="model-selection-panel">
+            <h3>Choose AI Model</h3>
+            <p>Select the AI model that best fits your research domain; each model has different strengths for scientific writing</p>
+            <div class="model-grid">
+                <div class="model-card selected" data-model="gpt4-research">
+                    <div class="model-header">
+                        <span class="model-logo">🤖</span>
+                        <div class="model-info">
+                            <h4>OpenAI GPT-4</h4>
+                            <span class="model-provider">General Research</span>
+                        </div>
+                        <div class="model-badge popular">Popular</div>
+                    </div>
+                    <div class="model-description">
+                        Excellent for diverse research fields, strong in technical writing and clear explanations.
+                    </div>
+                    <div class="model-stats">
+                        <div class="stat-item">
+                            <span>Strength:</span>
+                            <div class="rating">
+                                <div class="rating-fill" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <span>Specialty:</span>
+                            <span>General</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="model-card" data-model="claude-3">
+                    <div class="model-header">
+                        <span class="model-logo">🧠</span>
+                        <div class="model-info">
+                            <h4>Claude 3</h4>
+                            <span class="model-provider">Anthropic</span>
+                        </div>
+                        <div class="model-badge detailed">Detailed</div>
+                    </div>
+                    <div class="model-description">
+                        Outstanding for detailed scientific explanations and ethical considerations.
+                    </div>
+                    <div class="model-stats">
+                        <div class="stat-item">
+                            <span>Strength:</span>
+                            <div class="rating">
+                                <div class="rating-fill" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <span>Specialty:</span>
+                            <span>Technical</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="model-card" data-model="gemini-pro">
+                    <div class="model-header">
+                        <span class="model-logo">💎</span>
+                        <div class="model-info">
+                            <h4>Gemini Pro</h4>
+                            <span class="model-provider">Google</span>
+                        </div>
+                        <div class="model-badge fast">Fast</div>
+                    </div>
+                    <div class="model-description">
+                        Great for medical and biological sciences with current research knowledge.
+                    </div>
+                    <div class="model-stats">
+                        <div class="stat-item">
+                            <span>Strength:</span>
+                            <div class="rating">
+                                <div class="rating-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <span>Specialty:</span>
+                            <span>Medical</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="model-card" data-model="llama-3">
+                    <div class="model-header">
+                        <span class="model-logo">🦙</span>
+                        <div class="model-info">
+                            <h4>Llama 3</h4>
+                            <span class="model-provider">Meta</span>
+                        </div>
+                        <div class="model-badge open">Open Source</div>
+                    </div>
+                    <div class="model-description">
+                        Strong in mathematics and computer science, perfect for interdisciplinary proposals.
+                    </div>
+                    <div class="model-stats">
+                        <div class="stat-item">
+                            <span>Strength:</span>
+                            <div class="rating">
+                                <div class="rating-fill" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <span>Specialty:</span>
+                            <span>Mathematical</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="model-card" data-model="mistral">
+                    <div class="model-header">
+                        <span class="model-logo">🔬</span>
+                        <div class="model-info">
+                            <h4>Mistral Large</h4>
+                            <span class="model-provider">Mistral</span>
+                        </div>
+                        <div class="model-badge multilingual">Multilingual</div>
+                    </div>
+                    <div class="model-description">
+                        Excellent for international collaborations and multilingual applications.
+                    </div>
+                    <div class="model-stats">
+                        <div class="stat-item">
+                            <span>Strength:</span>
+                            <div class="rating">
+                                <div class="rating-fill" style="width: 82%"></div>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <span>Specialty:</span>
+                            <span>International</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <div class="grant-generator-content">
             <div class="grant-form-panel">
-                <h3>Generate Your Grant Proposal</h3>
-                <p>Answer a few questions about your research focus and let our AI help craft a compelling grant proposal.</p>
+                <h3>Research Details</h3>
+                <p>Tell us about your research project to generate a tailored grant proposal</p>
                 
                 <form id="grant-form" class="grant-form">
+                    <input type="hidden" id="selected-model" value="gpt4-research">
+                    
                     <div class="form-section">
                         <label for="research-area" class="form-label">Research Focus Area</label>
                         <select id="research-area" class="form-select" required>
@@ -20,47 +158,112 @@
                             <option value="synthetic-bio">Synthetic Biology</option>
                             <option value="bioinformatics">Bioinformatics</option>
                             <option value="bioprocess">Bioprocess Engineering</option>
+                            <option value="drug-discovery">Drug Discovery</option>
+                            <option value="computational">Computational Biology</option>
                             <option value="other">Other</option>
                         </select>
                     </div>
                     
                     <div class="form-section">
+                        <label for="project-title" class="form-label">Project Title</label>
+                        <input type="text" id="project-title" class="form-input" 
+                               placeholder="Enter your project title" required>
+                    </div>
+                    
+                    <div class="form-section">
                         <label for="project-description" class="form-label">Project Description</label>
                         <textarea id="project-description" class="form-textarea" rows="4" 
-                            placeholder="Describe your research project in a few sentences..." required></textarea>
-                        <div class="char-count"><span id="char-count">0</span>/500</div>
+                            placeholder="Describe your research project, objectives, methodology, and expected outcomes..." required></textarea>
+                        <div class="char-count"><span id="char-count">0</span>/1000</div>
                     </div>
                     
                     <div class="form-section">
                         <label for="funding-agency" class="form-label">Target Funding Agency</label>
-                        <select id="funding-agency" class="form-select">
+                        <select id="funding-agency" class="form-select" required>
                             <option value="">Select funding agency</option>
                             <option value="nsf">National Science Foundation (NSF)</option>
                             <option value="nih">National Institutes of Health (NIH)</option>
                             <option value="ukri">UK Research and Innovation (UKRI)</option>
-                            <option value="eu">European Commission</option>
+                            <option value="eu">European Horizon Europe</option>
+                            <option value="dod">Department of Defense (DoD)</option>
+                            <option value="doe">Department of Energy (DOE)</option>
                             <option value="industry">Industry Sponsor</option>
+                            <option value="foundation">Private Foundation</option>
                             <option value="other">Other</option>
                         </select>
                     </div>
                     
                     <div class="form-section">
                         <label for="grant-type" class="form-label">Grant Type</label>
-                        <select id="grant-type" class="form-select">
+                        <select id="grant-type" class="form-select" required>
                             <option value="">Select grant type</option>
                             <option value="seed">Seed Grant</option>
                             <option value="career">Career Development</option>
                             <option value="collaborative">Collaborative Research</option>
+                            <option value="center">Research Center</option>
                             <option value="equipment">Equipment Funding</option>
-                            <option value="travel">Travel & Conference</option>
+                            <option value="conference">Travel & Conference</option>
                             <option value="graduate">Graduate Fellowship</option>
+                            <option value="postdoc">Postdoctoral Fellowship</option>
                         </select>
+                    </div>
+                    
+                    <div class="form-section">
+                        <label for="budget" class="form-label">Budget Range</label>
+                        <select id="budget" class="form-select">
+                            <option value="">Select budget range</option>
+                            <option value="small">$10k - $50k</option>
+                            <option value="medium">$50k - $100k</option>
+                            <option value="large">$100k - $500k</option>
+                            <option value="xlarge">$500k - $1M</option>
+                            <option value="xxlarge">$1M +</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-section">
+                        <label for="duration" class="form-label">Project Duration</label>
+                        <select id="duration" class="form-select">
+                            <option value="">Select duration</option>
+                            <option value="6-months">6 months</option>
+                            <option value="1-year">1 year</option>
+                            <option value="2-years">2 years</option>
+                            <model_type3-years">3 years</option>
+                            <option value="5-years">5 years</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="advanced-options">
+                        <button type="button" class="options-toggle" onclick="toggleAdvancedOptions()">
+                            <span id="options-text">Show Advanced Options</span>
+                            <span class="arrow">▼</span>
+                        </button>
+                        <div class="advanced-fields" id="advanced-fields" style="display: none;">
+                            <div class="form-section">
+                                <label for="methodology" class="form-label">Methodology</label>
+                                <textarea id="methodology" class="form-textarea" rows="3" 
+                                    placeholder="Describe specific methods and approaches..."></textarea>
+                            </div>
+                            <div class="form-section">
+                                <label for="expected-outcomes" class="form-label">Expected Outcomes</label>
+                                <textarea id="expected-outcomes" class="form-textarea" rows="3" 
+                                    placeholder="What do you expect to achieve with this funding?"></textarea>
+                            </div>
+                            <div class="form-section">
+                                <label for="collaborations" class="form-label">Collaborations</label>
+                                <input type="text" id="collaborations" class="form-input" 
+                                       placeholder="List any existing or planned collaborations">
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="form-actions">
                         <button type="submit" class="generate-button">
                             <span class="button-text">Generate Proposal</span>
-                            <span class="button-loading" style="display: none;">Generating...</span>
+                            <span class="button-loading" style="display: none;">
+                                <span class="loading-spinner"></span>
+                                Generating...
+                            </span>
                         </button>
                     </div>
                 </form>
@@ -68,15 +271,34 @@
             
             <div class="grant-output-panel" id="grant-output" style="display: none;">
                 <div class="output-header">
-                    <h3>Your AI-Generated Proposal</h3>
+                    <div class="output-info">
+                        <h3>Your AI-Generated Proposal</h3>
+                        <span class="model-used" id="model-used">Generated with GPT-4</span>
+                    </div>
                     <div class="output-actions">
                         <button class="copy-button" onclick="copyProposal()">📋 Copy</button>
                         <button class="download-button" onclick="downloadProposal()">📥 Download</button>
                         <button class="edit-button" onclick="editProposal()">✏️ Edit</button>
+                        <button class="regenerate-button" onclick="regenerateProposal()">🔄 Regenerate</button>
+                        <button class="share-button" onclick="shareProposal()">🔗 Share</button>
                     </div>
                 </div>
                 <div class="output-content" id="proposal-content">
                     <!-- Generated proposal will appear here -->
+                </div>
+                <div class="generation-metrics" id="generation-metrics" style="display: none;">
+                    <div class="metric">
+                        <span class="metric-label">Generation Time:</span>
+                        <span class="metric-value" id="generation-time">2.3s</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Tokens Used:</span>
+                        <span class="metric-value" id="tokens-used">1,234</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Quality Score:</span>
+                        <span class="metric-value" id="quality-score">92/100</span>
+                    </div>
                 </div>
             </div>
             
@@ -84,22 +306,29 @@
                 <div class="feature-point">
                     <div class="feature-icon">🧠</div>
                     <div class="feature-text">
-                        <h4>AI-Powered Analysis</h4>
-                        <p>Advanced language models analyze your research and generate compelling narratives</p>
+                        <h4>Multiple AI Models</h4>
+                        <p>Choose from OpenAI, Anthropic, Google, Meta, and other leading AI models for scientific writing</p>
                     </div>
                 </div>
                 <div class="feature-point">
                     <div class="feature-icon">🎯</div>
                     <div class="feature-text">
                         <h4>Agency-Specific Tailoring</h4>
-                        <p>Proposals customized to match funding agency priorities and evaluation criteria</p>
+                        <p>Proposals customized to match specific funding agency priorities and evaluation criteria</p>
                     </div>
                 </div>
                 <div class="feature-point">
                     <div class="feature-icon">⚡</div>
                     <div class="feature-text">
-                        <h4>Instant Generation</h4>
-                        <p>Get professional-quality proposals in seconds, not days or weeks</p>
+                        <h4>Real-Time Generation</h4>
+                        <p>Get professional-quality proposals in seconds with performance metrics</p>
+                    </div>
+                </div>
+                <div class="feature-point">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-text">
+                        <h4>Quality Assessment</h4>
+                        <p>Built-in scoring system to evaluate proposal quality and competitiveness</p>
                     </div>
                 </div>
             </div>

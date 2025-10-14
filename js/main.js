@@ -238,36 +238,431 @@ window.showProjectDetails = function(projectTitle) {
     document.body.appendChild(modal);
 };
 
-// Grant Generator functionality
-window.copyProposal = function() {
-    const content = document.getElementById('proposal-content');
-    if (content) {
-        navigator.clipboard.writeText(content.innerText).then(() => {
-            alert('Proposal copied to clipboard!');
-        });
+// Model Selection Functions
+window.selectModel = function(modelId) {
+    // Remove selected class from all model cards
+    document.querySelectorAll('.model-card').forEach(card => {
+        card.classList.remove('selected');
+    });
+    
+    // Add selected class to the selected model
+    const selectedCard = document.querySelector(`[data-model="${modelId}"]`);
+    if (selectedCard) {
+        selectedCard.classList.add('selected');
+        document.getElementById('selected-model').value = modelId;
     }
 };
 
-window.downloadProposal = function() {
-    const content = document.getElementById('proposal-content');
-    if (content) {
-        const blob = new Blob([content.innerText], { type: 'text/plain' });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'grant-proposal.txt';
-        a.click();
-        window.URL.revokeObjectURL(url);
+window.toggleAdvancedOptions = function() {
+    const advancedFields = document.getElementById('advanced-fields');
+    const toggleButton = document.querySelector('.options-toggle');
+    const optionsText = document.getElementById('options-text');
+    const arrow = document.querySelector('.arrow');
+    
+    if (advancedFields.style.display === 'none') {
+        advancedFields.style.display = 'grid';
+        optionsText.textContent = 'Hide Advanced Options';
+        arrow.classList.add('active');
+    } else {
+        advancedFields.style.display = 'none';
+        optionsText.textContent = 'Show Advanced Options';
+        arrow.classList.remove('active');
     }
 };
 
-window.editProposal = function() {
-    const content = document.getElementById('proposal-content');
-    if (content) {
-        content.contentEditable = true;
-        content.focus();
+// Grant Generator Functions with Different AI Models
+window.generateProposal = async function() {
+    const form = document.getElementById('grant-form');
+    const model = document.getElementById('selected-model').value;
+    
+    if (!form.checkValidity()) {
+        const invalidFields = form.querySelectorAll(':invalid');
+        return;
+    }
+    
+    // Clear previous errors
+    document.querySelectorAll('.form-error').forEach(error => error.textContent = '');
+    
+    // Get form data
+    const formData = {
+        model,
+        researchArea: document.getElementById('research-area').value,
+        projectTitle: document.getElementById('project-title').value,
+        projectDescription: document.getElementById('project-description').value,
+        fundingAgency: document.getElementById('funding-agency').value,
+        grantType: document.getElementById('grant-type').value,
+        budget: document.getElementById('budget').value,
+        duration: document.getElementById('duration').value,
+        methodology: document.getElementById('methodology').value || '',
+        expectedOutcomes: document.getElementById('expected-outcomes').value || '',
+        collaborations: document.getElementById('collaborations').value || '',
+        researchTitle: document.getElementById('project-title').value
+    };
+    
+    // Show loading state
+    const button = form.querySelector('.generate-button');
+    const buttonText = button.querySelector('.button-text');
+    const buttonLoading = button.querySelector('.button-loading');
+    
+    buttonText.style.display = 'none';
+    buttonLoading.style.display = inline';
+    startTime = Date.now();
+    
+    try {
+        // Call appropriate AI based on selection
+        let proposal;
+        switch (formData.model) {
+            case 'gpt4-research':
+                proposal = await callOpenAI(formData);
+                break;
+            case 'claude-3':
+                proposal = await callClaude(formData);
+                break;
+            case 'gemini-pro':
+                proposal = await callGemini(formData);
+                break;
+            case 'llama-3':
+                proposal = callLlama(formData);
+                break;
+            case 'mistral':
+                proposal = callMistral(formData);
+                break;
+            default:
+                proposal = await callOpenAI(formData);
+        }
+        
+        // Update output panel
+        displayProposal(proposal);
+        
+        // Update generation metrics
+        const generationTime = Date.now() - startTime;
+        const tokensUsed = estimateTokens(proposal);
+        const qualityScore = calculateQualityScore(proposal);
+        updateGenerationMetrics(generationTime, tokensUsed, qualityScore);
+        
+        document.getElementById('model-used').textContent = `Generated with ${getModelName(formData.model)`;
+        
+    } catch (error) {
+        console.error('Error generating proposal:', error);
+        alert('Error generating proposal. Please try again.');
+    } finally {
+        // Reset button state
+        buttonText.style.display = 'inline';
+        buttonLoading.style.display = 'none';
     }
 };
+
+// AI Model API Functions
+async function callOpenAI(formData) {
+    // Simulate OpenAI API call
+    return await callAIModel(formData, 'OpenAI GPT-4', 'gpt-4-1106-preview', '/v1/chat/completions');
+}
+
+async function callClaude(formData) {
+    // Simulate Claude API call
+    return await callAIModel(formData, 'Claude 3 Sonnet', 'claude-3-sonnet', '/v1/messages');
+}
+
+async function callGemini(formData) {
+    // Simulate Google Gemini API call
+    return await callAIModel(formData, 'Gemini Pro', 'gemini-1.5-pro', '/v1/generate');
+}
+
+async function callLlama(formData) {
+    // Simulate Meta Llama API call
+    return await callAIModel(formData, 'Llama 3 70B', 'llama-3.1', '/v1/generate');
+}
+
+async function callMistral(formData) {
+    // Simulate Mistral API call
+    return await callAIModel(formData, 'Mistral Large', 'mistral-large', '/v1/chat/completions');
+}
+
+async function callAIModel(formData, modelName, modelId, endpoint) {
+    // Simulate different AI model responses based on model selected
+    const proposals = {
+        'gpt4-research': generateGPT4Proposal(formData),
+        'claude-3': generateClaudeProposal(formData),
+        'gemini-pro': generateGeminiProposal(formData),
+        'llama-3': generateLlamaProposal(formData),
+        'mistral': generateMistralProposal(formData)
+    };
+    
+    const proposal = proposals[formData.model] || proposals['gpt4-research'];
+    return Promise.resolve(proposal);
+}
+
+function generateGPT4Proposal(formData) {
+    const proposal = `# ${formData.researchTitle || 'Research Grant Proposal'}\n
+**Principal Investigator:** ${getModelName('gpt4-research')}\n
+**Funding Agency:** ${formatFundingAgency(formData.fundingAgency)}\n
+**Grant Type:** ${formatGrantType(formData.grantType)}\n
+**Amount:** ${formData.budget}\n\n## Executive Summary
+
+${formData.projectDescription}\n\n## Research Objectives
+
+This proposal leverages advanced ${formData.researchArea} methodologies to achieve significant breakthroughs in ${formData.technicalGoal || 'biological research'}. Our interdisciplinary approach combines ${formData.methodology || 'computational and experimental'} methods to address critical challenges in the field.
+
+## Methodology
+
+Our research integrates ${formData.methodology || 'state-of-the-art techniques'} with ${formData.experimental_approach || 'bench validation'} to ensure reproducibility and translational impact.
+
+**Key Innovation:** ${formData.innovation || 'Novel computational approaches'} that establish new paradigms for ${formData.target_sector || 'biological system optimization'}.
+
+## Expected Outcomes
+
+${formData.expectedOutcomes || 'Substantial advancements in knowledge, publications, and technological capabilities'} within the proposal timeline.
+
+## Budget & Timeline
+
+**Budget:** ${formData.budget}\n**Duration:** ${formData.duration}\n**Peer Review:** Built into proposal development process
+
+## Impact Measurement
+
+We will use quantitative metrics to track proposal success through measurable indicators such as publication output, citation impact, and commercial applications.
+
+*This proposal demonstrates excellence in scientific rigor and innovation potential.*`;
+}
+
+function generateClaudeProposal(formData) {
+    const proposal = `# ${formData.researchTitle || 'Scientific Grant Proposal'}\n\n**Principal Investigator:** ${getModelName('claude-3')}\n
+**Funding Agency:** ${formatFundingAgency(formData.fundingAgency)}\n
+**Grant Type:** ${formatGrantType(formData.grantType)}\n
+**Amount:** ${formData.budget}\n\n## Abstract
+
+${formData.projectDescription}
+
+## Research Background
+
+The proposed research addresses critical needs in ${formData.researchArea} through ${formData.methodology || 'advanced computational frameworks'} that enable ${formData.target_sector || 'biological innovation'}.
+
+## Technical Approach
+
+Our methodology combines ${formData.methodology || 'cutting-edge techniques'} with ${formData.experimental_approach || 'rigorous validation'} protocols to ensure reproducibility.
+
+## Innovation Highlights
+
+- ${formData.innovation || 'Novel computational framework'}
+- Interdisciplinary collaboration across ${formData.collaborations || 'multiple institutions'}
+- Focus on ethical considerations and responsible AI development
+
+## Implementation Strategy
+
+The project will be executed over ${formData.duration} with clear milestones and deliverables established at each phase.
+
+*This proposal demonstrates thoughtful planning and realistic scope management.*`;
+}
+
+function generateGeminiProposal(formData) {
+    const proposal = `# ${formData.researchTitle || 'Medical Research Grant'}\n\n**Principal Investigator:** ${getModelName('gemini-pro')}\n
+**Funding Agency:** ${formatFundingAgency(formData.fundingAgency)}\n
+**Grant Type:** ${formatGrantType(formData.grantType)}\n
+**Amount:** ${formData.budget}\n\n## Abstract
+
+${formData.projectDescription}
+
+## Research Significance
+
+This project leverages Google Gemini Pro's access to recent medical literature and clinical databases to advance ${formData.researchArea} in ${formData.target_sector || 'medical biotechnology'} through ${formData.methodology || 'AI-driven approaches'}.
+
+## Methodology
+
+Our approach integrates ${formData.methodology || 'machine learning and simulation approaches'} with ${formData.experimental_approach || 'wet lab validation'} to achieve ${formData.expected_outcomes || 'clinical translation outcomes'}.
+
+## Technical Innovation
+
+- **AI-Powered Analysis**: Gemini Pro's multimodal capabilities for comprehensive literature review
+- **Data-Driven Modeling**: Predictive analytics for ${formData.target_sector || 'biological systems'}
+- **Real-Time Optimization**: Dynamic parameter adjustment based on intermediate results
+
+## Expected Outcomes
+
+${formData.expected_outcomes || 'Clinical translation and pipeline optimization'}`
+
+## Timeline and Milestones
+
+**Duration:** ${formData.duration}
+**Budget:** ${formData.budget}
+**Key Milestones:** Literature review, model development, validation testing, clinical translation.
+
+*Increasing efficiency by 40% through AI-driven optimization*\n\nThis approach demonstrates how AI can accelerate biomedical research.*`;
+}
+
+function generateLlamaProposal(formData) {
+    const proposal = `# ${formData.researchTitle || 'Computational Mathematics Grant'}\n
+**Principal Investigator:** ${getModelName('llama-3')}\n
+**Funding Agency:** ${formatFundingAgency(formData.fundingAgency)}\n
+**Grant Type:** ${formatGrantType(formData.grantType)}\n
+**Amount:** ${formData.budget}\n\n## Abstract
+
+${formData.projectDescription}\n\n## Research Objectives
+
+This grant supports fundamental advances in ${formData.researchArea} using ${formData.methodology || 'mathematical analysis'} applied to ${formData.target_sector || 'biological modeling'}.
+
+## Methodology
+
+Our approach employs ${formData.methodology || 'advanced mathematical frameworks'} to solve ${formData.challenges || 'complex computational problems'} with ${formData.experimental_approach || 'verification and validation'}.
+
+## Novel Contributions
+
+- **Algorithm Development**: ${formData.innovation || 'New mathematical frameworks'}
+- **Open Source Release**: ${formData.opensource || 'All models and code developed will be open source'}
+- **Educational Impact**: Training modules and tutorials for ${formData.education || 'community engagement'}
+
+## Implementation Plans
+
+**Phases:** ${formData.duration || '36 months'}\
+**Deliverables:** ${formData.deliverables || 'Open-source models, publications, training materials'}
+
+*Our solution combines cutting-edge mathematics with practical applications.*\n\n## Broader Impacts
+
+*Publication Output:* Higher quality and faster computational methods
+*Student Training:* Better mathematical literacy and tooling
+*Commercial Value:* Increased efficiency in ${formData.target_sector || 'biological engineering'}
+
+*Enables transformative research capabilities across academia and industry.*`;
+}
+
+function generateMistralProposal(formData) {
+    const proposal = `# ${formData.researchTitle || 'International Research Grant'}\n
+**Principal Investigator:** ${getModelName('mistral')}\n
+**Funding Agency:** ${formatFundingAgency(formData.fundingAgency)}\n
+**Grant Type:** ${formatGrantType(formData.grant_type)}\n
+**Amount:** ${formData.budget}\n\n## Abstract
+
+${formData.project_description}\n\n## Research Context
+
+This proposal strengthens international collaborations in ${formData.research_area} by ${formData.methodology || 'advanced computational approaches'} that facilitate ${formData.collaborations || 'cross-institution partnerships'}.
+
+## Technical Approach
+
+Our ${formData.experimental_approach || 'hybrid computational-experimental'} methodology leverages ${formData.methodology || 'distributed computing'} to solve ${formData.challenges || 'distributed biological systems'} problems.
+
+## Impact and Innovation
+
+- **Collaboration Enhancement**: ${formData.collaborations || 'International partnerships'}
+- **Open Science**: ${formData.opensource || 'All code and models shared globally'}
+- **Multilingual Capabilities**: ${formData.multilingual || 'Multilingual support'} accessibility
+
+## Expected Results
+
+${formData.expected_outcomes || 'Improved collaboration efficiency and broader scientific reach'}'}
+
+## Sustainability & Future Work
+
+**Training & Dissemination:** ${formData.training || 'Educational programs'}\n**Continued Development:** Maintenance and optimization of ${models across grant period
+
+*Fosters new collaborative networks and resource sharing*\n*Enables reproducible research at scale*\n\nThis proposal creates lasting value through open science and capacity building.*`;
+}
+
+function getModelName(modelId) {
+    const models = {
+        'gpt4-research': 'OpenAI GPT-4',
+        'claude-3': 'Claude 3',
+        'gemini-pro': 'Google Gemini Pro',
+        'llama-3': 'Meta Llama 3',
+        'mistral': 'Mistral Large'
+    };
+    return models[modelId] || 'OpenAI GPT-4';
+}
+
+function formatFundingAgency(agency) {
+    const agencies = {
+        'nsf': 'National Science Foundation (NSF)',
+        'nih': 'National Institutes of Health (NIH)',
+        'ukri': 'UK Research and Innovation (UKRI)',
+        'eu': 'European Horizon Europe',
+        'dod': 'Department of Defense (DoD)',
+        'doe': 'Department of Energy (DOE)', 
+        'industry': 'Industry Sponsor',
+        'foundation': 'Private Foundation',
+        'other': 'Other'
+    };
+    return agencies[agency] || agency;
+}
+
+function formatGrantType(type) {
+    const types = {
+        'seed': 'Seed Grant',
+        'career': 'Career Development',
+        'collaborative': 'Collaborative Research',
+        'center': 'Research Center',
+        'equipment': 'equipment Funding',
+        'conference': 'Travel & Conference',
+        'graduate': 'Graduate Fellowship',
+        'postdoc': 'Postdoctoral Fellowship',
+        'other': 'Other'
+    };
+    return types[type] || 'Seed Grant';
+}
+
+function estimateTokens(proposal) {
+    // Simple token estimation based on text length
+    const wordCount = proposal.split(/\s+/).length;
+    return wordCount * 0.75; // Rough token estimate
+}
+
+function calculateQualityScore(proposal) {
+    // Simple quality scoring based on content metrics
+    const features = {
+        'objective': proposal.includes('objectives') ? 20 : 0,
+        'methodology': proposal.includes('methodology') || proposal.includes('approach') ? 20 : 0,
+        'timeline': proposal.includes('timeline') ? 15 : 0,
+        'budget': proposal.includes('budget') ? 10 : 0,
+        'collaboration': proposal.includes('collaboration') ? 15 : 0,
+        'references': proposal.includes('publication') ? 10 : 0,
+        'qualitative': proposal.includes('quality') ? 10 : 0
+    };
+    
+    return Math.min(95, Object.values(features).reduce((sum, score) => sum + score, 0));
+}
+
+function updateGenerationMetrics(time, tokens, score) {
+    const metricsPanel = document.getElementById('generation-metrics');
+    if (metricsPanel) {
+        const stats = metricsPanel.querySelectorAll('.metric');
+        stats[0].querySelector('.metric-value').textContent = `${time}s`;
+        stats[1].querySelector('.metric-value').textContent = tokens;
+        stats[2].querySelector('.metric-value').textContent = `${score}/100`;
+        metricsPanel.style.display = 'block';
+    }
+}
+
+function generateSampleProposal() {
+    const content = `# Research Grant Proposal
+    
+## Executive Summary
+
+This proposal requests $${document.getElementById('budget')?.value || '$250,000'} over ${duration || '2 years'} for ${fundingAgency || 'NSF'} to support groundbreaking research in AI research at our lab.
+
+## Research Focus
+
+We are developing ${researchArea || 'computational approaches'} tools and databases that solve real-world biological problems, from ${researchGoal || 'data analysis'} to ${researchImpact || 'industrial applications'}.
+
+${methodology || 'Our methodology includes'} iterative testing and rigorous validation'}. ${collaborations || 'Working with partners'}.
+
+## Expected Outcomes
+
+- Publications in high-impact journals (${publications || '5-10 papers in target journals})
+- Open-source software tools and databases for the research community
+- Training materials and educational resources
+- Enhanced research capabilities through collaborative networks
+
+Impact: ${impact || 'Significant advancement in research capability'}.
+
+## Budget Breakdown
+
+**Personnel:** ${personnel || '60% of budget'}
+**Equipment:** ${equipment || '15% of budget'}
+**Travel/Dissemination:** ${travel || '10% of budget'}
+**Overhead:** ${overhead || '5% of budget'}
+
+${disciplinary_collaborations || 'Partners who bring expertise in complementary areas'}.
+
+This is a community effort to advance ${technical_goal || 'AI and mathematics integration'} that benefits the entire scientific community.
+
+**Professional quality, collaborative approach, and community focus position this project for success. Welcome opportunities for additional collaborators.${exclamation}`;
+}
 
 // Publications functionality
 window.loadMorePublications = function() {

@@ -1859,14 +1859,340 @@
 /* Grant Generator Section */
 .grant-generator-section {
     padding: var(--section-gap) 0;
-    background: var(--color-surface);
+    background: var(--color-background-alt);
 }
 
 .grant-generator-content {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 3rem;
     align-items: start;
+}
+
+/* Model Selection Panel */
+.model-selection-panel {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-2xl);
+    padding: 3rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-md);
+}
+
+.model-selection-panel h3 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 0 0.5rem 0;
+}
+
+.model-selection-panel p {
+    color: var(--color-text-secondary);
+    margin: 0 0 2rem 0;
+    font-size: 0.95rem;
+}
+
+.model-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.model-card {
+    background: var(--color-surface);
+    border: 2px solid transparent;
+    border-radius: var(--radius-xl);
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    position: relative;
+}
+
+.model-card.selected {
+    border-color: var(--color-accent);
+    background: var(--color-accent-soft);
+    box-shadow: 0 8px 25px rgba(6, 182, 212, 0.15);
+}
+
+.model-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+.model-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.model-logo {
+    font-size: 2rem;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-primary-soft);
+    border-radius: var(--radius-lg);
+}
+
+.model-info {
+    flex: 1;
+}
+
+.model-info h4 {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 0 0.25rem 0;
+}
+
+.model-provider {
+    font-size: 0.875rem;
+    color: var(--color-text-tertiary);
+}
+
+.model-badge {
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+    font-size: 0.625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.model-badge.popular {
+    background: var(--color-accent);
+    color: white;
+}
+
+.model-badge.detailed {
+    background: var(--color-primary);
+    color: white;
+}
+
+.model-badge.fast {
+    background: var(--color-success);
+    color: white;
+}
+
+.model-badge.open {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+}
+
+.model-badge.multilingual {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+}
+
+.model-description {
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    font-size: 0.875rem;
+    margin-top: 1rem;
+}
+
+.model-stats {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.75rem;
+}
+
+.stat-item span {
+    color: var(--color-text);
+}
+
+.rating {
+    width: 60px;
+    height: 6px;
+    background: var(--color-border);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.rating-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-accent), var(--color-accent-light));
+    border-radius: var(--radius-full);
+    transition: width var(--transition-base);
+}
+
+.stat-item span.metric:last-child {
+    color: var(--color-text-tertiary);
+    font-weight: 500;
+    text-align: right;
+}
+
+/* Enhanced Grant Form */
+.grant-form-panel {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-2xl);
+    padding: 2.5rem;
+    box-shadow: var(--shadow-md);
+}
+
+.grant-form-panel h3 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 0 0.75rem 0;
+}
+
+.grant-form-panel p {
+    color: var(--color-text-secondary);
+    margin: 0 0 2rem 0;
+    font-size: 0.95rem;
+}
+
+.grant-form-section {
+    margin-bottom: 1.5rem;
+}
+
+.advanced-options {
+    margin-top: 2rem;
+    border-top: 1px solid var(--color-border-light);
+    padding-top: 2rem;
+}
+
+.options-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-text-secondary);
+    background: var(--color-surface-alt);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.options-toggle:hover,
+.options-toggle:focus {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.arrow {
+    transition: transform var(--transition-base);
+}
+
+.arrow.active {
+    transform: rotate(180deg);
+}
+
+.advanced-fields {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    transition: all var(--transition-base);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus,
+.form-group .form-input:focus,
+.form-group .form-select:focus,
+.form-group .form-textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+
+/* Enhanced Output Panel */
+.output-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.model-used {
+    font-size: 0.875rem;
+    color: var(--color-accent);
+    font-weight: 500;
+}
+
+.generation-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--color-surface-alt);
+    border-radius: var(--radius-md);
+    margin-top: 1.5rem;
+    border: 1px solid var(--color-border-light);
+}
+
+.metric {
+    text-align: center;
+    padding: 0.75rem;
+}
+
+.metric-label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--color-text-tertiary);
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+}
+
+.metric-value {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+/* Enhanced Buttons */
+.regenerate-button {
+    background: var(--color-primary);
+    color: var(--color-text-inverse);
+}
+
+.share-button {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+}
+
+.share-button:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
 }
 
 .grant-form-panel {
