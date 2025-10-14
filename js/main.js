@@ -246,7 +246,7 @@ function setupSmoothScrolling() {
             if (targetElement) {
                 e.preventDefault();
                 
-                const headerOffset = 80; // Account for fixed header
+                const headerOffset = 100; // Account for fixed header height
                 const elementPosition = targetElement.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
                 
@@ -268,7 +268,7 @@ function setupSmoothScrolling() {
         const sections = document.querySelectorAll('section[id]');
         
         sections.forEach(section => {
-            const sectionTop = section.offsetTop - 100;
+            const sectionTop = section.offsetTop - 120; // More offset for better detection
             const sectionHeight = section.clientHeight;
             
             if (window.pageYOffset >= sectionTop && window.pageYOffset < sectionTop + sectionHeight) {
