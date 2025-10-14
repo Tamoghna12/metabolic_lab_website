@@ -305,7 +305,7 @@ window.generateProposal = async function() {
     const buttonLoading = button.querySelector('.button-loading');
     
     buttonText.style.display = 'none';
-    buttonLoading.style.display = inline';
+    buttonLoading.style.display = 'inline';
     startTime = Date.now();
     
     try {
@@ -326,6 +326,9 @@ window.generateProposal = async function() {
                 break;
             case 'mistral':
                 proposal = callMistral(formData);
+                break;
+            case 'groq':
+                proposal = callGroq(formData);
                 break;
             default:
                 proposal = await callOpenAI(formData);
@@ -378,6 +381,11 @@ async function callMistral(formData) {
     return await callAIModel(formData, 'Mistral Large', 'mistral-large', '/v1/chat/completions');
 }
 
+async function callGroq(formData) {
+    // Simulate Groq API call
+    return await callAIModel(formData, 'Groq LLM', 'llama3-70b-8192', '/v1/chat/completions');
+}
+
 async function callAIModel(formData, modelName, modelId, endpoint) {
     // Simulate different AI model responses based on model selected
     const proposals = {
@@ -385,7 +393,8 @@ async function callAIModel(formData, modelName, modelId, endpoint) {
         'claude-3': generateClaudeProposal(formData),
         'gemini-pro': generateGeminiProposal(formData),
         'llama-3': generateLlamaProposal(formData),
-        'mistral': generateMistralProposal(formData)
+        'mistral': generateMistralProposal(formData),
+        'groq': generateGroqProposal(formData)
     };
     
     const proposal = proposals[formData.model] || proposals['gpt4-research'];
@@ -555,13 +564,18 @@ ${formData.expected_outcomes || 'Improved collaboration efficiency and broader s
 *Fosters new collaborative networks and resource sharing*\n*Enables reproducible research at scale*\n\nThis proposal creates lasting value through open science and capacity building.*`;
 }
 
+function generateGroqProposal(formData) {
+    const proposal = `# ${formData.researchTitle || 'Rapid Development Grant'}\n\n**Principal Investigator:** ${getModelName('groq')}\n**Funding Agency:** ${formatFundingAgency(formData.fundingAgency)}\n**Grant Type:** ${formatGrantType(formData.grantType)}\n**Amount:** ${formData.budget}\n\n## Executive Summary\n\n${formData.projectDescription}\n\n## Innovation Focus\n\nThis proposal leverages ultra-fast AI-driven development to accelerate ${formData.researchArea} research through ${formData.methodology || 'rapid prototyping'} and ${formData.expectedOutcomes || 'quick iteration cycles'}.\n\n## Speed Advantage\n\n**Key Benefits:**\n- **Rapid Prototyping**: Generate and test hypotheses in hours, not weeks\n- **Real-time Optimization**: Dynamic parameter adjustment based on immediate results\n- **Fast Iteration**: Multiple proposal versions for different funding agencies\n- **Agile Development**: Flexible approach to research challenges\n\n## Technical Implementation\n\nOur ${formData.experimental_approach || 'agile methodology'} combines speed with scientific rigor:\n\n- **Phase 1**: Rapid literature review and gap analysis (${formData.duration || '2 weeks'})\n- **Phase 2**: Fast prototype development (${formData.duration || '1 month'})\n- **Phase 3**: Quick validation and iteration (${formData.duration || '3 months'})\n- **Phase 4**: Scalable deployment (${formData.duration || '6 months'})\n\n## Expected Outcomes\n\n${formData.expectedOutcomes || 'Accelerated research outcomes with multiple deliverables'}:\n- Real-time research dashboards for continuous monitoring\n- Automated reporting for funding agencies\n- Scalable ${formData.researchArea} frameworks\n- Open-source tools for broader community adoption\n\n## Innovation Impact\n\n**Speed Advantage.${formData.collaborations || 'Industry partnerships'} enable rapid translation to applications.\n\n*This proposal demonstrates how ultra-fast computationally-driven research can accelerate scientific discovery while maintaining rigorous standards.*`;
+}
+
 function getModelName(modelId) {
     const models = {
         'gpt4-research': 'OpenAI GPT-4',
         'claude-3': 'Claude 3',
         'gemini-pro': 'Google Gemini Pro',
         'llama-3': 'Meta Llama 3',
-        'mistral': 'Mistral Large'
+        'mistral': 'Mistral Large',
+        'groq': 'Groq LLM'
     };
     return models[modelId] || 'OpenAI GPT-4';
 }
@@ -917,3 +931,180 @@ function setupSmoothScrolling() {
         });
     });
 }
+
+// Grant Generator utility functions
+function displayProposal(proposal) {
+    const outputPanel = document.getElementById('grant-output');
+    const proposalContent = document.getElementById('proposal-content');
+    
+    if (outputPanel && proposalContent) {
+        proposalContent.innerHTML = `<pre class="proposal-text">${formatProposal(proposal)}</pre>`;
+        outputPanel.style.display = 'block';
+        
+        // Scroll to output panel
+        outputPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+function formatProposal(proposal) {
+    // Format the proposal text for better display
+    return proposal
+        .replace(/\n\n/g, '\n\n')
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/^- (.*?)$/gm, '• $1');
+}
+
+// Grant Generator utility functions
+window.copyProposal = function() {
+    const content = document.getElementById('proposal-content');
+    if (content) {
+        const text = content.innerText || content.textContent;
+        navigator.clipboard.writeText(text).then(() => {
+            showNotification('Proposal copied to clipboard!');
+        }).catch(err => {
+            console.error('Failed to copy:', err);
+            showNotification('Failed to copy proposal');
+        });
+    }
+};
+
+window.downloadProposal = function() {
+    const content = document.getElementById('proposal-content');
+    if (content) {
+        const text = content.innerText || content.textContent;
+        const blob = new Blob([text], { type: 'text/plain' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `grant-proposal-${Date.now()}.txt`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        showNotification('Proposal downloaded successfully!');
+    }
+};
+
+window.editProposal = function() {
+    const content = document.getElementById('proposal-content');
+    if (content) {
+        content.contentEditable = true;
+        content.focus();
+        showNotification('You can now edit the proposal. Click outside to save changes.');
+        
+        // Add save on blur
+        content.addEventListener('blur', function() {
+            content.contentEditable = false;
+            showNotification('Changes saved locally');
+        }, { once: true });
+    }
+};
+
+window.regenerateProposal = function() {
+    // Re-trigger generation with current form data
+    const form = document.getElementById('grant-form');
+    if (form) {
+        generateProposal();
+    }
+};
+
+window.shareProposal = function() {
+    const content = document.getElementById('proposal-content');
+    if (content) {
+        const text = content.innerText || content.textContent;
+        
+        if (navigator.share) {
+            navigator.share({
+                title: 'Grant Proposal',
+                text: text.substring(0, 500) + '...',
+                url: window.location.href
+            }).then(() => {
+                showNotification('Proposal shared successfully!');
+            }).catch(err => {
+                console.error('Share failed:', err);
+                copyShareableLink(text);
+            });
+        } else {
+            copyShareableLink(text);
+        }
+    }
+};
+
+function copyShareableLink(text) {
+    // Create a short shareable text
+    const shareableText = `${document.getElementById('project-title')?.value || 'Grant Proposal'} - ${text.substring(0, 200)}...`;
+    navigator.clipboard.writeText(shareableText).then(() => {
+        showNotification('Shareable text copied to clipboard!');
+    });
+}
+
+function showNotification(message) {
+    // Create and show a temporary notification
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.textContent = message;
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: hsl(210 50% 81%);
+        color: hsl(210 30% 20%);
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        border: 1px solid hsl(210 40% 60%);
+        z-index: 1000;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        animation: slideIn 0.3s ease-out;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease-out';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
+}
+
+// Grant Generator form setup
+document.addEventListener('DOMContentLoaded', function() {
+    // Set up form submission
+    const grantForm = document.getElementById('grant-form');
+    if (grantForm) {
+        grantForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            window.generateProposal();
+        });
+    }
+    
+    // Set up character counter
+    const projectDescription = document.getElementById('project-description');
+    const charCount = document.getElementById('char-count');
+    if (projectDescription && charCount) {
+        projectDescription.addEventListener('input', function() {
+            const count = this.value.length;
+            charCount.textContent = count;
+            
+            // Add warning color if approaching limit
+            if (count > 900) {
+                charCount.style.color = 'var(--color-error, #dc2626)';
+            } else if (count > 800) {
+                charCount.style.color = 'var(--color-warning, #f59e0b)';
+            } else {
+                charCount.style.color = 'var(--color-text-secondary)';
+            }
+        });
+    }
+    
+    // Set up model card selection
+    const modelCards = document.querySelectorAll('.model-card');
+    modelCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const modelId = this.getAttribute('data-model');
+            window.selectModel(modelId);
+        });
+    });
+});

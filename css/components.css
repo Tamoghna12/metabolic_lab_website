@@ -2195,6 +2195,83 @@
     color: var(--color-accent);
 }
 
+/* Notification Styles */
+.notification {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+/* Proposal Text Styling */
+.proposal-text {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-text);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    background: var(--color-surface-alt);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.proposal-text strong {
+    color: var(--color-text);
+    font-weight: 600;
+}
+
+.proposal-text em {
+    color: var(--color-text-secondary);
+    font-style: italic;
+}
+
+/* Form Validation */
+.form-input:invalid,
+.form-select:invalid,
+.form-textarea:invalid {
+    border-color: var(--color-error, #dc2626);
+}
+
+/* Loading States */
+.loading-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 0.5rem;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
 .grant-form-panel {
     background: var(--color-surface);
     border: 1px solid var(--color-border-light);
