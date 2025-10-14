@@ -1,54 +1,84 @@
-import { loadComponent } from './components.js';
-import { registerDarkModeToggle } from './dark-mode.js';
-import { initializeSearch } from './search.js';
-import { fetchLabData } from './api-integration.js';
+// Core imports
+import { ComponentManager } from './core/ComponentManager.js';
+import { DataManager } from './core/DataManager.js';
 
-const componentOrder = [
-    'header',
-    'hero',
-    'overview',
-    'research',
-    'news',
-    'projects',
-    'publications',
-    'team',
-    'testimonials',
-    'grant-generator',
-    'contact',
-    'footer'
-];
+// UI imports
+import { AnimationController } from './ui/AnimationController.js';
+import { DarkModeController } from './ui/DarkModeController.js';
+import { SearchController } from './ui/SearchController.js';
 
-let revealObserver;
+// Form imports
+import { ContactForm } from './forms/ContactForm.js';
+import { GrantGenerator } from './forms/GrantGenerator.js';
+
+// Utility imports
+import { HeroKeywordRotator } from './utils/HeroKeywordRotator.js';
+import { HeroStats } from './utils/HeroStats.js';
+
+// Global controllers
+let componentManager;
+let dataManager;
+let animationController;
+let darkModeController;
+let searchController;
+let heroKeywordRotator;
+let heroStats;
+let contactForm;
+let grantGenerator;
 
 async function bootstrap() {
-    const app = document.getElementById('app');
-    if (!app) {
-        console.error('App container not found');
-        return;
+    try {
+        // Initialize core systems
+        componentManager = new ComponentManager();
+        dataManager = new DataManager();
+        animationController = new AnimationController();
+        darkModeController = new DarkModeController();
+        
+        // Load all components
+        await componentManager.loadAllComponents();
+        
+        // Load data
+        const labData = await dataManager.fetchLabData();
+        
+        // Initialize UI controllers
+        searchController = new SearchController(dataManager);
+        heroKeywordRotator = new HeroKeywordRotator();
+        heroStats = new HeroStats(animationController);
+        
+        // Initialize forms
+        contactForm = new ContactForm();
+        grantGenerator = new GrantGenerator();
+        
+        // Render dynamic content
+        renderDynamicSections(labData);
+        
+        // Hydrate footer
+        hydrateFooter();
+        
+        // Notify that everything is ready
+        document.dispatchEvent(new CustomEvent('bioai-ready', { 
+            detail: { labData, controllers: getControllers() } 
+        }));
+        
+        console.log('BioAI Lab website initialized successfully');
+        
+    } catch (error) {
+        console.error('Error initializing BioAI Lab website:', error);
     }
+}
 
-    const fragment = document.createDocumentFragment();
-
-    for (const name of componentOrder) {
-        const section = await loadComponent(name);
-        if (section) {
-            fragment.appendChild(section);
-        }
-    }
-
-    app.appendChild(fragment);
-
-    registerDarkModeToggle();
-    registerRevealAnimations();
-    registerHeroKeywordRotation();
-    initializeSearch();
-    hydrateFooter();
-    registerGrantGenerator();
-
-    const data = await fetchLabData();
-    window.__BIOAI_DATA__ = data;
-    renderDynamicSections(data);
-    document.dispatchEvent(new CustomEvent('bioai-data-ready', { detail: data }));
+function getControllers() {
+    return {
+        componentManager,
+        dataManager,
+        animationController,
+        darkModeController,
+        searchController,
+        heroKeywordRotator,
+        heroStats,
+        contactForm,
+        grantGenerator
+    };
 }
 
 function renderDynamicSections(data) {
@@ -65,42 +95,66 @@ function renderList(items, selector, renderer) {
         return;
     }
     container.innerHTML = '';
+    container.setAttribute('data-stagger', 'true');
+    
     if (!items || items.length === 0) {
         const empty = document.createElement('p');
-        empty.className = 'card-text';
+        empty.className = 'card-text empty-state';
         empty.textContent = 'Content coming soon.';
         container.appendChild(empty);
-        observeReveals(container);
+        if (animationController) {
+            animationController.observeReveals(container);
+        }
         return;
     }
 
-    for (const item of items) {
-        container.appendChild(renderer(item));
-    }
+    items.forEach(item => {
+        const element = renderer(item);
+        element.classList.add('reveal');
+        container.appendChild(element);
+    });
 
-    observeReveals(container);
+    if (animationController) {
+        animationController.observeReveals(container);
+    }
 }
 
 function createNewsCard(item) {
     const article = document.createElement('article');
-    article.className = 'card-surface reveal';
-    const formattedDate = item.date ? new Date(item.date).toLocaleDateString() : '';
+    article.className = 'card-surface';
+    const formattedDate = item.date ? new Date(item.date).toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric' 
+    }) : '';
+    
     article.innerHTML = `
         <span class="soft-badge">News</span>
         <h3 class="card-title">${item.title}</h3>
         <p class="card-text">${item.summary}</p>
         <div class="card-meta">${formattedDate}</div>
+        ${item.image ? `<img src="${item.image}" alt="${item.title}" class="card-image" loading="lazy">` : ''}
     `;
     return article;
 }
 
 function createProjectCard(item) {
     const article = document.createElement('article');
-    article.className = 'card-surface reveal';
+    article.className = 'card-surface project-card';
+    
+    const statusClass = item.status?.toLowerCase().replace(/\s+/g, '-') || 'active';
+    const statusText = item.status ?? 'Active';
+    
     article.innerHTML = `
-        <span class="project-status">${item.status ?? 'In progress'}</span>
+        <span class="project-status ${statusClass}">${statusText}</span>
         <h3 class="card-title">${item.title}</h3>
         <p class="card-text">${item.summary}</p>
+        ${item.image ? `<img src="${item.image}" alt="${item.title}" class="card-image" loading="lazy">` : ''}
+        <div class="project-actions">
+            <button class="pill-button secondary small" onclick="showProjectDetails('${item.title}')">
+                Learn More
+            </button>
+        </div>
     `;
     return article;
 }
@@ -143,107 +197,33 @@ function hydrateFooter() {
     }
 }
 
-function registerGrantGenerator() {
-    const form = document.querySelector('[data-grant-form]');
-    const output = document.querySelector('[data-grant-output]');
-    const text = document.querySelector('[data-grant-text]');
-
-    if (!form || !output || !text) {
+// Global utility function for project details
+window.showProjectDetails = function(projectTitle) {
+    // Find project data
+    const projectData = window.__BIOAI_DATA__?.projects?.find(p => p.title === projectTitle);
+    if (!projectData) {
+        console.warn('Project not found:', projectTitle);
         return;
     }
 
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const formData = new FormData(form);
-        const focus = formData.get('focus');
-        const impact = formData.get('impact');
-        const context = formData.get('context');
-
-        const sentences = [
-            `We propose to investigate ${focus}, leveraging BioAI Lab expertise to deliver ${impact}.`
-        ];
-
-        if (context) {
-            sentences.push(`By partnering with ${context}, we will amplify translational impact.`);
-        }
-
-        sentences.push('Our multidisciplinary platform will accelerate translation from concept to measurable outcomes.');
-        text.textContent = sentences.join(' ');
-        output.hidden = false;
-        observeReveals(output.parentElement || document);
-    });
-}
-
-function registerRevealAnimations() {
-    if (!('IntersectionObserver' in window)) {
-        document.querySelectorAll('.reveal').forEach((element) => {
-            element.classList.add('is-visible');
-        });
-        return;
-    }
-
-    revealObserver = new IntersectionObserver(
-        (entries) => {
-            for (const entry of entries) {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    revealObserver.unobserve(entry.target);
-                }
-            }
-        },
-        {
-            threshold: 0.15,
-            rootMargin: '0px 0px -60px 0px'
-        }
-    );
-
-    observeReveals(document);
-}
-
-function observeReveals(root = document) {
-    if (!revealObserver) {
-        root.querySelectorAll('.reveal').forEach((element) => element.classList.add('is-visible'));
-        return;
-    }
-
-    root.querySelectorAll('.reveal').forEach((element) => {
-        if (!element.classList.contains('is-visible')) {
-            revealObserver.observe(element);
-        }
-    });
-}
-
-function registerHeroKeywordRotation() {
-    const wrapper = document.querySelector('[data-hero-keywords]');
-    if (!wrapper) {
-        return;
-    }
-
-    const keywords = (wrapper.dataset.heroKeywords || '')
-        .split('|')
-        .map((keyword) => keyword.trim())
-        .filter(Boolean);
-    const display = wrapper.querySelector('[data-hero-keyword]');
-
-    if (!display || keywords.length === 0) {
-        return;
-    }
-
-    let index = 0;
-    display.textContent = keywords[index];
-
-    if (keywords.length === 1) {
-        return;
-    }
-
-    setInterval(() => {
-        index = (index + 1) % keywords.length;
-        wrapper.classList.add('is-changing');
-        setTimeout(() => {
-            display.textContent = keywords[index];
-            wrapper.classList.remove('is-changing');
-        }, 200);
-    }, 2800);
-}
+    // Create and show modal
+    const modal = document.createElement('div');
+    modal.className = 'project-modal';
+    modal.innerHTML = `
+        <div class="modal-backdrop" onclick="this.parentElement.remove()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="this.closest('.project-modal').remove()" aria-label="Close modal">&times;</button>
+            <h2>${projectData.title}</h2>
+            <span class="project-status">${projectData.status}</span>
+            <p>${projectData.summary}</p>
+            ${projectData.image ? `<img src="${projectData.image}" alt="${projectData.title}" class="modal-image">` : ''}
+            <div class="modal-actions">
+                <button class="pill-button" onclick="this.closest('.project-modal').remove()">Close</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+};
 
 window.addEventListener('DOMContentLoaded', bootstrap);

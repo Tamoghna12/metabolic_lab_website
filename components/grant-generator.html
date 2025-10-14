@@ -9,28 +9,87 @@
             </p>
         </div>
         <div class="grant-generator reveal">
-            <form class="form-grid" data-grant-form>
-                <div class="form-field">
-                    <label for="grant-focus">What is your research focus?</label>
-                    <input id="grant-focus" name="focus" type="text" placeholder="e.g. AI-accelerated enzyme discovery" required />
+            <div class="grant-generator-template">
+                <label for="template-select">Start with a template:</label>
+                <select id="template-select" data-template-select class="template-select">
+                    <option value="">Custom Proposal</option>
+                    <option value="basic">Basic Research Grant</option>
+                    <option value="biomedical">Biomedical Research</option>
+                    <option value="climate">Climate & Sustainability</option>
+                </select>
+            </div>
+            
+            <form class="grant-form" data-grant-form>
+                <div class="form-section">
+                    <h3 class="form-section-title">Research Focus</h3>
+                    <div class="form-field">
+                        <label for="grant-focus">What is your research focus?</label>
+                        <input id="grant-focus" name="focus" type="text" 
+                               placeholder="e.g. AI-accelerated enzyme discovery" 
+                               required 
+                               aria-describedby="focus-help" />
+                        <small id="focus-help">Be specific about the scientific problem or technology</small>
+                    </div>
+                    
+                    <div class="form-field">
+                        <label for="grant-impact">What change will it create?</label>
+                        <input id="grant-impact" name="impact" type="text" 
+                               placeholder="e.g. net-zero biomanufacturing" 
+                               required 
+                               aria-describedby="impact-help" />
+                        <small id="impact-help">Describe the societal, economic, or scientific impact</small>
+                    </div>
                 </div>
-                <div class="form-field">
-                    <label for="grant-impact">What change will it create?</label>
-                    <input id="grant-impact" name="impact" type="text" placeholder="e.g. net-zero biomanufacturing" required />
+                
+                <div class="form-section">
+                    <h3 class="form-section-title">Methodology & Context</h3>
+                    <div class="form-field">
+                        <label for="grant-methodology">Research methodology</label>
+                        <input id="grant-methodology" name="methodology" type="text" 
+                               placeholder="e.g. generative AI models and high-throughput screening" 
+                               aria-describedby="methodology-help" />
+                        <small id="methodology-help">How will you conduct the research?</small>
+                    </div>
+                    
+                    <div class="form-field">
+                        <label for="grant-context">Key collaborators or assets</label>
+                        <textarea
+                            id="grant-context"
+                            name="context"
+                            rows="3"
+                            placeholder="e.g. partnering with GreenTech Bio to scale metabolic models to pilot reactors"
+                            aria-describedby="context-help"
+                        ></textarea>
+                        <small id="context-help">Industry partners, clinical collaborators, or unique resources</small>
+                    </div>
+                    
+                    <div class="form-field">
+                        <label for="grant-timeline">Project timeline</label>
+                        <select id="grant-timeline" name="timeline">
+                            <option value="12 months">12 months</option>
+                            <option value="18 months">18 months</option>
+                            <option value="24 months" selected>24 months</option>
+                            <option value="36 months">36 months</option>
+                            <option value="48 months">48 months</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="form-field">
-                    <label for="grant-context">Key collaborators or assets</label>
-                    <textarea
-                        id="grant-context"
-                        name="context"
-                        placeholder="e.g. partnering with GreenTech Bio to scale metabolic models to pilot reactors"
-                    ></textarea>
+                
+                <div class="grant-preview" data-grant-preview>
+                    <strong>Quick Preview:</strong>
+                    <p>Start filling out the form to see your proposal take shape...</p>
                 </div>
-                <button class="pill-button" type="submit">Generate narrative</button>
+                
+                <button type="submit" class="pill-button grant-submit">
+                    <span class="button-text">Generate Complete Proposal</span>
+                </button>
             </form>
+            
             <div class="grant-output" data-grant-output hidden>
-                <h3 class="font-display">Suggested positioning</h3>
-                <p data-grant-text></p>
+                <h3 class="font-display">Generated Proposal Narrative</h3>
+                <div class="grant-content">
+                    <p data-grant-text class="grant-text"></p>
+                </div>
             </div>
         </div>
     </div>

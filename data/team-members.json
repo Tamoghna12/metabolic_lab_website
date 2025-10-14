@@ -1,14 +1,56 @@
 [
     {
         "name": "Dr. Elena Martinez",
-        "role": "Director",
-        "bio": "Leads research on interpretable machine learning for genomics.",
-        "image": "assets/images/team/elena-martinez.jpg"
+        "role": "Lab Director & Principal Investigator",
+        "bio": "Expert in interpretable machine learning for genomics and systems biology. Previously at Stanford BioAI Center with 15+ years of experience in computational biology and AI research.",
+        "image": "assets/images/team/elena-martinez.jpg",
+        "email": "elena.martinez@bioai.lab",
+        "website": "https://elenamartinez.bioai.lab",
+        "linkedin": "https://linkedin.com/in/elenamartinez"
     },
     {
         "name": "Dr. Noah Patel",
-        "role": "Senior Scientist",
-        "bio": "Focuses on generative protein design and model interpretability.",
-        "image": "assets/images/team/noah-patel.jpg"
+        "role": "Senior Research Scientist",
+        "bio": "Specializes in generative protein design and model interpretability. Pioneer in AI-driven enzyme engineering with numerous high-impact publications.",
+        "image": "assets/images/team/noah-patel.jpg",
+        "email": "noah.patel@bioai.lab",
+        "website": "https://noahpatel.bioai.lab",
+        "linkedin": "https://linkedin.com/in/noahpatel"
+    },
+    {
+        "name": "Dr. Sarah Chen",
+        "role": "Machine Learning Engineer",
+        "bio": "Develops novel deep learning architectures for biological sequence analysis. Expert in transformers and attention mechanisms for genomics.",
+        "image": "assets/images/team/sarah-chen.jpg",
+        "email": "sarah.chen@bioai.lab",
+        "website": "https://sarahchen.bioai.lab",
+        "linkedin": "https://linkedin.com/in/sarahchen"
+    },
+    {
+        "name": "Dr. James Williams",
+        "role": "Computational Biologist",
+        "bio": "Leads metabolic network modeling and pathway optimization research. Background in synthetic biology and metabolic engineering.",
+        "image": "assets/images/team/james-williams.jpg",
+        "email": "james.williams@bioai.lab",
+        "website": "https://jameswilliams.bioai.lab",
+        "linkedin": "https://linkedin.com/in/jameswilliams"
+    },
+    {
+        "name": "Dr. Maria Rodriguez",
+        "role": "Postdoctoral Researcher",
+        "bio": "Working on multi-omics integration and single-cell analysis using advanced machine learning techniques.",
+        "image": "assets/images/team/maria-rodriguez.jpg",
+        "email": "maria.rodriguez@bioai.lab",
+        "website": "https://mariarodriguez.bioai.lab",
+        "linkedin": "https://linkedin.com/in/mariarodriguez"
+    },
+    {
+        "name": "Alex Thompson",
+        "role": "PhD Student",
+        "bio": "Investigating AI-guided protein engineering for industrial biocatalysts. Focus on reinforcement learning applications.",
+        "image": "assets/images/team/alex-thompson.jpg",
+        "email": "alex.thompson@bioai.lab",
+        "website": "https://alexthompson.bioai.lab",
+        "linkedin": "https://linkedin.com/in/alexthompson"
     }
 ]

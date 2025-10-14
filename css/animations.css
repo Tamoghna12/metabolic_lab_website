@@ -10,13 +10,25 @@
     transform: translateY(0) scale(1);
 }
 
+/* Enhanced reveal with stagger effect */
+[data-stagger] .reveal {
+    transition-delay: 0s;
+}
+
+[data-stagger] .reveal:nth-child(1) { transition-delay: 0ms; }
+[data-stagger] .reveal:nth-child(2) { transition-delay: 100ms; }
+[data-stagger] .reveal:nth-child(3) { transition-delay: 200ms; }
+[data-stagger] .reveal:nth-child(4) { transition-delay: 300ms; }
+[data-stagger] .reveal:nth-child(5) { transition-delay: 400ms; }
+[data-stagger] .reveal:nth-child(6) { transition-delay: 500ms; }
+
+/* Floating animations */
 .float-soft {
     animation: floatSoft 6s ease-in-out infinite;
 }
 
 @keyframes floatSoft {
-    0%,
-    100% {
+    0%, 100% {
         transform: translateY(0px);
     }
     50% {
@@ -24,6 +36,23 @@
     }
 }
 
+.float-gentle {
+    animation: floatGentle 8s ease-in-out infinite;
+}
+
+@keyframes floatGentle {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-8px) rotate(1deg);
+    }
+    75% {
+        transform: translateY(-4px) rotate(-1deg);
+    }
+}
+
+/* Pulse effects */
 .pulse-ring {
     position: relative;
 }
@@ -32,7 +61,7 @@
     content: '';
     position: absolute;
     inset: -10px;
-    border-radius: 999px;
+    border-radius: 9999px;
     border: 1px solid rgba(31, 95, 74, 0.22);
     opacity: 0;
     animation: ringPulse 3.2s ease-in-out infinite;
@@ -52,8 +81,253 @@
     }
 }
 
+.pulse-soft {
+    animation: pulseSoft 2s ease-in-out infinite;
+}
+
+@keyframes pulseSoft {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+}
+
+/* Gradient text effects */
 .gradient-text {
     background: linear-gradient(135deg, #1f5f4a 0%, #6c8c7b 50%, #b87333 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     color: transparent;
+    background-size: 200% 200%;
+    animation: gradientShift 4s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Button animations */
+.pill-button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pill-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.pill-button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.pill-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(31, 95, 74, 0.3);
+}
+
+.pill-button:active {
+    transform: translateY(0);
+}
+
+/* Card hover animations */
+.card-surface,
+.team-card,
+.project-card,
+.testimonial-card {
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card-surface:hover,
+.team-card:hover,
+.project-card:hover,
+.testimonial-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 32px rgba(31, 95, 74, 0.15);
+}
+
+/* Loading spinner */
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Ripple effect */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(0);
+    animation: rippleEffect 0.6s ease-out;
+    pointer-events: none;
+}
+
+@keyframes rippleEffect {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Keyword rotation transitions */
+.hero-keywords.is-changing [data-hero-keyword] {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+}
+
+.hero-keywords [data-hero-keyword] {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease-in, transform 0.3s ease-in;
+}
+
+/* Modal animations */
+.project-modal {
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-content {
+    animation: modalSlideIn 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Search results animations */
+.search-result-item {
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.search-result-item:hover,
+.search-result-item.active {
+    background: rgba(31, 95, 74, 0.05);
+    transform: translateX(4px);
+}
+
+.search-result-item mark {
+    background: rgba(31, 95, 74, 0.1);
+    color: var(--color-primary-strong);
+    padding: 1px 2px;
+    border-radius: 2px;
+}
+
+/* Form animations */
+.form-field.focused label {
+    color: var(--color-primary);
+    transform: translateY(-1px);
+}
+
+.form-field.focused input,
+.form-field.focused textarea,
+.form-field.focused select {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(31, 95, 74, 0.1);
+}
+
+.form-message {
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hero stats counter animation */
+.hero-metric {
+    position: relative;
+}
+
+.hero-metric .stat-number {
+    transition: all 0.3s ease;
+}
+
+/* Intercept animations for better performance */
+.intercept-animation {
+    will-change: transform, opacity;
+}
+
+.intercept-animation.animation-complete {
+    will-change: auto;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        opacity: 1;
+        transform: none;
+    }
+    
+    .float-soft,
+    .float-gentle,
+    .pulse-ring,
+    .pulse-soft,
+    .gradient-text {
+        animation: none;
+    }
+    
+    .pill-button:hover {
+        transform: none;
+    }
+    
+    .card-surface:hover,
+    .team-card:hover,
+    .project-card:hover,
+    .testimonial-card:hover {
+        transform: none;
+    }
 }
