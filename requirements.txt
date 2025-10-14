@@ -1,5 +1,0 @@
-streamlit
-google-api-python-client
-youtube_transcript_api
-openai
-pandas
