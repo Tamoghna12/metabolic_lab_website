@@ -36,8 +36,10 @@ jobs:
       - name: Build static site
         run: |
           mkdir -p dist
-          cp -r css js components data index.html dist/
+          cp *.html dist/
+          cp -r css js components data dist/
           cp -r docs dist/ 2>/dev/null || true
+          ls -la dist/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
