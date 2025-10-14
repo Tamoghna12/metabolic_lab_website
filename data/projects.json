@@ -1,0 +1,14 @@
+[
+    {
+        "title": "Atlas",
+        "summary": "A multimodal atlas for mapping gene regulation across tissues.",
+        "status": "Active",
+        "image": "assets/images/projects/atlas.jpg"
+    },
+    {
+        "title": "HelixGAN",
+        "summary": "Generative adversarial model for de novo protein design.",
+        "status": "In Collaboration",
+        "image": "assets/images/projects/helixgan.jpg"
+    }
+]

@@ -1,0 +1,14 @@
+[
+    {
+        "title": "BioAI Lab Awarded NSF Grant",
+        "summary": "Funding will support new research into AI-driven biomarker discovery.",
+        "date": "2024-02-10",
+        "image": "assets/images/news/nsf-grant.jpg"
+    },
+    {
+        "title": "New Publication in Cell Systems",
+        "summary": "Our team introduces a multimodal foundation model for clinical phenotyping.",
+        "date": "2023-11-05",
+        "image": "assets/images/news/cell-systems.jpg"
+    }
+]
