@@ -79,6 +79,9 @@ function initializeComponents() {
     
     // Initialize animations
     setupAnimations();
+    
+    // Initialize bio link interactions
+    setupBioLinkInteractions();
 }
 
 function setupSmoothScrolling() {
@@ -598,4 +601,34 @@ window.toggleAdvancedOptions = function() {
             arrow.classList.remove('active');
         }
     }
-};
+}
+
+// Bio Link Interactions
+function setupBioLinkInteractions() {
+    const bioLinks = document.querySelectorAll('.bio-link');
+    
+    bioLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            // Add loading animation
+            const originalContent = link.innerHTML;
+            link.innerHTML = '<span class="loading-spinner"></span> Loading...';
+            link.style.opacity = '0.7';
+            link.style.pointerEvents = 'none';
+            
+            // Track navigation
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'bio_view', {
+                    'page_title': link.getAttribute('href'),
+                    'page_location': window.location.href
+                });
+            }
+            
+            // Reset after a delay (in case navigation fails)
+            setTimeout(() => {
+                link.innerHTML = originalContent;
+                link.style.opacity = '1';
+                link.style.pointerEvents = 'auto';
+            }, 3000);
+        });
+    });
+}
