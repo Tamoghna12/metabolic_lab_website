@@ -37,6 +37,7 @@ async function loadComponents() {
         'components/publications-with-filter.html',
         'components/partners.html',
         'components/grant-generator-ai.html',
+        'components/api-key-manager.html',
         'components/contact-form.html',
         'components/footer.html'
     ];
@@ -82,6 +83,9 @@ function initializeComponents() {
     
     // Initialize bio link interactions
     setupBioLinkInteractions();
+    
+    // Initialize API key manager
+    initializeAPIKeyManager();
 }
 
 function setupSmoothScrolling() {
@@ -106,9 +110,29 @@ function setupSmoothScrolling() {
                 // Update active nav link
                 navLinks.forEach(navLink => navLink.classList.remove('active'));
                 this.classList.add('active');
+            } else {
+                // Handle API keys and other special navigation
+                const section = this.getAttribute('data-section');
+                if (section === 'api-keys') {
+                    e.preventDefault();
+                    if (window.apiKeyUI) {
+                        window.apiKeyUI.showAPIKeysSection();
+                    }
+                }
             }
         });
     });
+    
+    // Handle API keys navigation separately
+    const apiKeysLink = document.querySelector('[data-section="api-keys"]');
+    if (apiKeysLink) {
+        apiKeysLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (window.apiKeyUI) {
+                window.apiKeyUI.showAPIKeysSection();
+            }
+        });
+    }
 }
 
 function setupCharacterCounter() {
@@ -631,4 +655,18 @@ function setupBioLinkInteractions() {
             }, 3000);
         });
     });
+}
+
+// Initialize API Key Manager
+async function initializeAPIKeyManager() {
+    try {
+        // Import and initialize the API key manager
+        const { APIKeyUI } = await import('./ui/APIKeyUI.js');
+        window.apiKeyUI = new APIKeyUI();
+        
+        console.log('API Key Manager initialized successfully');
+    } catch (error) {
+        console.error('Error initializing API Key Manager:', error);
+        // Don't show error to user for optional feature
+    }
 }
