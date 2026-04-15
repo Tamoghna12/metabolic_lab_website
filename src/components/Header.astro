@@ -221,8 +221,24 @@ const currentPath = Astro.url.pathname.replace(baseUrl, '') || '/';
         display: none !important;
     }
 
-    .mobile-menu.open {
-        display: block;
+    @media (max-width: 1024px) {
+        .mobile-menu {
+            display: none;
+        }
+
+        .mobile-menu.open {
+            display: block;
+        }
+
+        .mobile-menu[hidden] {
+            display: none !important;
+        }
+    }
+
+    @media (min-width: 1025px) {
+        .mobile-menu {
+            display: none !important;
+        }
     }
 
     .mobile-nav-link {
@@ -266,13 +282,24 @@ const currentPath = Astro.url.pathname.replace(baseUrl, '') || '/';
         const toggle = document.getElementById('mobile-menu-toggle');
         const menu = document.getElementById('mobile-menu');
 
+        // Always ensure menu starts closed on page load (for view transitions)
+        if (menu) {
+            menu.classList.remove('open');
+            menu.setAttribute('hidden', '');
+        }
+        if (toggle) {
+            toggle.setAttribute('aria-expanded', 'false');
+        }
+
         toggle?.addEventListener('click', () => {
             const isOpen = menu?.classList.contains('open');
             if (isOpen) {
                 menu?.classList.remove('open');
+                menu?.setAttribute('hidden', '');
                 toggle?.setAttribute('aria-expanded', 'false');
             } else {
                 menu?.classList.add('open');
+                menu?.removeAttribute('hidden');
                 toggle?.setAttribute('aria-expanded', 'true');
             }
         });
@@ -281,6 +308,7 @@ const currentPath = Astro.url.pathname.replace(baseUrl, '') || '/';
         menu?.querySelectorAll('.mobile-nav-link').forEach(link => {
             link.addEventListener('click', () => {
                 menu?.classList.remove('open');
+                menu?.setAttribute('hidden', '');
                 toggle?.setAttribute('aria-expanded', 'false');
             });
         });
@@ -289,6 +317,7 @@ const currentPath = Astro.url.pathname.replace(baseUrl, '') || '/';
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && menu?.classList.contains('open')) {
                 menu.classList.remove('open');
+                menu.setAttribute('hidden', '');
                 toggle?.setAttribute('aria-expanded', 'false');
             }
         });
