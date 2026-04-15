@@ -19,89 +19,101 @@ const { data } = entry;
 <BaseLayout title={data.name} description={`${data.name} - ${data.role} at BioAI Lab.`}>
     <Header />
     
-    <main class="py-20 bg-background-alt/30">
+    <main class="py-20">
         <div class="max-container">
-            <div class="flex flex-col lg:flex-row gap-16 items-start">
-                <div class="bio-aside lg:w-1/3 w-full sticky top-32">
-                    <div class="card-surface p-8 overflow-hidden">
-                        <div class="aspect-square rounded-2xl overflow-hidden mb-8 shadow-lg">
+            <div class="flex flex-col lg:flex-row gap-16 items-start" data-pagefind-body>
+                
+                <!-- Left Sidebar: Photo & Stats -->
+                <aside class="lg:w-1/3 w-full sticky top-32">
+                    <div class="profile-card card-surface p-8 overflow-hidden text-center lg:text-left">
+                        <div class="aspect-square rounded-3xl overflow-hidden mb-8 shadow-2xl ring-4 ring-primary/10">
                             <img src={data.image} alt={data.name} class="w-full h-full object-cover" />
                         </div>
-                        <h1 class="text-3xl font-bold mb-2">{data.name}</h1>
-                        <p class="text-accent font-bold mb-6">{data.role}</p>
+                        <h1 class="text-4xl font-bold mb-3 tracking-tight">{data.name}</h1>
+                        <p class="text-primary font-bold text-lg mb-2">{data.role}</p>
+                        <p class="text-gray-500 font-medium mb-8 leading-relaxed">{data.title}</p>
                         
-                        <div class="contact-links space-y-4 pt-6 border-t border-border">
+                        <div class="quick-links space-y-3 pt-8 border-t border-border">
                             {data.email && (
-                                <a href={`mailto:${data.email}`} class="flex items-center gap-3 text-gray-600 hover:text-primary">
-                                    <span class="text-xl">✉️</span> {data.email}
+                                <a href={`mailto:${data.email}`} class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary/5 text-gray-600 hover:text-primary transition-all group">
+                                    <span class="text-xl group-hover:scale-110 transition-transform">✉️</span> 
+                                    <span class="text-sm font-semibold">{data.email}</span>
                                 </a>
                             )}
                             {data.linkedin && (
-                                <a href={data.linkedin} target="_blank" rel="noopener" class="flex items-center gap-3 text-gray-600 hover:text-primary">
-                                    <span class="text-xl">💼</span> LinkedIn Profile
+                                <a href={data.linkedin} target="_blank" rel="noopener" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary/5 text-gray-600 hover:text-primary transition-all group">
+                                    <span class="text-xl group-hover:scale-110 transition-transform">💼</span> 
+                                    <span class="text-sm font-semibold">LinkedIn Profile</span>
                                 </a>
                             )}
                             {data.website && (
-                                <a href={data.website} target="_blank" rel="noopener" class="flex items-center gap-3 text-gray-600 hover:text-primary">
-                                    <span class="text-xl">🌐</span> University Profile
+                                <a href={data.website} target="_blank" rel="noopener" class="flex items-center gap-3 p-3 rounded-xl hover:bg-primary/5 text-gray-600 hover:text-primary transition-all group">
+                                    <span class="text-xl group-hover:scale-110 transition-transform">🌐</span> 
+                                    <span class="text-sm font-semibold">University Profile</span>
                                 </a>
                             )}
                         </div>
                     </div>
-                </div>
+
+                    <!-- Highlight Tags -->
+                    <div class="mt-8 flex flex-wrap gap-2 justify-center lg:justify-start">
+                        {data.researchFocus?.map(focus => (
+                            <span class="bg-accent/5 text-accent-dark text-[10px] uppercase tracking-widest font-bold px-3 py-1 rounded-full border border-accent/10">
+                                {focus}
+                            </span>
+                        ))}
+                    </div>
+                </aside>
                 
-                <div class="bio-main lg:w-2/3 w-full">
-                    <div class="card-surface p-12">
-                        <section class="bio-section mb-12">
-                            <h2 class="text-2xl font-bold border-b-2 border-primary w-fit pb-2 mb-6">Biography</h2>
-                            <div class="prose prose-lg max-w-none text-gray-600 leading-relaxed">
-                                <Content />
+                <!-- Main Content: Bio & Details -->
+                <div class="lg:w-2/3 w-full space-y-12">
+                    
+                    <!-- Biography -->
+                    <section class="card-surface p-12 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
+                            <svg width="120" height="120" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H16.017C14.9124 8 14.017 7.10457 14.017 6V5C14.017 3.89543 14.9124 3 16.017 3H19.017C21.2261 3 23.017 4.79086 23.017 7V15C23.017 18.3137 20.3307 21 17.017 21H14.017ZM1 21L1 18C1 16.8954 1.89543 16 3 16H6C6.55228 16 7 15.5523 7 15V9C7 8.44772 6.55228 8 6 8H3C1.89543 8 1 7.10457 1 6V5C1 3.89543 1.89543 3 3 3H6C8.20914 3 10 4.79086 10 7V15C10 18.3137 7.31371 21 4 21H1Z"></path></svg>
+                        </div>
+                        <h2 class="text-sm font-bold uppercase tracking-widest text-primary mb-8">Professional Summary</h2>
+                        <div class="prose prose-xl max-w-none text-gray-600 leading-relaxed italic">
+                            <Content />
+                        </div>
+                    </section>
+
+                    <!-- Qualifications -->
+                    <section class="card-surface p-12">
+                        <h2 class="text-sm font-bold uppercase tracking-widest text-primary mb-8">Academic Foundation</h2>
+                        <div class="space-y-8">
+                            {data.qualifications?.map(q => (
+                                <div class="flex gap-6 items-start group">
+                                    <div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-2xl group-hover:bg-primary group-hover:text-white transition-colors">
+                                        🎓
+                                    </div>
+                                    <div class="pt-1">
+                                        <p class="text-lg font-bold text-gray-800 leading-tight group-hover:text-primary transition-colors">{q}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <!-- Achievements -->
+                    {data.achievements && data.achievements.length > 0 && (
+                        <section class="card-surface p-12">
+                            <h2 class="text-sm font-bold uppercase tracking-widest text-primary mb-8">Key Recognitions</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {data.achievements.map(a => (
+                                    <div class="p-6 bg-background rounded-2xl border border-border/50 hover:border-accent/30 hover:shadow-lg transition-all group">
+                                        <span class="text-2xl mb-4 block group-hover:scale-125 transition-transform">🏆</span>
+                                        <p class="text-sm font-bold text-gray-700 leading-snug">{a}</p>
+                                    </div>
+                                ))}
                             </div>
                         </section>
+                    )}
 
-                        {data.qualifications && data.qualifications.length > 0 && (
-                            <section class="bio-section mb-12">
-                                <h2 class="text-2xl font-bold border-b-2 border-primary w-fit pb-2 mb-6">Academic Journey</h2>
-                                <ul class="space-y-4">
-                                    {data.qualifications.map(q => (
-                                        <li class="flex gap-4 items-start">
-                                            <span class="text-xl">🎓</span>
-                                            <span class="text-gray-700">{q}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </section>
-                        )}
-
-                        {data.researchFocus && data.researchFocus.length > 0 && (
-                            <section class="bio-section mb-12">
-                                <h2 class="text-2xl font-bold border-b-2 border-primary w-fit pb-2 mb-6">Research Interests</h2>
-                                <div class="flex flex-wrap gap-3">
-                                    {data.researchFocus.map(focus => (
-                                        <span class="bg-primary/10 text-primary-dark px-4 py-2 rounded-full font-medium">{focus}</span>
-                                    ))}
-                                </div>
-                            </section>
-                        )}
-
-                        {data.achievements && data.achievements.length > 0 && (
-                            <section class="bio-section mb-12">
-                                <h2 class="text-2xl font-bold border-b-2 border-primary w-fit pb-2 mb-6">Key Achievements</h2>
-                                <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    {data.achievements.map(a => (
-                                        <li class="p-4 bg-background/50 rounded-xl border border-border flex gap-3">
-                                            <span class="text-lg">🏆</span>
-                                            <span class="text-sm font-medium">{a}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </section>
-                        )}
-                    </div>
-                    
-                    <div class="mt-12">
-                        <a href={`${import.meta.env.BASE_URL}/#team`} class="pill-button secondary flex items-center gap-2 w-fit">
-                            <span>←</span> Back to Team Overview
+                    <div class="pt-12">
+                        <a href={`${import.meta.env.BASE_URL}/#team`} class="text-sm font-bold flex items-center gap-2 text-gray-400 hover:text-primary transition-colors">
+                            <span class="text-2xl">←</span> Back to research team overview
                         </a>
                     </div>
                 </div>
@@ -111,3 +123,9 @@ const { data } = entry;
     
     <Footer />
 </BaseLayout>
+
+<style>
+    .prose p {
+        margin-bottom: 1.5rem;
+    }
+</style>

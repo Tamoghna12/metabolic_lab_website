@@ -8,31 +8,38 @@
     --color-text-secondary: hsl(224 7% 30%);
     --color-text-tertiary: hsl(224 7% 50%);
     --color-text-muted: hsl(224 7% 70%);
-    
-    --color-primary: hsl(210 50% 81%); /* Light muted blue/grey */
-    --color-primary-dark: hsl(210 50% 70%);
-    --color-primary-light: hsl(210 50% 90%);
-    --color-primary-soft: hsl(210 50% 96%);
-    
-    --color-accent: hsl(120 27% 65%); /* Gentle green for CTAs */
-    --color-accent-dark: hsl(120 27% 55%);
-    --color-accent-light: hsl(120 27% 75%);
-    --color-accent-soft: hsl(120 27% 95%);
-    
+    --color-text-inverse: #ffffff;
+
+    --color-primary: hsl(160 30% 45%); /* Deep teal/green for light mode */
+    --color-primary-dark: hsl(160 30% 35%);
+    --color-primary-light: hsl(160 30% 55%);
+    --color-primary-soft: hsl(160 30% 92%);
+    --color-primary-strong: hsl(160 30% 30%);
+
+    --color-accent: hsl(25 65% 52%); /* Warm amber for CTAs */
+    --color-accent-dark: hsl(25 65% 42%);
+    --color-accent-light: hsl(25 65% 62%);
+    --color-accent-soft: hsl(25 65% 92%);
+
+    --color-success: hsl(142 76% 36%);
+    --color-warning: hsl(38 92% 50%);
+    --color-error: hsl(0 84% 60%);
+
     --color-background: hsl(220 17% 95%); /* Very light grey main background */
     --color-background-alt: hsl(220 17% 92%); /* Slightly darker for secondary sections */
     --color-surface: #ffffff; /* White for cards and sections */
     --color-surface-alt: hsl(220 17% 96%);
+    --color-surface-muted: hsl(220 17% 94%);
     --color-border: hsl(220 10% 85%);
     --color-border-light: hsl(220 10% 90%);
-    
+
     /* Shadows - more subtle and professional */
     --shadow-sm: 0 2px 8px rgb(0 0 0 / 0.04);
     --shadow-md: 0 4px 16px rgb(0 0 0 / 0.06);
     --shadow-lg: 0 8px 32px rgb(0 0 0 / 0.08);
     --shadow-xl: 0 16px 64px rgb(0 0 0 / 0.10);
     --shadow-inner: 0 2px 4px rgb(0 0 0 / 0.02) inset;
-    
+
     /* Border radius - more traditional academic look */
     --radius-sm: 6px;
     --radius-md: 8px;
@@ -40,19 +47,20 @@
     --radius-xl: 16px;
     --radius-2xl: 24px;
     --radius-full: 9999px;
-    
+
     /* Typography - Space Grotesk for headlines, Inter for body */
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-display: 'Space Grotesk', 'Inter', sans-serif;
     --font-mono: 'VT323', 'Courier New', monospace;
-    
+
     /* Transitions */
     --transition-fast: 150ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
     --transition-base: 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
     --transition-slow: 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    
+
     /* Layout */
     --container-max: 1400px;
+    --container-padding: 1.5rem;
     --section-gap: 6rem;
     --section-gap-sm: 4rem;
     --card-gap: 2rem;

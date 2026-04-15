@@ -1,0 +1,154 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const teamMembers = await getCollection('team');
+const allProjects = await getCollection('projects');
+const allPublications = await getCollection('publications');
+---
+
+<BaseLayout title="About" description="Learn about the BioAI Lab — our mission, research philosophy, and impact.">
+    <Header />
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero py-24">
+            <div class="max-container text-center">
+                <span class="section-eyebrow mb-6 inline-block">About the Lab</span>
+                <h1 class="text-5xl md:text-6xl font-bold mb-8 tracking-tight">Advancing <span class="text-primary">Biological Intelligence</span></h1>
+                <p class="text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed">The BioAI Lab pioneers computational frameworks that decode, predict, and engineer complex biological systems through the convergence of metabolic engineering, systems biology, and AI.</p>
+            </div>
+        </section>
+
+        <!-- Mission & Vision -->
+        <section class="py-20 bg-surface/30">
+            <div class="max-container">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div class="card-surface p-10">
+                        <div class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-2xl mb-6">🎯</div>
+                        <h2 class="text-2xl font-bold mb-4">Our Mission</h2>
+                        <p class="text-text-secondary leading-relaxed">To develop next-generation computational frameworks that integrate metabolic modeling, machine learning, and systems biology to solve pressing challenges in biotechnology, sustainable production, and health.</p>
+                    </div>
+                    <div class="card-surface p-10">
+                        <div class="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center text-2xl mb-6">🔭</div>
+                        <h2 class="text-2xl font-bold mb-4">Our Vision</h2>
+                        <p class="text-text-secondary leading-relaxed">A future where intelligent biological systems — designed through computational prediction and validated experimentally — enable sustainable manufacturing, precision medicine, and deeper understanding of life's complexity.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Philosophy -->
+        <section class="py-20">
+            <div class="max-container">
+                <div class="section-header mb-16">
+                    <span class="section-eyebrow">Our Approach</span>
+                    <h2 class="text-4xl font-bold mb-6">Research Philosophy</h2>
+                    <p class="text-xl text-text-secondary max-w-2xl mx-auto">We operate at the nexus of three primary domains, ensuring a holistic approach to biological problem-solving.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {[
+                        {
+                            icon: '🧬',
+                            title: 'Metabolic Engineering',
+                            description: 'Design and construction of novel metabolic pathways for sustainable production of chemicals, materials, and fuels through computational strain design and experimental validation.',
+                            color: 'primary'
+                        },
+                        {
+                            icon: '📊',
+                            title: 'Systems Biology',
+                            description: 'Genome-scale metabolic reconstructions and multi-omics integration to understand biological systems at a holistic level, from single organisms to complex communities.',
+                            color: 'accent'
+                        },
+                        {
+                            icon: '🤖',
+                            title: 'Artificial Intelligence',
+                            description: 'Machine learning, digital twins, and predictive modeling to optimize bioprocesses, predict metabolic behavior, and accelerate the design-build-test cycle in synthetic biology.',
+                            color: 'primary'
+                        }
+                    ].map((area) => (
+                        <div class="card-surface p-8 group hover:-translate-y-2 transition-all duration-500">
+                            <div class={`w-16 h-16 rounded-2xl flex items-center justify-center text-3xl mb-6 ${area.color === 'accent' ? 'bg-accent/10' : 'bg-primary/10'} group-hover:scale-110 transition-transform`}>
+                                {area.icon}
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">{area.title}</h3>
+                            <p class="text-text-secondary leading-relaxed">{area.description}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+        <!-- Impact Stats -->
+        <section class="py-20 bg-surface/30">
+            <div class="max-container">
+                <div class="section-header mb-16">
+                    <span class="section-eyebrow">Our Impact</span>
+                    <h2 class="text-4xl font-bold mb-6">Lab at a Glance</h2>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    {[
+                        { number: String(allProjects.length), label: 'Active Projects' },
+                        { number: String(allPublications.length), label: 'Publications' },
+                        { number: String(teamMembers.length), label: 'Team Members' },
+                        { number: '3', label: 'Research Domains' }
+                    ].map((stat) => (
+                        <div class="text-center">
+                            <div class="text-4xl md:text-5xl font-bold text-primary mb-2">{stat.number}</div>
+                            <div class="text-text-secondary font-medium">{stat.label}</div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Research Areas -->
+        <section class="py-20">
+            <div class="max-container">
+                <div class="section-header mb-16">
+                    <span class="section-eyebrow">Focus Areas</span>
+                    <h2 class="text-4xl font-bold mb-6">What We Work On</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {[
+                        { icon: '🔄', title: 'Digital Twins for Bioprocesses', desc: 'Real-time virtual replicas that model, monitor, and optimize industrial fermentation processes.' },
+                        { icon: '🧪', title: 'Sustainable Bioproduction', desc: 'Engineering microbes to produce green biopolymers, platform chemicals, and biofuels from renewable feedstocks.' },
+                        { icon: '💨', title: 'C1 Gas Fermentation', desc: 'Harnessing acetogenic bacteria to convert industrial waste gases (CO, CO₂, H₂) into valuable products.' },
+                        { icon: '🔬', title: 'Metabolic Network Analysis', desc: 'Systems-level reconstruction and analysis of microbial metabolism for rational engineering strategies.' },
+                        { icon: '📈', title: 'AI-Driven Optimization', desc: 'Machine learning models for predicting metabolic fluxes, gene expression, and process outcomes.' },
+                        { icon: '🌿', title: 'Environmental Bioremediation', desc: 'Computational design of microbial systems for degrading environmental pollutants.' }
+                    ].map((area) => (
+                        <div class="flex gap-5 p-6 card-surface group hover:-translate-y-1 transition-all">
+                            <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-2xl flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                                {area.icon}
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold mb-2 group-hover:text-primary transition-colors">{area.title}</h3>
+                                <p class="text-text-secondary text-sm leading-relaxed">{area.desc}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="py-20 bg-surface/30">
+            <div class="max-container text-center">
+                <h2 class="text-3xl font-bold mb-6">Interested in Working With Us?</h2>
+                <p class="text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed">We welcome collaborations, student placements, and research partnerships. Get in touch to explore opportunities.</p>
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <a href={`${import.meta.env.BASE_URL}/#contact`} class="pill-button">Get in Touch</a>
+                    <a href={`${import.meta.env.BASE_URL}/team`} class="pill-button secondary">Meet the Team</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <Footer />
+</BaseLayout>

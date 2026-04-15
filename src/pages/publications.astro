@@ -11,18 +11,24 @@ const sortedPublications = allPublications.sort((a, b) => b.data.year - a.data.y
 
 <BaseLayout title="Publications" description="Research publications from the BioAI Lab.">
     <Header />
-    
-    <main class="py-16">
-        <div class="max-container">
-            <div class="section-header mb-12 text-center">
-                <span class="section-eyebrow">Research Output</span>
-                <h1 class="text-4xl font-bold mb-4">Our Publications</h1>
-                <p class="section-subtitle max-w-2xl mx-auto">A collection of our peer-reviewed research in high-impact journals and international conferences.</p>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero py-24">
+            <div class="max-container text-center">
+                <span class="section-eyebrow mb-6 inline-block">Research Output</span>
+                <h1 class="text-5xl md:text-6xl font-bold mb-8 tracking-tight">Our <span class="text-primary">Publications</span></h1>
+                <p class="text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed">Peer-reviewed research published in high-impact journals and international conferences.</p>
             </div>
-            
-            <PublicationList initialPublications={sortedPublications} client:load />
-        </div>
+        </section>
+
+        <!-- Publications List -->
+        <section class="py-20">
+            <div class="max-container">
+                <PublicationList initialPublications={sortedPublications} client:load />
+            </div>
+        </section>
     </main>
-    
+
     <Footer />
 </BaseLayout>

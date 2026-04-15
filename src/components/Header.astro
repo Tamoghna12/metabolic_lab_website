@@ -1,38 +1,291 @@
 ---
+import DarkModeToggle from './ui/DarkModeToggle.jsx';
+
+const navLinks = [
+    { label: 'About', href: '/about' },
+    { label: 'Research', href: '/research' },
+    { label: 'Team', href: '/team' },
+    { label: 'Publications', href: '/publications' },
+    { label: 'News', href: '/news' },
+    { label: 'Contact', href: '/#contact' },
+];
+
+const baseUrl = import.meta.env.BASE_URL;
+const currentPath = Astro.url.pathname.replace(baseUrl, '') || '/';
 ---
+
 <header class="site-header" id="top">
     <div class="max-container nav-content">
         <div class="nav-left">
-            <a class="brand" href={`${import.meta.env.BASE_URL}/`} aria-label="BioAI Lab home">
+            <a class="brand" href={`${baseUrl}/`} aria-label="BioAI Lab home">
                 <span class="brand-name">BioAI Lab</span>
             </a>
         </div>
-        
+
         <div class="nav-center">
             <nav class="nav-links" aria-label="Primary navigation">
-                <a class="nav-link" href={`${import.meta.env.BASE_URL}/#overview`}>About</a>
-                <a class="nav-link" href={`${import.meta.env.BASE_URL}/research`}>Research</a>
-                <a class="nav-link" href={`${import.meta.env.BASE_URL}/#projects`}>Projects</a>
-                <a class="nav-link" href={`${import.meta.env.BASE_URL}/#team`}>Team</a>
-                <a class="nav-link" href={`${import.meta.env.BASE_URL}/publications`}>Publications</a>
-                <a class="nav-link" data-section="api-keys" href={`${import.meta.env.BASE_URL}/#api-keys`}>API Keys</a>
-                <a class="nav-link" href={`${import.meta.env.BASE_URL}/#contact`}>Contact</a>
+                {navLinks.map(link => {
+                    const href = `${baseUrl}${link.href}`;
+                    const isActive = link.href === '/' 
+                        ? currentPath === '/' 
+                        : currentPath.startsWith(link.href.replace('#', '').replace(/\/$/, ''));
+                    
+                    return (
+                        <a 
+                            class={`nav-link ${isActive ? 'active' : ''}`} 
+                            href={href}
+                            data-active={isActive ? 'true' : 'false'}
+                        >
+                            {link.label}
+                        </a>
+                    );
+                })}
             </nav>
         </div>
-        
-        <div class="nav-right">
-            <a class="pill-button" href={`${import.meta.env.BASE_URL}/#grant-generator`}>Grant Generator</a>
+
+        <div class="nav-right flex items-center gap-2">
+            <div id="search-container">
+                <button id="search-trigger" class="nav-icon-btn" aria-label="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+            </div>
+            <DarkModeToggle client:load />
+            <a class="pill-button pill-button-sm hidden lg:inline-flex" href={`${baseUrl}/#grant-generator`}>Grant Generator</a>
+            <button class="mobile-menu-btn lg:hidden" id="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
         </div>
     </div>
+
+    <!-- Mobile Menu -->
+    <nav class="mobile-menu hidden" id="mobile-menu" aria-label="Mobile navigation">
+        <div class="max-container py-4">
+            {navLinks.map(link => {
+                const href = `${baseUrl}${link.href}`;
+                const isActive = link.href === '/' 
+                    ? currentPath === '/' 
+                    : currentPath.startsWith(link.href.replace('#', '').replace(/\/$/, ''));
+                
+                return (
+                    <a 
+                        class={`mobile-nav-link ${isActive ? 'active' : ''}`} 
+                        href={href}
+                    >
+                        {link.label}
+                    </a>
+                );
+            })}
+            <div class="pt-4 border-t border-border mt-4">
+                <a class="pill-button w-full justify-center" href={`${baseUrl}/#grant-generator`}>Grant Generator</a>
+            </div>
+        </div>
+    </nav>
 </header>
 
 <style>
-    /* Add any Astro-specific styles here, or rely on global.css */
     .site-header {
         position: sticky;
         top: 0;
         z-index: 1000;
         background: var(--color-surface);
-        box-shadow: var(--shadow-sm);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--color-border);
+        transition: all 0.3s ease;
+    }
+
+    .nav-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 72px;
+    }
+
+    .brand-name {
+        font-family: var(--font-display);
+        font-size: 1.4rem;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    /* Desktop Nav Links */
+    .nav-links {
+        display: flex;
+        gap: 0.25rem;
+    }
+
+    .nav-link {
+        font-weight: 500;
+        color: var(--color-text-secondary);
+        transition: color 0.2s ease;
+        position: relative;
+        padding: 0.5rem 0.75rem;
+        border-radius: var(--radius-md);
+        font-size: 0.9rem;
+        text-decoration: none;
+    }
+
+    .nav-link:hover {
+        color: var(--color-text);
+        background: var(--color-surface-alt);
+    }
+
+    .nav-link.active {
+        color: var(--color-primary);
+        background: var(--color-primary-soft);
+        font-weight: 600;
+    }
+
+    /* Icon Buttons */
+    .nav-icon-btn {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-md);
+        border: none;
+        background: transparent;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .nav-icon-btn:hover {
+        background: var(--color-surface-alt);
+        color: var(--color-text);
+    }
+
+    /* Small Pill Button */
+    .pill-button-sm {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    /* Mobile Menu Button */
+    .mobile-menu-btn {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: var(--radius-md);
+        transition: background 0.2s ease;
+    }
+
+    .mobile-menu-btn:hover {
+        background: var(--color-surface-alt);
+    }
+
+    .hamburger-line {
+        display: block;
+        width: 18px;
+        height: 2px;
+        background: var(--color-text-secondary);
+        border-radius: 1px;
+        transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn[aria-expanded="true"] .hamburger-line:nth-child(1) {
+        transform: translateY(6px) rotate(45deg);
+    }
+
+    .mobile-menu-btn[aria-expanded="true"] .hamburger-line:nth-child(2) {
+        opacity: 0;
+    }
+
+    .mobile-menu-btn[aria-expanded="true"] .hamburger-line:nth-child(3) {
+        transform: translateY(-6px) rotate(-45deg);
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+        border-top: 1px solid var(--color-border);
+        background: var(--color-surface);
+    }
+
+    .mobile-nav-link {
+        display: block;
+        padding: 0.875rem 0;
+        font-weight: 500;
+        color: var(--color-text-secondary);
+        text-decoration: none;
+        border-bottom: 1px solid var(--color-border-light);
+        transition: all 0.2s ease;
+        font-size: 1rem;
+    }
+
+    .mobile-nav-link:last-of-type {
+        border-bottom: none;
+    }
+
+    .mobile-nav-link:hover {
+        color: var(--color-text);
+        padding-left: 0.5rem;
+    }
+
+    .mobile-nav-link.active {
+        color: var(--color-primary);
+        font-weight: 600;
+    }
+
+    @media (max-width: 1024px) {
+        .nav-center {
+            display: none;
+        }
+
+        .hidden.lg\\:inline-flex {
+            display: none !important;
+        }
     }
 </style>
+
+<script>
+    document.addEventListener('astro:page-load', () => {
+        const toggle = document.getElementById('mobile-menu-toggle');
+        const menu = document.getElementById('mobile-menu');
+
+        toggle?.addEventListener('click', () => {
+            const isOpen = menu?.classList.contains('!block');
+            if (isOpen) {
+                menu?.classList.remove('!block');
+                menu?.classList.add('hidden');
+                toggle?.setAttribute('aria-expanded', 'false');
+            } else {
+                menu?.classList.remove('hidden');
+                menu?.classList.add('!block');
+                toggle?.setAttribute('aria-expanded', 'true');
+            }
+        });
+
+        // Close menu when clicking on a link
+        menu?.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.remove('!block');
+                menu.classList.add('hidden');
+                toggle?.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // Close menu on escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && menu?.classList.contains('!block')) {
+                menu.classList.remove('!block');
+                menu.classList.add('hidden');
+                toggle?.setAttribute('aria-expanded', 'false');
+            }
+        });
+    });
+</script>

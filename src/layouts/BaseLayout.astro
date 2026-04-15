@@ -1,8 +1,10 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
 import '../styles/styles.css';
 import '../styles/components.css';
 import '../styles/animations.css';
 import '../styles/dark-mode.css';
+import '../styles/bio-animations.css';
 
 interface Props {
 	title: string;
@@ -13,29 +15,153 @@ const { title, description = "BioAI Lab • Advancing Biological Intelligence" }
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-transitions">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}/favicon.svg`} />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
 		<title>{title} | BioAI Lab</title>
-        
+
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-        
+
+        <!-- Pagefind search -->
+        <link href={`${import.meta.env.BASE_URL}/pagefind/pagefind-ui.css`} rel="stylesheet">
+        <script is:inline src={`${import.meta.env.BASE_URL}/pagefind/pagefind-ui.js`}></script>
+
+        <!-- Dark mode initialization (must be inline & in head to prevent flash) -->
+        <script is:inline>
+            (function() {
+                const theme = (() => {
+                    if (typeof localStorage !== 'undefined' && localStorage.getItem('bioai-theme')) {
+                        return localStorage.getItem('bioai-theme');
+                    }
+                    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                        return 'dark';
+                    }
+                    return 'light';
+                })();
+
+                if (theme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+
+                // Listen for system theme changes
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                    if (!localStorage.getItem('bioai-theme')) {
+                        if (e.matches) {
+                            document.documentElement.setAttribute('data-theme', 'dark');
+                        } else {
+                            document.documentElement.removeAttribute('data-theme');
+                        }
+                    }
+                });
+            })();
+        </script>
+
+        <ViewTransitions />
         <slot name="head" />
+
+        <style is:global>
+            /* Pagefind UI overrides */
+            :root {
+                --pagefind-ui-primary: var(--color-primary);
+                --pagefind-ui-text: var(--color-text);
+                --pagefind-ui-background: var(--color-surface);
+                --pagefind-ui-border: var(--color-border);
+                --pagefind-ui-tag: var(--color-accent);
+                --pagefind-ui-scale: 0.9;
+            }
+
+            /* Custom scrollbar */
+            ::-webkit-scrollbar { width: 10px; }
+            ::-webkit-scrollbar-track { background: var(--color-background); }
+            ::-webkit-scrollbar-thumb { background: var(--color-primary); border-radius: 5px; }
+            ::-webkit-scrollbar-thumb:hover { background: var(--color-primary-dark); }
+
+            /* Selection */
+            ::selection {
+                background: var(--color-accent-soft);
+                color: var(--color-text);
+            }
+
+            /* Focus visible */
+            :focus-visible {
+                outline: 2px solid var(--color-accent);
+                outline-offset: 2px;
+            }
+        </style>
 	</head>
-	<body>
+	<body class="bg-background text-text">
 		<slot />
+
+        <!-- Global Search Modal -->
+        <div id="search-modal" class="hidden fixed inset-0 z-[3000] flex items-start justify-center pt-24 px-4 bg-black/60 backdrop-blur-sm">
+            <div class="card-surface max-w-2xl w-full p-6 shadow-2xl animate-fade-in relative">
+                <button id="close-search" class="absolute top-4 right-4 text-gray-400 hover:text-primary transition-colors text-2xl" aria-label="Close search">&times;</button>
+                <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    Search Lab Data
+                </h2>
+                <div id="search-modal-content"></div>
+            </div>
+        </div>
+
+        <style is:global>
+            .animate-fade-in {
+                animation: fadeIn 0.3s ease-out;
+            }
+
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(-10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        </style>
+
+        <script>
+            document.addEventListener('astro:page-load', () => {
+                // Remove no-transitions class after first render to enable transitions
+                document.documentElement.classList.remove('no-transitions');
+
+                const modal = document.getElementById('search-modal');
+                const closeBtn = document.getElementById('close-search');
+
+                closeBtn?.addEventListener('click', () => {
+                    modal?.classList.add('hidden');
+                    // Clear previous search results
+                    const content = document.getElementById('search-modal-content');
+                    if (content) content.innerHTML = '';
+                });
+
+                modal?.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.add('hidden');
+                        const content = document.getElementById('search-modal-content');
+                        if (content) content.innerHTML = '';
+                    }
+                });
+
+                // Global shortcut (Ctrl+K / Cmd+K)
+                document.addEventListener('keydown', (e) => {
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                        e.preventDefault();
+                        document.getElementById('search-trigger')?.click();
+                    }
+                    if (e.key === 'Escape') {
+                        modal?.classList.add('hidden');
+                        const content = document.getElementById('search-modal-content');
+                        if (content) content.innerHTML = '';
+                    }
+                });
+            });
+
+            // Re-remove class after view transition
+            document.addEventListener('astro:after-swap', () => {
+                document.documentElement.classList.remove('no-transitions');
+            });
+        </script>
 	</body>
 </html>
-
-<style is:global>
-    /* Add common layout overrides if needed */
-    #app {
-        min-height: 100vh;
-    }
-</style>

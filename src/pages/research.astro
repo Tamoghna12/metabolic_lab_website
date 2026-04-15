@@ -5,70 +5,172 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
 const allProjects = await getCollection('projects');
+const activeProjects = allProjects.filter(p => p.data.status === 'Active');
+const otherProjects = allProjects.filter(p => p.data.status !== 'Active');
 ---
 
 <BaseLayout title="Research" description="Our research areas and current projects at the BioAI Lab.">
     <Header />
-    
-    <main class="py-16">
-        <div class="max-container">
-            <div class="section-header mb-16">
-                <span class="section-eyebrow">Our Work</span>
-                <h1 class="text-4xl font-bold mb-6">Research Portfolio</h1>
-                <p class="section-subtitle max-w-3xl">We integrate experimental and computational approaches to solve global challenges in biotechnology and medicine. Our research portfolio covers a range of high-impact areas from bioprocess optimization to environmental biotechnology.</p>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero py-24">
+            <div class="max-container text-center">
+                <span class="section-eyebrow mb-6 inline-block">Our Research</span>
+                <h1 class="text-5xl md:text-6xl font-bold mb-8 tracking-tight">Advancing the Frontier of <span class="text-primary">Bio-Intelligence</span></h1>
+                <p class="text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed">The BioAI Lab develops next-generation computational frameworks to decode, predict, and engineer complex biological systems.</p>
             </div>
-            
-            <div class="projects-detail space-y-24">
-                {allProjects.map((project, index) => (
-                    <section id={project.id} class={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-12 items-center`}>
-                        <div class="project-image flex-1 w-full max-w-xl">
-                            <div class="card-surface p-2 rounded-2xl overflow-hidden shadow-xl aspect-video bg-background flex items-center justify-center">
+        </section>
+
+        <!-- Active Projects -->
+        <section class="py-20">
+            <div class="max-container">
+                <div class="section-header mb-16">
+                    <span class="section-eyebrow">Current Work</span>
+                    <h2 class="text-4xl font-bold mb-6">Active Projects</h2>
+                    <p class="text-xl text-text-secondary max-w-2xl mx-auto">Our ongoing research pushing the boundaries of computational biology.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {activeProjects.map((project, index) => (
+                        <article class="project-card card-surface overflow-hidden group hover:-translate-y-2 transition-all duration-500 reveal" style={`animation-delay: ${index * 100}ms`}>
+                            <div class="project-visual relative h-56 overflow-hidden bg-surface-muted">
                                 {project.data.image ? (
-                                    <img src={project.data.image} alt={project.data.title} class="w-full h-full object-cover rounded-xl" />
+                                    <img src={project.data.image} alt={project.data.title} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                                 ) : (
-                                    <span class="text-4xl font-bold opacity-20">PROJECT</span>
+                                    <div class="w-full h-full flex items-center justify-center">
+                                        <div class="text-6xl font-bold opacity-5 text-primary">BIOAI</div>
+                                    </div>
                                 )}
+                                <div class="absolute top-4 right-4">
+                                    <span class="text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-success/20 text-success border border-success/30 backdrop-blur-sm">
+                                        {project.data.status}
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="project-info flex-1">
-                            <span class={`text-sm font-bold uppercase tracking-wider px-3 py-1 rounded-full ${project.data.status === 'Active' ? 'bg-success/10 text-success' : 'bg-gray-100 text-gray-500'}`}>
-                                {project.data.status}
-                            </span>
-                            <h2 class="text-3xl font-bold mt-4 mb-6">{project.data.title}</h2>
-                            <div class="prose prose-lg text-gray-600 max-w-none">
-                                <p>{project.data.summary}</p>
+                            <div class="p-8">
+                                <h3 class="text-2xl font-bold mb-3 group-hover:text-primary transition-colors leading-tight">{project.data.title}</h3>
+                                <p class="text-text-secondary leading-relaxed mb-6">{project.data.summary}</p>
+                                <div class="flex items-center justify-between pt-4 border-t border-border">
+                                    <div class="flex gap-2">
+                                        <span class="text-xs font-bold bg-primary/10 text-primary px-2.5 py-1 rounded-md">AI-Driven</span>
+                                        <span class="text-xs font-bold bg-accent/10 text-accent px-2.5 py-1 rounded-md">Bio-Systems</span>
+                                    </div>
+                                    <a href={`${import.meta.env.BASE_URL}/#contact`} class="text-sm font-semibold flex items-center gap-1.5 text-primary hover:translate-x-1 transition-transform">
+                                        Learn More <span>→</span>
+                                    </a>
+                                </div>
                             </div>
-                            <div class="mt-8 flex gap-4">
-                                <a href={`${import.meta.env.BASE_URL}/#contact`} class="pill-button small">Collaborate</a>
-                                <a href={`${import.meta.env.BASE_URL}/publications`} class="pill-button small secondary">Related Publications</a>
-                            </div>
-                        </div>
-                    </section>
-                ))}
+                        </article>
+                    ))}
+                </div>
             </div>
-            
-            <section class="research-areas mt-32 py-16 bg-surface/30 rounded-3xl p-12">
-                <h2 class="text-3xl font-bold text-center mb-12">Core Research Domains</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-                    <div class="area-card text-center">
-                        <div class="text-4xl mb-4">🧬</div>
-                        <h3 class="text-xl font-bold mb-4">Metabolic Engineering</h3>
-                        <p class="text-gray-600">Genetic optimization of microbial factories for high-yield production of platform chemicals and fuels.</p>
+        </section>
+
+        <!-- Other Projects -->
+        {otherProjects.length > 0 && (
+            <section class="py-20 bg-surface/30">
+                <div class="max-container">
+                    <div class="section-header mb-16">
+                        <span class="section-eyebrow">Completed & Collaborative</span>
+                        <h2 class="text-4xl font-bold mb-6">Other Projects</h2>
+                        <p class="text-xl text-text-secondary max-w-2xl mx-auto">Completed work and ongoing collaborations.</p>
                     </div>
-                    <div class="area-card text-center">
-                        <div class="text-4xl mb-4">💻</div>
-                        <h3 class="text-xl font-bold mb-4">Systems Biology</h3>
-                        <p class="text-gray-600">Integrative computational modeling of genome-scale biological networks to predict cellular behavior.</p>
-                    </div>
-                    <div class="area-card text-center">
-                        <div class="text-4xl mb-4">🌿</div>
-                        <h3 class="text-xl font-bold mb-4">Bioprocess Control</h3>
-                        <p class="text-gray-600">Digital twin development and real-time process monitoring for industrial scale biomanufacturing.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {otherProjects.map((project, index) => (
+                            <article class="project-card card-surface overflow-hidden group hover:-translate-y-1 transition-all duration-300 reveal" style={`animation-delay: ${index * 100}ms`}>
+                                <div class="project-visual relative h-40 overflow-hidden bg-surface-muted">
+                                    {project.data.image ? (
+                                        <img src={project.data.image} alt={project.data.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                    ) : (
+                                        <div class="w-full h-full flex items-center justify-center">
+                                            <div class="text-4xl font-bold opacity-5 text-primary">BIOAI</div>
+                                        </div>
+                                    )}
+                                    <div class="absolute top-3 right-3">
+                                        <span class={`text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full backdrop-blur-sm ${project.data.status === 'Completed' ? 'bg-gray-500/20 text-gray-400 border border-gray-500/30' : 'bg-accent/20 text-accent border border-accent/30'}`}>
+                                            {project.data.status}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-lg font-bold mb-2 group-hover:text-primary transition-colors leading-tight">{project.data.title}</h3>
+                                    <p class="text-text-secondary text-sm leading-relaxed line-clamp-3">{project.data.summary}</p>
+                                </div>
+                            </article>
+                        ))}
                     </div>
                 </div>
             </section>
-        </div>
+        )}
+
+        <!-- Cross-Disciplinary Focus Areas -->
+        <section class="py-20">
+            <div class="max-container">
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-12 items-start">
+                    <div class="lg:col-span-1 lg:sticky lg:top-32">
+                        <span class="section-eyebrow mb-4 inline-block">Methodology</span>
+                        <h2 class="text-3xl font-bold mb-4">Cross-Disciplinary Focus Areas</h2>
+                        <p class="text-text-secondary leading-relaxed">Our lab operates at the nexus of three primary domains, ensuring a holistic approach to biological problem-solving.</p>
+                    </div>
+                    <div class="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {[
+                            { icon: '🔄', title: 'Digital Twins', desc: 'Real-time virtual replicas of bioprocess systems that enable predictive monitoring, optimization, and control of industrial fermentation processes.', tools: 'Tools: ODE modeling, ML surrogates, real-time data integration' },
+                            { icon: '🧬', title: 'Pathway Design', desc: 'Computational design and optimization of synthetic metabolic routes for sustainable production of chemicals, materials, and pharmaceuticals.', tools: 'Tools: Genome-scale models, flux balance analysis, retrosynthesis' },
+                            { icon: '📊', title: 'Multi-Omics Integration', desc: 'Large-scale integration of transcriptomics, proteomics, and metabolomics datasets to understand biological systems at a holistic level.', tools: 'Tools: RNA-seq, metabolomics, statistical integration' },
+                            { icon: '🤖', title: 'Machine Learning', desc: 'Deep learning and AI models for predicting metabolic behavior, optimizing gene expression, and accelerating the design-build-test cycle.', tools: 'Tools: Neural networks, GNNs, transformer models' },
+                            { icon: '🏭', title: 'Bioprocess Engineering', desc: 'Scale-up and optimization of industrial bioprocesses from lab-scale to production, integrating computational models with experimental validation.', tools: 'Tools: CFD, kinetic modeling, process control' },
+                            { icon: '🌱', title: 'Sustainability', desc: 'Engineering biological systems for circular bioeconomy — converting waste streams into valuable products through intelligent design.', tools: 'Tools: LCA, techno-economic analysis, metabolic engineering' }
+                        ].map((area, index) => (
+                            <div class="card-surface p-7 group hover:-translate-y-1 transition-all duration-300 reveal" style={`animation-delay: ${index * 80}ms`}>
+                                <div class="flex gap-4 items-start">
+                                    <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-2xl flex-shrink-0 group-hover:bg-primary/20 group-hover:scale-110 transition-all">
+                                        {area.icon}
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-bold mb-2 group-hover:text-primary transition-colors">{area.title}</h3>
+                                        <p class="text-text-secondary text-sm leading-relaxed mb-3">{area.desc}</p>
+                                        <p class="text-text-tertiary text-xs italic">{area.tools}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="py-20 bg-surface/30">
+            <div class="max-container text-center">
+                <h2 class="text-3xl font-bold mb-4">Interested in Collaborating?</h2>
+                <p class="text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed">We're always open to new research partnerships and interdisciplinary collaborations.</p>
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <a href={`${import.meta.env.BASE_URL}/#contact`} class="pill-button">Get in Touch</a>
+                    <a href={`${import.meta.env.BASE_URL}/publications`} class="pill-button secondary">View Publications</a>
+                </div>
+            </div>
+        </section>
     </main>
-    
+
     <Footer />
 </BaseLayout>
+
+<style>
+    .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .project-card {
+        border: 1px solid var(--color-border);
+    }
+
+    .project-card:hover {
+        border-color: hsla(160 45% 62% / 0.3);
+        box-shadow: var(--shadow-lg);
+    }
+</style>

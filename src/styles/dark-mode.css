@@ -1,70 +1,389 @@
+/* =====================================================
+   DARK MODE THEME — BioAI Lab
+   ===================================================== */
+
 :root[data-theme='dark'] {
     color-scheme: dark;
-    --page-gradient: radial-gradient(circle at 0% 0%, rgba(24, 63, 49, 0.65), transparent 55%),
-        radial-gradient(circle at 100% 0%, rgba(184, 115, 51, 0.3), transparent 65%),
-        linear-gradient(135deg, #0f1f1a 0%, #152822 100%);
-    --color-ink: #f4faf6;
-    --color-muted: #c2d5cd;
-    --color-soft: #9fb7ab;
-    --color-accent: #ffb37a;
-    --color-primary: #6dd4ab;
-    --color-primary-strong: #41b789;
-    --surface: rgba(16, 34, 28, 0.85);
-    --surface-soft: rgba(20, 40, 33, 0.78);
-    --surface-muted: rgba(21, 44, 35, 0.74);
-    --surface-border: rgba(109, 212, 171, 0.18);
-    --shadow-sm: 0 18px 40px rgba(0, 0, 0, 0.35);
-    --shadow-lg: 0 28px 65px rgba(0, 0, 0, 0.45);
-    --shadow-inner: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+    /* Text */
+    --color-text: hsl(160 15% 94%);
+    --color-text-secondary: hsl(160 10% 72%);
+    --color-text-tertiary: hsl(160 8% 55%);
+    --color-text-muted: hsl(160 8% 45%);
+    --color-text-inverse: hsl(224 7% 4%);
+
+    /* Primary — luminous teal */
+    --color-primary: hsl(160 45% 62%);
+    --color-primary-dark: hsl(160 45% 52%);
+    --color-primary-light: hsl(160 45% 72%);
+    --color-primary-soft: hsla(160 45% 62% / 0.12);
+    --color-primary-strong: hsl(160 55% 55%);
+
+    /* Accent — warm amber */
+    --color-accent: hsl(28 80% 65%);
+    --color-accent-dark: hsl(28 80% 55%);
+    --color-accent-light: hsl(28 80% 75%);
+    --color-accent-soft: hsla(28 80% 65% / 0.12);
+
+    /* Status */
+    --color-success: hsl(142 60% 55%);
+    --color-warning: hsl(38 85% 60%);
+    --color-error: hsl(0 75% 68%);
+
+    /* Surfaces */
+    --color-background: hsl(165 20% 6%);
+    --color-background-alt: hsl(165 20% 8%);
+    --color-surface: hsl(165 18% 10%);
+    --color-surface-alt: hsl(165 18% 12%);
+    --color-surface-muted: hsl(165 15% 13%);
+    --color-border: hsla(160 30% 60% / 0.15);
+    --color-border-light: hsla(160 30% 60% / 0.08);
+
+    /* Shadows — deeper for dark mode */
+    --shadow-sm: 0 2px 8px rgb(0 0 0 / 0.3);
+    --shadow-md: 0 4px 16px rgb(0 0 0 / 0.4);
+    --shadow-lg: 0 8px 32px rgb(0 0 0 / 0.5);
+    --shadow-xl: 0 16px 64px rgb(0 0 0 / 0.6);
+    --shadow-inner: 0 1px 4px rgb(255 255 255 / 0.03) inset;
 }
 
-:root[data-theme='dark'] body::before {
-    background: radial-gradient(circle at 30% 20%, rgba(109, 212, 171, 0.12), transparent 55%),
-        radial-gradient(circle at 80% 10%, rgba(255, 179, 122, 0.12), transparent 60%);
+/* =====================================================
+   GLOBAL DARK MODE OVERRIDES
+   ===================================================== */
+
+/* Body & root */
+:root[data-theme='dark'] body {
+    background: var(--color-background);
 }
 
-:root[data-theme='dark'] .nav-blur {
-    background: rgba(12, 24, 20, 0.9);
-    border-bottom-color: rgba(109, 212, 171, 0.16);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+:root[data-theme='dark'] #app {
+    background: var(--color-background);
 }
 
-:root[data-theme='dark'] .brand-mark {
-    background: linear-gradient(135deg, rgba(109, 212, 171, 0.95), rgba(65, 183, 137, 0.85));
+/* =====================================================
+   HEADER / NAVIGATION
+   ===================================================== */
+
+:root[data-theme='dark'] .site-header {
+    background: rgba(10, 22, 18, 0.88);
+    border-bottom-color: var(--color-border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+:root[data-theme='dark'] .brand-name {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+:root[data-theme='dark'] .nav-link {
+    color: var(--color-text-secondary);
+}
+
+:root[data-theme='dark'] .nav-link:hover {
+    color: var(--color-primary);
+}
+
+:root[data-theme='dark'] .nav-link::after {
+    background: var(--color-primary);
+}
+
+/* =====================================================
+   HERO SECTION
+   ===================================================== */
+
+:root[data-theme='dark'] .hero {
+    background: linear-gradient(135deg, var(--color-surface) 0%, hsl(165 20% 10%) 50%, hsl(165 15% 8%) 100%);
 }
 
 :root[data-theme='dark'] .hero::before {
-    background: linear-gradient(135deg, rgba(109, 212, 171, 0.18), rgba(12, 24, 20, 0));
+    background-image:
+        radial-gradient(circle at 20% 80%, hsla(160 45% 62% / 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, hsla(28 80% 65% / 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, hsla(200 60% 55% / 0.05) 0%, transparent 50%);
 }
 
-:root[data-theme='dark'] .hero-search-card {
-    background: linear-gradient(135deg, rgba(24, 44, 37, 0.9), rgba(20, 38, 32, 0.92));
-    border-color: rgba(109, 212, 171, 0.22);
+:root[data-theme='dark'] .hero-keywords {
+    background: hsla(160 45% 62% / 0.12);
+    color: var(--color-primary);
 }
 
-:root[data-theme='dark'] .hero-highlight,
+:root[data-theme='dark'] .hero-highlight {
+    background: var(--color-surface-muted);
+    border-color: var(--color-border);
+}
+
+:root[data-theme='dark'] .hero-highlight-icon {
+    background: hsla(160 45% 62% / 0.15);
+}
+
+/* =====================================================
+   CARDS & SURFACES
+   ===================================================== */
+
 :root[data-theme='dark'] .card-surface,
-:root[data-theme='dark'] .contact-card,
-:root[data-theme='dark'] .publication-item {
-    background: rgba(19, 38, 32, 0.9);
-    border-color: rgba(109, 212, 171, 0.2);
+:root[data-theme='dark'] .team-card,
+:root[data-theme='dark'] .project-card,
+:root[data-theme='dark'] .testimonial-card,
+:root[data-theme='dark'] .news-card {
+    background: var(--color-surface);
+    border-color: var(--color-border);
 }
 
-:root[data-theme='dark'] .stat-card {
-    background: rgba(19, 38, 32, 0.78);
-    border-color: rgba(109, 212, 171, 0.16);
+:root[data-theme='dark'] .card-surface:hover,
+:root[data-theme='dark'] .team-card:hover,
+:root[data-theme='dark'] .project-card:hover {
+    border-color: hsla(160 45% 62% / 0.3);
+    box-shadow: 0 8px 32px hsla(160 45% 62% / 0.1);
+}
+
+:root[data-theme='dark'] .soft-badge {
+    background: hsla(160 45% 62% / 0.12);
+    color: var(--color-primary);
+}
+
+:root[data-theme='dark'] .tag-pill {
+    background: hsla(160 45% 62% / 0.1);
+    color: var(--color-primary);
+}
+
+/* =====================================================
+   SECTIONS
+   ===================================================== */
+
+:root[data-theme='dark'] section:nth-child(even) {
+    background: var(--color-surface);
+}
+
+:root[data-theme='dark'] section:nth-child(odd) {
+    background: var(--color-background);
+}
+
+:root[data-theme='dark'] section + section::before {
+    background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+}
+
+/* =====================================================
+   BUTTONS
+   ===================================================== */
+
+:root[data-theme='dark'] .pill-button {
+    background: var(--color-primary);
+    color: var(--color-text-inverse);
+}
+
+:root[data-theme='dark'] .pill-button:hover {
+    background: var(--color-primary-dark);
+    box-shadow: 0 8px 24px hsla(160 45% 62% / 0.25);
+}
+
+:root[data-theme='dark'] .pill-button.secondary {
+    background: transparent;
+    color: var(--color-primary);
+    border-color: var(--color-border);
+}
+
+:root[data-theme='dark'] .pill-button.secondary:hover {
+    background: var(--color-surface);
+    border-color: var(--color-primary);
+}
+
+/* =====================================================
+   FORMS
+   ===================================================== */
+
+:root[data-theme='dark'] .form-field input,
+:root[data-theme='dark'] .form-field textarea,
+:root[data-theme='dark'] .form-field select {
+    background: var(--color-surface-muted);
+    border-color: var(--color-border);
+    color: var(--color-text);
+}
+
+:root[data-theme='dark'] .form-field input:focus,
+:root[data-theme='dark'] .form-field textarea:focus,
+:root[data-theme='dark'] .form-field select:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px hsla(160 45% 62% / 0.15);
+}
+
+:root[data-theme='dark'] .form-field label {
+    color: var(--color-text-secondary);
 }
 
 :root[data-theme='dark'] .grant-generator {
-    background: linear-gradient(135deg, rgba(24, 44, 37, 0.88), rgba(38, 22, 12, 0.78));
-    border-color: rgba(109, 212, 171, 0.2);
+    background: linear-gradient(135deg, hsla(160 45% 62% / 0.08), hsla(28 80% 65% / 0.06));
+    border-color: var(--color-border);
+}
+
+/* =====================================================
+   PUBLICATIONS
+   ===================================================== */
+
+:root[data-theme='dark'] .publication-item {
+    background: var(--color-surface);
+    border-color: var(--color-border);
+}
+
+:root[data-theme='dark'] .publication-title a {
+    color: var(--color-primary);
+}
+
+/* =====================================================
+   STATS
+   ===================================================== */
+
+:root[data-theme='dark'] .stat-card {
+    background: var(--color-surface-muted);
+    border-color: var(--color-border);
+}
+
+:root[data-theme='dark'] .stat-number {
+    color: var(--color-primary);
+}
+
+:root[data-theme='dark'] .stat-label {
+    color: var(--color-text-tertiary);
+}
+
+/* =====================================================
+   SEARCH
+   ===================================================== */
+
+:root[data-theme='dark'] #search-modal > div {
+    background: var(--color-surface);
+    border-color: var(--color-border);
 }
 
 :root[data-theme='dark'] .search-result-card {
-    background: rgba(22, 42, 35, 0.9);
-    border-color: rgba(109, 212, 171, 0.14);
+    background: var(--color-surface-muted);
+    border-color: var(--color-border);
 }
 
+/* =====================================================
+   DARK MODE TOGGLE BUTTON
+   ===================================================== */
+
+:root[data-theme='dark'] .theme-toggle-btn {
+    background: transparent;
+}
+
+:root[data-theme='dark'] .theme-toggle-btn:hover {
+    background: var(--color-surface-alt);
+}
+
+/* =====================================================
+   FOOTER
+   ===================================================== */
+
 :root[data-theme='dark'] .site-footer {
-    background: rgba(6, 14, 11, 0.92);
+    background: hsl(165 20% 4%);
+    border-top: 1px solid var(--color-border);
+}
+
+:root[data-theme='dark'] .footer-nav a {
+    color: var(--color-text-secondary);
+}
+
+:root[data-theme='dark'] .footer-nav a:hover {
+    color: var(--color-primary);
+}
+
+:root[data-theme='dark'] .footer-meta {
+    color: var(--color-text-tertiary);
+}
+
+/* =====================================================
+   GRIDS & LAYOUTS
+   ===================================================== */
+
+:root[data-theme='dark'] .bg-surface\/30,
+:root[data-theme='dark'] .bg-surface\/40,
+:root[data-theme='dark'] .bg-surface\/60 {
+    background: var(--color-surface);
+}
+
+:root[data-theme='dark'] .bg-background,
+:root[data-theme='dark'] .bg-white\/60 {
+    background: var(--color-background);
+}
+
+/* =====================================================
+   TEXT COLORS
+   ===================================================== */
+
+:root[data-theme='dark'] .text-gray-500,
+:root[data-theme='dark'] .text-gray-600 {
+    color: var(--color-text-tertiary);
+}
+
+:root[data-theme='dark'] .text-gray-400 {
+    color: var(--color-text-muted);
+}
+
+/* =====================================================
+   PROJECT SHOWCASE
+   ===================================================== */
+
+:root[data-theme='dark'] .project-showcase {
+    background: var(--color-surface) !important;
+    border-color: var(--color-border);
+}
+
+:root[data-theme='dark'] .project-showcase:hover {
+    border-color: hsla(160 45% 62% / 0.3);
+}
+
+:root[data-theme='dark'] .project-visual {
+    background: var(--color-surface-muted) !important;
+}
+
+/* =====================================================
+   MOBILE MENU
+   ===================================================== */
+
+:root[data-theme='dark'] .mobile-menu {
+    background: rgba(10, 22, 18, 0.97);
+    border-top-color: var(--color-border);
+}
+
+:root[data-theme='dark'] .mobile-menu .nav-link {
+    color: var(--color-text-secondary);
+    border-bottom-color: var(--color-border);
+}
+
+/* =====================================================
+   PAGEFIND OVERRIDES
+   ===================================================== */
+
+:root[data-theme='dark'] {
+    --pagefind-ui-primary: var(--color-primary);
+    --pagefind-ui-text: var(--color-text);
+    --pagefind-ui-background: var(--color-surface);
+    --pagefind-ui-border: var(--color-border);
+    --pagefind-ui-tag: var(--color-accent);
+    --pagefind-ui-scale: 0.9;
+}
+
+/* =====================================================
+   SMOOTH THEME TRANSITIONS
+   ===================================================== */
+
+html {
+    transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+html *,
+html *::before,
+html *::after {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-duration: 0.2s;
+}
+
+/* Exclude transition for page-load performance */
+html.no-transitions *,
+html.no-transitions *::before,
+html.no-transitions *::after {
+    transition: none !important;
 }
