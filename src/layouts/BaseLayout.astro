@@ -1,5 +1,6 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
+import SEO from '../components/SEO.astro';
 import '../styles/styles.css';
 import '../styles/components.css';
 import '../styles/animations.css';
@@ -9,20 +10,17 @@ import '../styles/bio-animations.css';
 interface Props {
 	title: string;
     description?: string;
+    image?: string;
+    type?: string;
 }
 
-const { title, description = "BioAI Lab • Advancing Biological Intelligence" } = Astro.props;
+const { title, description, image, type } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en" class="no-transitions">
 	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}/favicon.svg`} />
-		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content={description} />
-		<title>{title} | BioAI Lab</title>
+		<SEO title={title} description={description} image={image} type={type} />
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -123,24 +121,37 @@ const { title, description = "BioAI Lab • Advancing Biological Intelligence" }
 
         <script>
             document.addEventListener('astro:page-load', () => {
-                // Remove no-transitions class after first render to enable transitions
-                document.documentElement.classList.remove('no-transitions');
+                // Initialize Pagefind UI
+                if (typeof PagefindUI !== 'undefined') {
+                    new PagefindUI({
+                        element: "#search-modal-content",
+                        showSubResults: true,
+                        pageSize: 5,
+                        resetStyles: false,
+                        baseUrl: import.meta.env.BASE_URL
+                    });
+                }
 
                 const modal = document.getElementById('search-modal');
                 const closeBtn = document.getElementById('close-search');
+                const searchTrigger = document.getElementById('search-trigger');
+
+                searchTrigger?.addEventListener('click', () => {
+                    modal?.classList.remove('hidden');
+                    // Focus the search input if Pagefind initialized it
+                    setTimeout(() => {
+                        const searchInput = modal?.querySelector('input');
+                        searchInput?.focus();
+                    }, 100);
+                });
 
                 closeBtn?.addEventListener('click', () => {
                     modal?.classList.add('hidden');
-                    // Clear previous search results
-                    const content = document.getElementById('search-modal-content');
-                    if (content) content.innerHTML = '';
                 });
 
                 modal?.addEventListener('click', (e) => {
                     if (e.target === modal) {
                         modal.classList.add('hidden');
-                        const content = document.getElementById('search-modal-content');
-                        if (content) content.innerHTML = '';
                     }
                 });
 
@@ -148,14 +159,15 @@ const { title, description = "BioAI Lab • Advancing Biological Intelligence" }
                 document.addEventListener('keydown', (e) => {
                     if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
                         e.preventDefault();
-                        document.getElementById('search-trigger')?.click();
+                        searchTrigger?.click();
                     }
                     if (e.key === 'Escape') {
                         modal?.classList.add('hidden');
-                        const content = document.getElementById('search-modal-content');
-                        if (content) content.innerHTML = '';
                     }
                 });
+
+                // Remove no-transitions class after first render to enable transitions
+                document.documentElement.classList.remove('no-transitions');
             });
 
             // Re-remove class after view transition

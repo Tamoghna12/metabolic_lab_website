@@ -68,29 +68,31 @@ Generated with ${formData.model} via BioAI Lab Platform.`;
                     <div class="grant-form-panel card-surface p-8">
                         <form id="grant-form" onSubmit={generateProposal}>
                             <div class="form-group mb-4">
-                                <label for="research-area">Research Area</label>
+                                <label for="research-area" class="form-label">Research Area</label>
                                 <input 
                                     type="text" 
                                     id="research-area" 
                                     placeholder="e.g., C1-Gas Fermentation" 
                                     required 
                                     onInput={handleInputChange}
+                                    class="form-input"
                                 />
                             </div>
 
                             <div class="form-group mb-4">
-                                <label for="project-title">Project Title</label>
+                                <label for="project-title" class="form-label">Project Title</label>
                                 <input 
                                     type="text" 
                                     id="project-title" 
                                     placeholder="Enter your project title" 
                                     required 
                                     onInput={handleInputChange}
+                                    class="form-input"
                                 />
                             </div>
 
                             <div class="form-group mb-4">
-                                <label for="project-description">Executive Summary (Max 1000 chars)</label>
+                                <label for="project-description" class="form-label">Executive Summary (Max 1000 chars)</label>
                                 <textarea 
                                     id="project-description" 
                                     rows="4" 
@@ -98,6 +100,7 @@ Generated with ${formData.model} via BioAI Lab Platform.`;
                                     placeholder="Describe your research goals and impact..." 
                                     required
                                     onInput={handleInputChange}
+                                    class="form-input form-textarea"
                                 ></textarea>
                                 <div class="char-counter text-right text-sm text-gray-500">
                                     <span id="char-count">{formData.projectDescription.length}</span>/1000
@@ -106,14 +109,14 @@ Generated with ${formData.model} via BioAI Lab Platform.`;
 
                             <div class="advanced-toggle mb-4 cursor-pointer flex items-center gap-2" onClick={() => setShowAdvanced(!showAdvanced)}>
                                 <span class={`arrow transition-transform ${showAdvanced ? 'rotate-90' : ''}`}>▶</span>
-                                <span id="options-text">{showAdvanced ? 'Hide' : 'Show'} Advanced Options</span>
+                                <span id="options-text" class="text-sm font-semibold">{showAdvanced ? 'Hide' : 'Show'} Advanced Options</span>
                             </div>
 
                             {showAdvanced && (
                                 <div id="advanced-fields" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                                     <div class="form-group">
-                                        <label for="funding-agency">Funding Agency</label>
-                                        <select id="funding-agency" onInput={handleInputChange}>
+                                        <label for="funding-agency" class="form-label">Funding Agency</label>
+                                        <select id="funding-agency" onInput={handleInputChange} class="form-input form-select">
                                             <option value="">Select Agency</option>
                                             <option value="nsf">NSF (USA)</option>
                                             <option value="nih">NIH (USA)</option>
@@ -122,16 +125,16 @@ Generated with ${formData.model} via BioAI Lab Platform.`;
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="budget">Approx. Budget</label>
-                                        <input type="text" id="budget" placeholder="e.g., $500,000" onInput={handleInputChange} />
+                                        <label for="budget" class="form-label">Approx. Budget</label>
+                                        <input type="text" id="budget" placeholder="e.g., $500,000" onInput={handleInputChange} class="form-input" />
                                     </div>
                                     <div class="form-group">
-                                        <label for="duration">Duration</label>
-                                        <input type="text" id="duration" placeholder="e.g., 3 years" onInput={handleInputChange} />
+                                        <label for="duration" class="form-label">Duration</label>
+                                        <input type="text" id="duration" placeholder="e.g., 3 years" onInput={handleInputChange} class="form-input" />
                                     </div>
                                     <div class="form-group">
-                                        <label for="selected-model">AI Model</label>
-                                        <select id="selected-model" onInput={handleInputChange}>
+                                        <label for="selected-model" class="form-label">AI Model</label>
+                                        <select id="selected-model" onInput={handleInputChange} class="form-input form-select">
                                             <option value="gpt4-research">GPT-4 Research</option>
                                             <option value="claude-3">Claude 3 Sonnet</option>
                                             <option value="gemini-pro">Gemini Pro</option>

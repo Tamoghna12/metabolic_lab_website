@@ -80,18 +80,19 @@ export default function APIKeyManager() {
                             <form onSubmit={handleSaveKey}>
                                 <input type="hidden" name="provider" value={currentEdit} />
                                 <div class="form-group mb-4">
-                                    <label>API Key</label>
+                                    <label class="form-label">API Key</label>
                                     <input 
                                         type="password" 
                                         name="key" 
                                         defaultValue={keys[currentEdit]?.key || ''} 
                                         required 
-                                        class="w-full"
+                                        class="form-input"
+                                        placeholder="Enter your API key"
                                     />
                                 </div>
-                                <div class="form-group mb-4">
-                                    <label>Default Model</label>
-                                    <select name="model" class="w-full">
+                                <div class="form-group mb-6">
+                                    <label class="form-label">Default Model</label>
+                                    <select name="model" class="form-input form-select">
                                         {PROVIDERS[currentEdit].models.map(m => (
                                             <option key={m} value={m} selected={m === keys[currentEdit]?.model}>{m}</option>
                                         ))}
