@@ -105,7 +105,7 @@ section {
 
 /* Alternating section backgrounds for visual hierarchy */
 section:nth-child(even) {
-    background: var(--color-surface);
+    background-color: var(--color-surface);
 }
 
 section:nth-child(odd) {
@@ -437,7 +437,7 @@ img {
 }
 
 .pill-button.secondary:hover {
-    background: var(--color-surface);
+    background-color: var(--color-surface);
     border-color: var(--color-primary);
 }
 
@@ -793,7 +793,7 @@ img {
     padding: 0.65rem 0.9rem;
     border: 1.5px solid var(--color-border);
     border-radius: var(--radius-md);
-    background: var(--color-surface);
+    background-color: var(--color-surface);
     color: var(--color-text);
     font-family: inherit;
     font-size: 0.95rem;
@@ -812,11 +812,13 @@ img {
     outline: none;
     border-color: var(--color-primary);
     box-shadow: 0 0 0 3px var(--color-primary-soft);
-    background: var(--color-surface);
+    background-color: var(--color-surface);
 }
 
 .form-select {
     appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
     background-position: right 0.5rem center;
     background-repeat: no-repeat;
@@ -824,13 +826,13 @@ img {
     padding-right: 2.5rem;
 }
 
+[data-theme='dark'] .form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+}
+
 .form-textarea {
     min-height: 120px;
     resize: vertical;
-}
-
-[data-theme='dark'] .form-select {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
 }
 
 @media (max-width: 768px) {

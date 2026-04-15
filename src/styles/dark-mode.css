@@ -196,7 +196,7 @@
 :root[data-theme='dark'] .form-field input,
 :root[data-theme='dark'] .form-field textarea,
 :root[data-theme='dark'] .form-field select {
-    background: var(--color-surface-muted);
+    background-color: var(--color-surface-muted);
     border-color: var(--color-border);
     color: var(--color-text);
 }
