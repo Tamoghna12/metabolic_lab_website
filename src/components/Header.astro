@@ -60,7 +60,7 @@ const currentPath = Astro.url.pathname.replace(baseUrl, '') || '/';
     </div>
 
     <!-- Mobile Menu -->
-    <nav class="mobile-menu hidden" id="mobile-menu" aria-label="Mobile navigation">
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation" hidden>
         <div class="max-container py-4">
             {navLinks.map(link => {
                 const href = `${baseUrl}${link.href}`;
@@ -212,8 +212,17 @@ const currentPath = Astro.url.pathname.replace(baseUrl, '') || '/';
 
     /* Mobile Menu */
     .mobile-menu {
+        display: none;
         border-top: 1px solid var(--color-border);
         background: var(--color-surface);
+    }
+
+    .mobile-menu[hidden] {
+        display: none !important;
+    }
+
+    .mobile-menu.open {
+        display: block;
     }
 
     .mobile-nav-link {
@@ -258,14 +267,12 @@ const currentPath = Astro.url.pathname.replace(baseUrl, '') || '/';
         const menu = document.getElementById('mobile-menu');
 
         toggle?.addEventListener('click', () => {
-            const isOpen = menu?.classList.contains('!block');
+            const isOpen = menu?.classList.contains('open');
             if (isOpen) {
-                menu?.classList.remove('!block');
-                menu?.classList.add('hidden');
+                menu?.classList.remove('open');
                 toggle?.setAttribute('aria-expanded', 'false');
             } else {
-                menu?.classList.remove('hidden');
-                menu?.classList.add('!block');
+                menu?.classList.add('open');
                 toggle?.setAttribute('aria-expanded', 'true');
             }
         });
@@ -273,17 +280,15 @@ const currentPath = Astro.url.pathname.replace(baseUrl, '') || '/';
         // Close menu when clicking on a link
         menu?.querySelectorAll('.mobile-nav-link').forEach(link => {
             link.addEventListener('click', () => {
-                menu.classList.remove('!block');
-                menu.classList.add('hidden');
+                menu?.classList.remove('open');
                 toggle?.setAttribute('aria-expanded', 'false');
             });
         });
 
         // Close menu on escape
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && menu?.classList.contains('!block')) {
-                menu.classList.remove('!block');
-                menu.classList.add('hidden');
+            if (e.key === 'Escape' && menu?.classList.contains('open')) {
+                menu.classList.remove('open');
                 toggle?.setAttribute('aria-expanded', 'false');
             }
         });
