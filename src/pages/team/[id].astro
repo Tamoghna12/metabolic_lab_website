@@ -1,0 +1,113 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const teamEntries = await getCollection('team');
+  return teamEntries.map(entry => ({
+    params: { id: entry.id }, props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { data } = entry;
+---
+
+<BaseLayout title={data.name} description={`${data.name} - ${data.role} at BioAI Lab.`}>
+    <Header />
+    
+    <main class="py-20 bg-background-alt/30">
+        <div class="max-container">
+            <div class="flex flex-col lg:flex-row gap-16 items-start">
+                <div class="bio-aside lg:w-1/3 w-full sticky top-32">
+                    <div class="card-surface p-8 overflow-hidden">
+                        <div class="aspect-square rounded-2xl overflow-hidden mb-8 shadow-lg">
+                            <img src={data.image} alt={data.name} class="w-full h-full object-cover" />
+                        </div>
+                        <h1 class="text-3xl font-bold mb-2">{data.name}</h1>
+                        <p class="text-accent font-bold mb-6">{data.role}</p>
+                        
+                        <div class="contact-links space-y-4 pt-6 border-t border-border">
+                            {data.email && (
+                                <a href={`mailto:${data.email}`} class="flex items-center gap-3 text-gray-600 hover:text-primary">
+                                    <span class="text-xl">✉️</span> {data.email}
+                                </a>
+                            )}
+                            {data.linkedin && (
+                                <a href={data.linkedin} target="_blank" rel="noopener" class="flex items-center gap-3 text-gray-600 hover:text-primary">
+                                    <span class="text-xl">💼</span> LinkedIn Profile
+                                </a>
+                            )}
+                            {data.website && (
+                                <a href={data.website} target="_blank" rel="noopener" class="flex items-center gap-3 text-gray-600 hover:text-primary">
+                                    <span class="text-xl">🌐</span> University Profile
+                                </a>
+                            )}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bio-main lg:w-2/3 w-full">
+                    <div class="card-surface p-12">
+                        <section class="bio-section mb-12">
+                            <h2 class="text-2xl font-bold border-b-2 border-primary w-fit pb-2 mb-6">Biography</h2>
+                            <div class="prose prose-lg max-w-none text-gray-600 leading-relaxed">
+                                <Content />
+                            </div>
+                        </section>
+
+                        {data.qualifications && data.qualifications.length > 0 && (
+                            <section class="bio-section mb-12">
+                                <h2 class="text-2xl font-bold border-b-2 border-primary w-fit pb-2 mb-6">Academic Journey</h2>
+                                <ul class="space-y-4">
+                                    {data.qualifications.map(q => (
+                                        <li class="flex gap-4 items-start">
+                                            <span class="text-xl">🎓</span>
+                                            <span class="text-gray-700">{q}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </section>
+                        )}
+
+                        {data.researchFocus && data.researchFocus.length > 0 && (
+                            <section class="bio-section mb-12">
+                                <h2 class="text-2xl font-bold border-b-2 border-primary w-fit pb-2 mb-6">Research Interests</h2>
+                                <div class="flex flex-wrap gap-3">
+                                    {data.researchFocus.map(focus => (
+                                        <span class="bg-primary/10 text-primary-dark px-4 py-2 rounded-full font-medium">{focus}</span>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {data.achievements && data.achievements.length > 0 && (
+                            <section class="bio-section mb-12">
+                                <h2 class="text-2xl font-bold border-b-2 border-primary w-fit pb-2 mb-6">Key Achievements</h2>
+                                <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {data.achievements.map(a => (
+                                        <li class="p-4 bg-background/50 rounded-xl border border-border flex gap-3">
+                                            <span class="text-lg">🏆</span>
+                                            <span class="text-sm font-medium">{a}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </section>
+                        )}
+                    </div>
+                    
+                    <div class="mt-12">
+                        <a href={`${import.meta.env.BASE_URL}/#team`} class="pill-button secondary flex items-center gap-2 w-fit">
+                            <span>←</span> Back to Team Overview
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <Footer />
+</BaseLayout>

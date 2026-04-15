@@ -1,29 +1,43 @@
-# BioAI Lab Website
+# Astro Starter Kit: Minimal
 
-An academic website template for the BioAI Lab featuring modular components, JSON-driven content, a Tailwind-inspired glassmorphic design system, and optional Node.js backend integration.
+```sh
+npm create astro@latest -- --template minimal
+```
 
-## Getting Started
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-2. Run the development server (optional backend):
-   ```bash
-   npm run dev
-   ```
-3. Open `index.html` in a browser or serve the project using your preferred static server.
+## 🚀 Project Structure
 
-## Front-end design language
+Inside of your Astro project, you'll see the following folders and files:
 
-- The site loads reusable HTML components at runtime and hydrates them with JSON data (news, projects, team, testimonials, publications).
-- Tailwind CSS Play CDN powers utility spacing (`py-24`, etc.), while bespoke CSS in `css/` provides the glassmorphism palette, reveal animations, and component styling used for dynamic content.
-- Intersection Observer-based reveal animations and keyword rotators live in `js/main.js`; search results are debounced in `js/search.js`.
+```text
+/
+├── public/
+├── src/
+│   └── pages/
+│       └── index.astro
+└── package.json
+```
 
-## Project Structure
+Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
 
-Refer to the repository tree for directories including styles, scripts, HTML components, JSON data, static assets, backend server files, documentation, and tests.
+There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
 
-## Contributing
+Any static assets, like images, can be placed in the `public/` directory.
 
-Please read `docs/CONTRIBUTING.md` for contribution guidelines.
+## 🧞 Commands
+
+All commands are run from the root of the project, from a terminal:
+
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Installs dependencies                            |
+| `npm run dev`             | Starts local dev server at `localhost:4321`      |
+| `npm run build`           | Build your production site to `./dist/`          |
+| `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI                     |
+
+## 👀 Want to learn more?
+
+Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

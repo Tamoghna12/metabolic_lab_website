@@ -1,0 +1,38 @@
+---
+---
+<header class="site-header" id="top">
+    <div class="max-container nav-content">
+        <div class="nav-left">
+            <a class="brand" href={`${import.meta.env.BASE_URL}/`} aria-label="BioAI Lab home">
+                <span class="brand-name">BioAI Lab</span>
+            </a>
+        </div>
+        
+        <div class="nav-center">
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a class="nav-link" href={`${import.meta.env.BASE_URL}/#overview`}>About</a>
+                <a class="nav-link" href={`${import.meta.env.BASE_URL}/research`}>Research</a>
+                <a class="nav-link" href={`${import.meta.env.BASE_URL}/#projects`}>Projects</a>
+                <a class="nav-link" href={`${import.meta.env.BASE_URL}/#team`}>Team</a>
+                <a class="nav-link" href={`${import.meta.env.BASE_URL}/publications`}>Publications</a>
+                <a class="nav-link" data-section="api-keys" href={`${import.meta.env.BASE_URL}/#api-keys`}>API Keys</a>
+                <a class="nav-link" href={`${import.meta.env.BASE_URL}/#contact`}>Contact</a>
+            </nav>
+        </div>
+        
+        <div class="nav-right">
+            <a class="pill-button" href={`${import.meta.env.BASE_URL}/#grant-generator`}>Grant Generator</a>
+        </div>
+    </div>
+</header>
+
+<style>
+    /* Add any Astro-specific styles here, or rely on global.css */
+    .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: var(--color-surface);
+        box-shadow: var(--shadow-sm);
+    }
+</style>

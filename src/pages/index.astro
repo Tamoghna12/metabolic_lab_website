@@ -1,0 +1,106 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import GrantGenerator from '../components/forms/GrantGenerator.jsx';
+import APIKeyManager from '../components/ui/APIKeyManager.jsx';
+import ContactForm from '../components/forms/ContactForm.jsx';
+
+const featuredProjects = await getCollection('projects', ({ data }) => {
+  return data.featured === true;
+});
+
+const teamMembers = await getCollection('team');
+const sortedTeam = teamMembers.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+
+const newsItems = await getCollection('news');
+const latestNews = newsItems.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()).slice(0, 3);
+---
+
+<BaseLayout title="Home">
+    <Header />
+    
+    <main>
+        <Hero />
+        
+        <section id="projects" class="py-16 bg-surface/30">
+            <div class="max-container">
+                <div class="section-header">
+                    <span class="section-eyebrow">Innovation</span>
+                    <h2 class="section-title">Featured Research Projects</h2>
+                    <p class="section-subtitle">Pioneering work at the intersection of computational modeling and experimental biology.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {featuredProjects.map(project => (
+                        <ProjectCard project={project} />
+                    ))}
+                </div>
+                
+                <div class="mt-12 text-center">
+                    <a href={`${import.meta.env.BASE_URL}/research`} class="pill-button secondary">Explore All Projects</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="team" class="py-16">
+            <div class="max-container">
+                <div class="section-header">
+                    <span class="section-eyebrow">Team</span>
+                    <h2 class="section-title">Meet Our Experts</h2>
+                    <p class="section-subtitle">A multidisciplinary team of scientists and engineers dedicated to advancing biological intelligence.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {sortedTeam.map(member => (
+                        <article class="team-card card-surface p-8 flex flex-col md:flex-row gap-6">
+                            <div class="member-photo w-32 h-32 flex-shrink-0 rounded-full overflow-hidden bg-background">
+                                <img src={member.data.image} alt={member.data.name} class="w-full h-full object-cover" />
+                            </div>
+                            <div class="member-info">
+                                <span class="role text-accent font-bold text-sm">{member.data.role}</span>
+                                <h3 class="text-2xl font-bold mb-2">{member.data.name}</h3>
+                                <p class="text-gray-600 mb-4 line-clamp-3">{member.data.bio}</p>
+                                <a href={`${import.meta.env.BASE_URL}/team/${member.id}`} class="text-primary hover:underline font-medium">Read Full Bio →</a>
+                            </div>
+                        </article>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+        <section id="news" class="py-16 bg-surface/30">
+            <div class="max-container">
+                <div class="section-header">
+                    <span class="section-eyebrow">Updates</span>
+                    <h2 class="section-title">Latest from the Lab</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {latestNews.map(item => (
+                        <article class="news-card card-surface p-6">
+                            <span class="text-xs text-gray-500">{new Date(item.data.date).toLocaleDateString()}</span>
+                            <h3 class="text-lg font-bold my-2">{item.data.title}</h3>
+                            <p class="text-gray-600 text-sm mb-4">{item.data.summary}</p>
+                        </article>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+        <div id="grant-generator">
+            <GrantGenerator client:visible />
+        </div>
+
+        <div id="api-keys">
+            <APIKeyManager client:visible />
+        </div>
+
+        <ContactForm client:visible />
+    </main>
+    
+    <Footer />
+</BaseLayout>

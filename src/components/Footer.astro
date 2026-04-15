@@ -1,0 +1,35 @@
+---
+const currentYear = new Date().getFullYear();
+---
+<footer class="site-footer" id="footer">
+    <div class="max-container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="footer-brand-mark font-display">AI</div>
+                <p class="font-display" style="font-size: 1.35rem; margin: 0;">BioAI Lab</p>
+                <p>Crafting intelligent, ethical, and sustainable biological systems.</p>
+            </div>
+            <div>
+                <h3 class="font-display" style="margin-top: 0;">Discover</h3>
+                <div class="footer-nav">
+                    <a href={`${import.meta.env.BASE_URL}/research`}>Research areas</a>
+                    <a href={`${import.meta.env.BASE_URL}/#projects`}>Projects</a>
+                    <a href={`${import.meta.env.BASE_URL}/publications`}>Publications</a>
+                    <a href={`${import.meta.env.BASE_URL}/#news`}>News</a>
+                </div>
+            </div>
+            <div>
+                <h3 class="font-display" style="margin-top: 0;">Connect</h3>
+                <div class="footer-nav">
+                    <a href="mailto:hello@bioai.lab">hello@bioai.lab</a>
+                    <a href="https://www.linkedin.com" target="_blank" rel="noreferrer">LinkedIn</a>
+                    <a href="https://www.twitter.com" target="_blank" rel="noreferrer">X (Twitter)</a>
+                    <a href={`${import.meta.env.BASE_URL}/#grant-generator`}>Grant generator</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-meta">
+            &copy; <span>{currentYear}</span> BioAI Lab. Crafted with curiosity in Loughborough by Tamoghna & AI.
+        </div>
+    </div>
+</footer>
